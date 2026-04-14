@@ -1,0 +1,55 @@
+.mainContainer {
+    padding: 1rem 2rem;
+}
+
+/* Header App */
+.appHeader {
+    gap: 1rem;
+    margin-bottom: 1rem;
+}
+
+.mapText {
+    font-family: Actor;
+    font-size: 16px;
+    color: var(--sapShell_SubBrand_TextColor);
+}
+
+.appTitle {
+    font-size: 14px;
+    color: var(--sapTextColor);
+}
+
+/* Card */
+.cardContrato {
+    background: var(--sapGroup_ContentBackground);
+    border-radius: 8px;
+    padding: 1rem;
+    margin-bottom: 1.5rem;
+}
+
+.cardTitle {
+    color: var(--sapLinkColor);
+    font-weight: 900;
+}
+
+.infoContrato {
+    margin-top: 0.5rem;
+    gap: 3rem;
+}
+
+.infoItem .sapMLabel {
+    color: var(--sapContent_LabelColor);
+    font-size: 14px;
+}
+
+/* Toolbar tabela */
+.tableToolbar {
+    margin-bottom: 0.5rem;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+/* Valor sugerido */
+.valorSug {
+    font-weight: 700;
+}

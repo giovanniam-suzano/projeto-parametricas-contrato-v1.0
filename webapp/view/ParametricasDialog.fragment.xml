@@ -1,0 +1,49 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form">
+    
+    <Dialog 
+        id="dialogParametricas" 
+        title="Alteração de Paramétricas" 
+        contentWidth="900px" 
+        contentHeight="600px"
+        horizontalScrolling="false">
+        
+        <Wizard id="wizardParametricas" finishButtonText="Concluir">
+            <WizardStep id="step1" title="Item" validated="true">
+                <form:SimpleForm 
+                    id="formParametricasStep1"
+                    layout="ColumnLayout" 
+                    editable="true"
+                    columnsM="1" columnsL="1" columnsXL="1">
+                    
+                    <core:Title id="titleItem2" text="Item: 2" />
+                    <Label id="lblNomeItem" text="Martelo" />
+                    
+                    <Label id="lblIndiceParametrica" text="índice da Paramétrica" required="true" />
+                    <Input id="inpIndiceParametrica" placeholder="Ex: IPCA" width="100%" />
+                    
+                    <Label id="lblPesoIndice" text="Peso do índice (%)" required="true" />
+                    <Input id="inpPesoIndice" placeholder="Ex: 15" type="Number" width="100%" />
+                    
+                    <Label id="lblSegundoIndice" text="2º índice da Paramétrica" />
+                    <Input id="inpSegundoIndice" placeholder="Ex: IGPN" showValueHelp="true" width="100%" />
+                </form:SimpleForm>
+            </WizardStep>
+
+            <WizardStep id="step2" title="Item" />
+            <WizardStep id="step3" title="Item" />
+            <WizardStep id="step4" title="Item" />
+            <WizardStep id="step5" title="Item" />
+            <WizardStep id="step6" title="Item" />
+        </Wizard>
+
+        <buttons>
+            <Button id="btnDialogVoltar" text="Voltar" type="Transparent" press=".onDialogVoltar" />
+            <Button id="btnDialogProximo" text="Próximo Passo" type="Emphasized" press=".onDialogProximo" />
+            <Button id="btnDialogCancel" text="Cancel" type="Transparent" press=".onDialogCancel" />
+        </buttons>
+    </Dialog>
+    
+</core:FragmentDefinition>

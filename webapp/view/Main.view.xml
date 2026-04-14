@@ -1,0 +1,111 @@
+<mvc:View
+    controllerName="com.parametricas.parametricasapp.controller.Main"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+    xmlns:f="sap.f"
+    displayBlock="true"
+    height="100%">
+
+    <f:DynamicPage id="pagePrincipal" headerExpanded="true" showFooter="false">
+        
+        <f:title>
+            <f:DynamicPageTitle id="dptMain">
+                <f:heading>
+                    <Title id="titleContrato" text="Dados do Contrato" level="H2"/>
+                </f:heading>
+                <f:navigationActions>
+                    <Button id="btnNavBack" icon="sap-icon://nav-back" type="Transparent" />
+                </f:navigationActions>
+            </f:DynamicPageTitle>
+        </f:title>
+
+        <f:header>
+            <f:DynamicPageHeader id="dphMain" pinnable="true">
+                <layout:HorizontalLayout id="hlFilters">
+                    <layout:VerticalLayout id="vlDateFilter" class="sapUiMediumMarginEnd">
+                        <Label id="lblDateBase" text="Data-Base:" />
+                        <DatePicker id="dpDateBase" value="Jan 26, 2024" displayFormat="MMM dd, yyyy" width="256px" />
+                    </layout:VerticalLayout>
+                    <layout:VerticalLayout id="vlPeriodFilter">
+                        <Label id="lblPeriod" text="Período:" />
+                        <ComboBox id="cbPeriod" selectedKey="mensal" width="256px">
+                            <core:Item id="itemMensal" key="mensal" text="Mensal" />
+                        </ComboBox>
+                    </layout:VerticalLayout>
+                </layout:HorizontalLayout>
+            </f:DynamicPageHeader>
+        </f:header>
+
+        <f:content>
+            <Table id="tabelaContratos" mode="MultiSelect" sticky="ColumnHeaders,HeaderToolbar">
+                <headerToolbar>
+                    <OverflowToolbar id="otbActions">
+                        <ToolbarSpacer id="tsSpacer" />
+                        <SearchField id="sfBusca" width="280px" placeholder="Search" search=".onSearch" />
+                        <Button id="btnEditar" text="Editar" icon="sap-icon://edit" type="Transparent" press=".onEditarPress" />
+                        <Button id="btnConcluido" text="Concluído" icon="sap-icon://accept" type="Transparent" press=".onConcluidoPress" />
+                        <ToolbarSeparator id="tsepSeparador" />
+                        <Button id="btnParametricas" icon="sap-icon://sys-help" type="Transparent" press=".onAbrirParametricas" />
+                    </OverflowToolbar>
+                </headerToolbar>
+
+                <columns>
+                    <Column id="colId"><Text id="txtColId" text="ID" /></Column>
+                    <Column id="colMat"><Text id="txtColMat" text="Material" /></Column>
+                    <Column id="colQtd" hAlign="Center"><Text id="txtColQtd" text="Quantidade" /></Column>
+                    <Column id="colUnd" hAlign="Center"><Text id="txtColUnd" text="Unidade" /></Column>
+                    <Column id="colVlUni" hAlign="End"><Text id="txtColVlUni" text="Valor Unid" /></Column>
+                    <Column id="colVlTot" hAlign="End"><Text id="txtColVlTot" text="Valor Total" /></Column>
+                    <Column id="colVlSug"><Text id="txtColVlSug" text="Valor Sugerido" /></Column>
+                </columns>
+
+                <items>
+                    <ColumnListItem id="cliItem1" selected="true">
+                        <cells>
+                            <Text id="txtI1_1" text="1" />
+                            <Text id="txtI1_2" text="Parafuso" />
+                            <Text id="txtI1_3" text="12" />
+                            <Text id="txtI1_4" text="10" />
+                            <Text id="txtI1_5" text="15,00" />
+                            <Text id="txtI1_6" text="1.800,00 REAL" />
+                            <Text id="txtI1_7" text="1.875,00 REAL" />
+                        </cells>
+                    </ColumnListItem>
+                    <ColumnListItem id="cliItem2">
+                        <cells>
+                            <Text id="txtI2_1" text="2" />
+                            <Text id="txtI2_2" text="Martelo" />
+                            <Text id="txtI2_3" text="5" />
+                            <Text id="txtI2_4" text="1" />
+                            <Text id="txtI2_5" text="247,00" />
+                            <Text id="txtI2_6" text="1.235,00 REAL" />
+                            <Text id="txtI2_7" text="1.345,00 REAL" />
+                        </cells>
+                    </ColumnListItem>
+                    <ColumnListItem id="cliItem3">
+                        <cells>
+                            <Text id="txtI3_1" text="3" />
+                            <Text id="txtI3_2" text="Pregos" />
+                            <Text id="txtI3_3" text="12" />
+                            <Text id="txtI3_4" text="20" />
+                            <Text id="txtI3_5" text="12,50" />
+                            <Text id="txtI3_6" text="3.000,00 REAL" />
+                            <Text id="txtI3_7" text="3.145,00 REAL" />
+                        </cells>
+                    </ColumnListItem>
+                    <ColumnListItem id="cliItem4">
+                        <cells>
+                            <Text id="txtI4_1" text="4" />
+                            <Text id="txtI4_2" text="Chave Fenda" />
+                            <Text id="txtI4_3" text="14" />
+                            <Text id="txtI4_4" text="1" />
+                            <Text id="txtI4_5" text="215,00" />
+                            <Text id="txtI4_6" text="3.010,00 REAL" />
+                            <Text id="txtI4_7" text="3.124,00 REAL" />
+                        </cells>
+                    </ColumnListItem>
+                </items>
+            </Table>
+        </f:content>
+    </f:DynamicPage>
+</mvc:View>
