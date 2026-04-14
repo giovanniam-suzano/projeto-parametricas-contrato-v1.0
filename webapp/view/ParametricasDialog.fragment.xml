@@ -22,13 +22,23 @@
                     <Label id="lblNomeItem" text="Martelo" />
                     
                     <Label id="lblIndiceParametrica" text="índice da Paramétrica" required="true" />
-                    <Input id="inpIndiceParametrica" placeholder="Ex: IPCA" width="100%" />
-                    
+                    <ComboBox id="cbIndiceParametrica" selectedKey="none" width="256px">
+                            <core:Item id="itemIPA" key="IPA" text="IPA" />
+                            <core:Item id="itemIPCA" key="IPCA" text="IPCA" />
+                            <core:Item id="itemIGP-M" key="IGP-M" text="IGP-M" />
+                            <core:Item id="itemINCC" key="INCC" text="INCC" />
+                    </ComboBox> 
                     <Label id="lblPesoIndice" text="Peso do índice (%)" required="true" />
                     <Input id="inpPesoIndice" placeholder="Ex: 15" type="Number" width="100%" />
                     
                     <Label id="lblSegundoIndice" text="2º índice da Paramétrica" />
-                    <Input id="inpSegundoIndice" placeholder="Ex: IGPN" showValueHelp="true" width="100%" />
+                    <ComboBox id="cbIndiceParametrica2" selectedKey="none" width="256px">
+                            <core:Item id="itemIPA2" key="IPA" text="IPA" />
+                            <core:Item id="itemIPCA2" key="IPCA" text="IPCA" />
+                            <core:Item id="itemIGP-M2" key="IGP-M" text="IGP-M" />
+                            <core:Item id="itemINCC2" key="INCC" text="INCC" />
+                    </ComboBox> 
+                    
                 </form:SimpleForm>
             </WizardStep>
 

@@ -3,6 +3,8 @@
     xmlns:mvc="sap.ui.core.mvc"
     xmlns="sap.m"
     xmlns:f="sap.f"
+    xmlns:layout="sap.ui.layout"
+    xmlns:core="sap.ui.core"
     displayBlock="true"
     height="100%">
 
@@ -13,9 +15,6 @@
                 <f:heading>
                     <Title id="titleContrato" text="Dados do Contrato" level="H2"/>
                 </f:heading>
-                <f:navigationActions>
-                    <Button id="btnNavBack" icon="sap-icon://nav-back" type="Transparent" />
-                </f:navigationActions>
             </f:DynamicPageTitle>
         </f:title>
 
@@ -30,6 +29,9 @@
                         <Label id="lblPeriod" text="Período:" />
                         <ComboBox id="cbPeriod" selectedKey="mensal" width="256px">
                             <core:Item id="itemMensal" key="mensal" text="Mensal" />
+                            <core:Item id="itemAnual" key="Anual" text="Anual" />
+                            <core:Item id="itemBimestral" key="Bimestral" text="Bimestral" />
+                            <core:Item id="itemTrimestral" key="Trimestral" text="Trimestral" />
                         </ComboBox>
                     </layout:VerticalLayout>
                 </layout:HorizontalLayout>
@@ -42,10 +44,10 @@
                     <OverflowToolbar id="otbActions">
                         <ToolbarSpacer id="tsSpacer" />
                         <SearchField id="sfBusca" width="280px" placeholder="Search" search=".onSearch" />
+                        <ToolbarSeparator id="tsepSeparador1" />
                         <Button id="btnEditar" text="Editar" icon="sap-icon://edit" type="Transparent" press=".onEditarPress" />
+                         <ToolbarSeparator id="tsepSeparador2" />
                         <Button id="btnConcluido" text="Concluído" icon="sap-icon://accept" type="Transparent" press=".onConcluidoPress" />
-                        <ToolbarSeparator id="tsepSeparador" />
-                        <Button id="btnParametricas" icon="sap-icon://sys-help" type="Transparent" press=".onAbrirParametricas" />
                     </OverflowToolbar>
                 </headerToolbar>
 
@@ -56,7 +58,7 @@
                     <Column id="colUnd" hAlign="Center"><Text id="txtColUnd" text="Unidade" /></Column>
                     <Column id="colVlUni" hAlign="End"><Text id="txtColVlUni" text="Valor Unid" /></Column>
                     <Column id="colVlTot" hAlign="End"><Text id="txtColVlTot" text="Valor Total" /></Column>
-                    <Column id="colVlSug"><Text id="txtColVlSug" text="Valor Sugerido" /></Column>
+                    <Column id="colVlSug" hAlign="End"><Text id="txtColVlSug" text="Valor Sugerido" /></Column>
                 </columns>
 
                 <items>
@@ -104,6 +106,65 @@
                             <Text id="txtI4_7" text="3.124,00 REAL" />
                         </cells>
                     </ColumnListItem>
+                    <ColumnListItem id="cliItem5">
+    <cells>
+        <Text id="txtI5_1" text="5" />
+        <Text id="txtI5_2" text="Bigorna" />
+        <Text id="txtI5_3" text="8" />
+        <Text id="txtI5_4" text="1" />
+        <Text id="txtI5_5" text="180,00" />
+        <Text id="txtI5_6" text="1.440,00 REAL" />
+        <Text id="txtI5_7" text="1.620,00 REAL" />
+    </cells>
+</ColumnListItem>
+
+<ColumnListItem id="cliItem6">
+    <cells>
+        <Text id="txtI6_1" text="6" />
+        <Text id="txtI6_2" text="Alicate Universal" />
+        <Text id="txtI6_3" text="10" />
+        <Text id="txtI6_4" text="1" />
+        <Text id="txtI6_5" text="95,00" />
+        <Text id="txtI6_6" text="950,00 REAL" />
+        <Text id="txtI6_7" text="1.045,00 REAL" />
+    </cells>
+</ColumnListItem>
+
+<ColumnListItem id="cliItem7">
+    <cells>
+        <Text id="txtI7_1" text="7" />
+        <Text id="txtI7_2" text="Trena 5m" />
+        <Text id="txtI7_3" text="12" />
+        <Text id="txtI7_4" text="1" />
+        <Text id="txtI7_5" text="40,00" />
+        <Text id="txtI7_6" text="480,00 REAL" />
+        <Text id="txtI7_7" text="520,00 REAL" />
+    </cells>
+</ColumnListItem>
+
+<ColumnListItem id="cliItem8">
+    <cells>
+        <Text id="txtI8_1" text="8" />
+        <Text id="txtI8_2" text="Serrote" />
+        <Text id="txtI8_3" text="6" />
+        <Text id="txtI8_4" text="1" />
+        <Text id="txtI8_5" text="120,00" />
+        <Text id="txtI8_6" text="720,00 REAL" />
+        <Text id="txtI8_7" text="840,00 REAL" />
+    </cells>
+</ColumnListItem>
+
+<ColumnListItem id="cliItem9">
+    <cells>
+        <Text id="txtI9_1" text="9" />
+        <Text id="txtI9_2" text="Chave Phillips" />
+        <Text id="txtI9_3" text="15" />
+        <Text id="txtI9_4" text="1" />
+        <Text id="txtI9_5" text="30,00" />
+        <Text id="txtI9_6" text="450,00 REAL" />
+        <Text id="txtI9_7" text="495,00 REAL" />
+    </cells>
+</ColumnListItem>
                 </items>
             </Table>
         </f:content>

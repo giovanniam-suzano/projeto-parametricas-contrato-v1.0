@@ -5,7 +5,7 @@ sap.ui.define([
 ], function (Controller, Fragment, MessageToast) {
     "use strict";
 
-    return Controller.extend("parametricas.app.controller.Main", {
+    return Controller.extend("com.parametricas.parametricasapp.controller.Main", {
         onInit: function () {
             // Inicializações se necessárias (Models, Routings)
         },
@@ -21,7 +21,8 @@ sap.ui.define([
         },
 
         onEditarPress: function () {
-            MessageToast.show("Ação de Editar disparada.");
+            MessageToast.show("Indo para Edição !!");
+            this.onAbrirParametricas();
         },
 
         onConcluidoPress: function () {
@@ -39,7 +40,7 @@ sap.ui.define([
             if (!this._pParametricasDialog) {
                 this._pParametricasDialog = Fragment.load({
                     id: oView.getId(),
-                    name: "parametricas.app.view.fragments.ParametricasDialog", // Ajuste para o seu namespace
+                    name: "com.parametricas.parametricasapp.view.ParametricasDialog", // Ajuste para o seu namespace
                     controller: this
                 }).then(function (oDialog) {
                     oView.addDependent(oDialog);
