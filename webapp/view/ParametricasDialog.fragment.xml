@@ -5,145 +5,129 @@
 
     <Dialog
         id="dialogParametricas"
-        title="Edição de Paramétricas"
+        title="Alteração de Paramétricas"
         contentWidth="900px"
         contentHeight="600px"
-        horizontalScrolling="false"
         verticalScrolling="true">
 
-        <!-- ===================== -->
-        <!-- CONTEÚDO -->
-        <!-- ===================== -->
         <content>
 
             <Wizard
                 id="wizardParametricas"
                 finishButtonText="Concluir">
 
-                <!-- ===================== -->
-                <!-- STEP 1 -->
-                <!-- ===================== -->
+                <!-- ================= STEP 1 ================= -->
                 <WizardStep
                     id="step1"
                     title="Paramétricas do Item {id}"
                     validated="true">
 
-                    <!-- ===== RESUMO DO ITEM (ENTRE TÍTULO E SUBTÍTULO) ===== -->
-                    <VBox
-                        id="boxResumoItem"
-                        class="sapUiSmallMarginBottom sapUiSmallMarginTop">
+                    <!-- ===== RESUMO DO ITEM ===== -->
+                    <VBox id="boxResumoItem" class="sapUiSmallMarginBottom">
 
-                        <HBox id="hbResumoId" class="sapUiTinyMarginBottom">
-                            <Text id="lblResumoId" text="ID:" width="140px" />
-                            <Text id="txtResumoId" text="{id}" />
+                        <HBox id="hbResumoId">
+                            <Text id="lblId" text="ID:" width="160px"/>
+                            <Text id="txtIdResumo" text="{id}"/>
                         </HBox>
 
-                        <HBox id="hbResumoMaterial" class="sapUiTinyMarginBottom">
-                            <Text id="lblResumoMaterial" text="Material:" width="140px" />
-                            <Text id="txtResumoMaterial" text="{material}" />
+                        <HBox id="hbResumoMaterial">
+                            <Text id="lblMaterial" text="Material:" width="160px"/>
+                            <Text id="txtMaterialResumo" text="{material}"/>
                         </HBox>
 
-                        <HBox id="hbResumoQtd" class="sapUiTinyMarginBottom">
-                            <Text id="lblResumoQtd" text="Quantidade:" width="140px" />
-                            <Text id="txtResumoQtd" text="{quantidade}" />
+                        <HBox id="hbResumoQtd">
+                            <Text id="lblQtd" text="Quantidade:" width="160px"/>
+                            <Text id="txtQtdResumo" text="{quantidade}"/>
                         </HBox>
 
-                        <HBox id="hbResumoValor" class="sapUiTinyMarginBottom">
-                            <Text id="lblResumoValor" text="Valor Total:" width="140px" />
-                            <Text id="txtResumoValor" text="{valorTotal}" />
+                        <HBox id="hbResumoValor">
+                            <Text id="lblValor" text="Valor Total:" width="160px"/>
+                            <Text id="txtValorResumo" text="{valorTotal}"/>
                         </HBox>
 
                     </VBox>
 
-                    <!-- ===== FORMULÁRIO ===== -->
-                    <form:SimpleForm
-                        id="formParametricasStep1"
-                        layout="ColumnLayout"
-                        editable="true"
-                        columnsM="1"
-                        columnsL="1"
-                        columnsXL="1">
+                    <!-- ===== LISTA DINÂMICA DE ÍNDICES ===== -->
+                    <VBox
+                        id="boxListaIndices"
+                        items="{dialog>/indices}">
 
-                        <core:Title
-                            id="titleDefinicaoIndices"
-                            text="Definição de Índices" />
+                        <!-- ===== TEMPLATE ===== -->
+                        <VBox
+                            id="boxIndiceItem"
+                            class="sapUiMediumMarginBottom">
 
-                        <Label
-                            id="lblIndiceParametrica"
-                            text="Índice da Paramétrica"
-                            required="true" />
+                            <form:SimpleForm
+                                id="formIndice"
+                                layout="ColumnLayout"
+                                columnsM="1"
+                                columnsL="1"
+                                columnsXL="1">
 
-                        <ComboBox
-                            id="cbIndiceParametrica"
-                            width="256px">
-                            <core:Item id="itemIPA" key="IPA" text="IPA" />
-                            <core:Item id="itemIPCA" key="IPCA" text="IPCA" />
-                            <core:Item id="itemIGPM" key="IGP-M" text="IGP-M" />
-                            <core:Item id="itemINCC" key="INCC" text="INCC" />
-                        </ComboBox>
+                                <core:Title
+                                    id="titleDefIndices"
+                                    text="Definição de Índices" />
 
-                        <Label
-                            id="lblPesoIndice"
-                            text="Peso do Índice (%)"
-                            required="true" />
+                                <Label
+                                    id="lblIndice"
+                                    text="{= ${dialog>ordem} + 'º Índice da Paramétrica'}"
+                                    required="true"/>
 
-                        <Input
-                            id="inpPesoIndice"
-                            type="Number"
-                            placeholder="Ex: 15"
-                            width="100%" />
+                                <ComboBox
+                                    id="cbIndice"
+                                    width="256px">
+                                    <core:Item id="itemIPA" key="IPA" text="IPA"/>
+                                    <core:Item id="itemIPCA" key="IPCA" text="IPCA"/>
+                                    <core:Item id="itemIGPM" key="IGP-M" text="IGP-M"/>
+                                    <core:Item id="itemINCC" key="INCC" text="INCC"/>
+                                </ComboBox>
 
-                        <Label
-                            id="lblSegundoIndice"
-                            text="2º Índice da Paramétrica" />
+                                <Label
+                                    id="lblPeso"
+                                    text="{= ${dialog>ordem} + 'º Peso do Índice (%)'}"
+                                    required="true"/>
 
-                        <ComboBox
-                            id="cbIndiceParametrica2"
-                            width="256px">
-                            <core:Item id="itemIPA2" key="IPA" text="IPA" />
-                            <core:Item id="itemIPCA2" key="IPCA" text="IPCA" />
-                            <core:Item id="itemIGPM2" key="IGP-M" text="IGP-M" />
-                            <core:Item id="itemINCC2" key="INCC" text="INCC" />
-                        </ComboBox>
+                                <Input
+                                    id="inpPeso"
+                                    type="Number"
+                                    placeholder="Ex: 15"/>
 
-                    </form:SimpleForm>
+                                <Label
+                                    id="lblPergunta"
+                                    text="Deseja adicionar mais um índice de Paramétrica para esse item?"
+                                    required="true"/>
+
+                                <ComboBox
+                                    id="cbPergunta"
+                                    width="200px"
+                                    selectionChange=".onAdicionarIndice">
+                                    <core:Item id="itemSim" key="SIM" text="Sim"/>
+                                    <core:Item id="itemNao" key="NAO" text="Não"/>
+                                </ComboBox>
+
+                            </form:SimpleForm>
+
+                        </VBox>
+
+                    </VBox>
 
                 </WizardStep>
 
                 <!-- STEPS FUTUROS -->
-                <WizardStep id="step2" title="Item" />
-                <WizardStep id="step3" title="Item" />
-                <WizardStep id="step4" title="Item" />
-                <WizardStep id="step5" title="Item" />
-                <WizardStep id="step6" title="Item" />
+                <WizardStep id="step2" title="Item"/>
+                <WizardStep id="step3" title="Item"/>
+                <WizardStep id="step4" title="Item"/>
+                <WizardStep id="step5" title="Item"/>
+                <WizardStep id="step6" title="Item"/>
 
             </Wizard>
 
         </content>
 
-        <!-- ===================== -->
-        <!-- BOTÕES -->
-        <!-- ===================== -->
         <buttons>
-
-            <Button
-                id="btnDialogVoltar"
-                text="Voltar"
-                type="Transparent"
-                press=".onDialogVoltar" />
-
-            <Button
-                id="btnDialogProximo"
-                text="Próximo Passo"
-                type="Emphasized"
-                press=".onDialogProximo" />
-
-            <Button
-                id="btnDialogCancel"
-                text="Cancelar"
-                type="Transparent"
-                press=".onDialogCancel" />
-
+            <Button id="btnDialogVoltar" text="Voltar" press=".onDialogVoltar"/>
+            <Button id="btnDialogProximo" text="Próximo Passo" type="Emphasized" press=".onDialogProximo"/>
+            <Button id="btnDialogCancel" text="Cancelar" press=".onDialogCancel"/>
         </buttons>
 
     </Dialog>
