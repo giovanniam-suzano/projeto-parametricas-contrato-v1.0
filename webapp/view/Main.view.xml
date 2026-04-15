@@ -8,165 +8,128 @@
     displayBlock="true"
     height="100%">
 
-    <f:DynamicPage id="pagePrincipal" headerExpanded="true" showFooter="false">
-        
+    <f:DynamicPage id="pagePrincipal" headerExpanded="true">
+
+        <!-- ===================== -->
+        <!-- TITLE -->
+        <!-- ===================== -->
         <f:title>
             <f:DynamicPageTitle id="dptMain">
                 <f:heading>
-                    <Title id="titleContrato" text="Dados do Contrato" level="H2"/>
+                    <Title id="titleContrato" text="Dados do Contrato" level="H2" />
                 </f:heading>
             </f:DynamicPageTitle>
         </f:title>
 
+        <!-- ===================== -->
+        <!-- HEADER -->
+        <!-- ===================== -->
         <f:header>
             <f:DynamicPageHeader id="dphMain" pinnable="true">
                 <layout:HorizontalLayout id="hlFilters">
+
                     <layout:VerticalLayout id="vlDateFilter" class="sapUiMediumMarginEnd">
                         <Label id="lblDateBase" text="Data-Base:" />
-                        <DatePicker id="dpDateBase" value="Jan 26, 2024" displayFormat="MMM dd, yyyy" width="256px" />
+                        <DatePicker
+                            id="dpDateBase"
+                            value="Jan 26, 2024"
+                            displayFormat="MMM dd, yyyy"
+                            width="256px" />
                     </layout:VerticalLayout>
+
                     <layout:VerticalLayout id="vlPeriodFilter">
                         <Label id="lblPeriod" text="Período:" />
                         <ComboBox id="cbPeriod" selectedKey="mensal" width="256px">
                             <core:Item id="itemMensal" key="mensal" text="Mensal" />
-                            <core:Item id="itemAnual" key="Anual" text="Anual" />
-                            <core:Item id="itemBimestral" key="Bimestral" text="Bimestral" />
-                            <core:Item id="itemTrimestral" key="Trimestral" text="Trimestral" />
+                            <core:Item id="itemAnual" key="anual" text="Anual" />
+                            <core:Item id="itemBimestral" key="bimestral" text="Bimestral" />
+                            <core:Item id="itemTrimestral" key="trimestral" text="Trimestral" />
                         </ComboBox>
                     </layout:VerticalLayout>
+
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
         </f:header>
 
+        <!-- ===================== -->
+        <!-- CONTENT -->
+        <!-- ===================== -->
         <f:content>
-            <Table id="tabelaContratos" mode="MultiSelect" sticky="ColumnHeaders,HeaderToolbar">
+
+            <Table
+                id="tabelaContratos"
+                mode="MultiSelect"
+                sticky="ColumnHeaders,HeaderToolbar"
+                items="{/contratos}">
+
+                <!-- Toolbar -->
                 <headerToolbar>
                     <OverflowToolbar id="otbActions">
                         <ToolbarSpacer id="tsSpacer" />
-                        <SearchField id="sfBusca" width="280px" placeholder="Search" search=".onSearch" />
-                        <ToolbarSeparator id="tsepSeparador1" />
-                        <Button id="btnEditar" text="Editar" icon="sap-icon://edit" type="Transparent" press=".onEditarPress" />
-                         <ToolbarSeparator id="tsepSeparador2" />
-                        <Button id="btnConcluido" text="Concluído" icon="sap-icon://accept" type="Transparent" press=".onConcluidoPress" />
+                        <SearchField
+                            id="sfBusca"
+                            width="280px"
+                            placeholder="Search"
+                            search=".onSearch" />
+                        <ToolbarSeparator id="tsep1" />
+                        <Button
+                            id="btnEditar"
+                            text="Editar"
+                            icon="sap-icon://edit"
+                            press=".onEditarPress" />
+                        <ToolbarSeparator id="tsep2" />
+                        <Button
+                            id="btnConcluido"
+                            text="Concluído"
+                            icon="sap-icon://accept"
+                            press=".onConcluidoPress" />
                     </OverflowToolbar>
                 </headerToolbar>
 
+                <!-- Columns -->
                 <columns>
-                    <Column id="colId"><Text id="txtColId" text="ID" /></Column>
-                    <Column id="colMat"><Text id="txtColMat" text="Material" /></Column>
-                    <Column id="colQtd" hAlign="Center"><Text id="txtColQtd" text="Quantidade" /></Column>
-                    <Column id="colUnd" hAlign="Center"><Text id="txtColUnd" text="Unidade" /></Column>
-                    <Column id="colVlUni" hAlign="End"><Text id="txtColVlUni" text="Valor Unid" /></Column>
-                    <Column id="colVlTot" hAlign="End"><Text id="txtColVlTot" text="Valor Total" /></Column>
-                    <Column id="colVlSug" hAlign="End"><Text id="txtColVlSug" text="Valor Sugerido" /></Column>
+                    <Column id="colId">
+                        <Text id="txtColId" text="ID" />
+                    </Column>
+                    <Column id="colMaterial">
+                        <Text id="txtColMaterial" text="Material" />
+                    </Column>
+                    <Column id="colQtd" hAlign="Center">
+                        <Text id="txtColQtd" text="Quantidade" />
+                    </Column>
+                    <Column id="colUnd" hAlign="Center">
+                        <Text id="txtColUnd" text="Unidade" />
+                    </Column>
+                    <Column id="colVlUni" hAlign="End">
+                        <Text id="txtColVlUni" text="Valor Unid" />
+                    </Column>
+                    <Column id="colVlTot" hAlign="End">
+                        <Text id="txtColVlTot" text="Valor Total" />
+                    </Column>
+                    <Column id="colVlSug" hAlign="End">
+                        <Text id="txtColVlSug" text="Valor Sugerido" />
+                    </Column>
                 </columns>
 
+                <!-- Items (Template) -->
                 <items>
-                    <ColumnListItem id="cliItem1" selected="true">
+                    <ColumnListItem id="cliContrato">
                         <cells>
-                            <Text id="txtI1_1" text="1" />
-                            <Text id="txtI1_2" text="Parafuso" />
-                            <Text id="txtI1_3" text="12" />
-                            <Text id="txtI1_4" text="10" />
-                            <Text id="txtI1_5" text="15,00" />
-                            <Text id="txtI1_6" text="1.800,00 REAL" />
-                            <Text id="txtI1_7" text="1.875,00 REAL" />
+                            <Text id="txtId" text="{id}" />
+                            <Text id="txtMaterial" text="{material}" />
+                            <Text id="txtQtd" text="{quantidade}" />
+                            <Text id="txtUnd" text="{unidade}" />
+                            <Text id="txtVlUni" text="{valorUnitario}" />
+                            <Text id="txtVlTot" text="{valorTotal}" />
+                            <Text id="txtVlSug" text="{valorSugerido}" />
                         </cells>
                     </ColumnListItem>
-                    <ColumnListItem id="cliItem2">
-                        <cells>
-                            <Text id="txtI2_1" text="2" />
-                            <Text id="txtI2_2" text="Martelo" />
-                            <Text id="txtI2_3" text="5" />
-                            <Text id="txtI2_4" text="1" />
-                            <Text id="txtI2_5" text="247,00" />
-                            <Text id="txtI2_6" text="1.235,00 REAL" />
-                            <Text id="txtI2_7" text="1.345,00 REAL" />
-                        </cells>
-                    </ColumnListItem>
-                    <ColumnListItem id="cliItem3">
-                        <cells>
-                            <Text id="txtI3_1" text="3" />
-                            <Text id="txtI3_2" text="Pregos" />
-                            <Text id="txtI3_3" text="12" />
-                            <Text id="txtI3_4" text="20" />
-                            <Text id="txtI3_5" text="12,50" />
-                            <Text id="txtI3_6" text="3.000,00 REAL" />
-                            <Text id="txtI3_7" text="3.145,00 REAL" />
-                        </cells>
-                    </ColumnListItem>
-                    <ColumnListItem id="cliItem4">
-                        <cells>
-                            <Text id="txtI4_1" text="4" />
-                            <Text id="txtI4_2" text="Chave Fenda" />
-                            <Text id="txtI4_3" text="14" />
-                            <Text id="txtI4_4" text="1" />
-                            <Text id="txtI4_5" text="215,00" />
-                            <Text id="txtI4_6" text="3.010,00 REAL" />
-                            <Text id="txtI4_7" text="3.124,00 REAL" />
-                        </cells>
-                    </ColumnListItem>
-                    <ColumnListItem id="cliItem5">
-    <cells>
-        <Text id="txtI5_1" text="5" />
-        <Text id="txtI5_2" text="Bigorna" />
-        <Text id="txtI5_3" text="8" />
-        <Text id="txtI5_4" text="1" />
-        <Text id="txtI5_5" text="180,00" />
-        <Text id="txtI5_6" text="1.440,00 REAL" />
-        <Text id="txtI5_7" text="1.620,00 REAL" />
-    </cells>
-</ColumnListItem>
-
-<ColumnListItem id="cliItem6">
-    <cells>
-        <Text id="txtI6_1" text="6" />
-        <Text id="txtI6_2" text="Alicate Universal" />
-        <Text id="txtI6_3" text="10" />
-        <Text id="txtI6_4" text="1" />
-        <Text id="txtI6_5" text="95,00" />
-        <Text id="txtI6_6" text="950,00 REAL" />
-        <Text id="txtI6_7" text="1.045,00 REAL" />
-    </cells>
-</ColumnListItem>
-
-<ColumnListItem id="cliItem7">
-    <cells>
-        <Text id="txtI7_1" text="7" />
-        <Text id="txtI7_2" text="Trena 5m" />
-        <Text id="txtI7_3" text="12" />
-        <Text id="txtI7_4" text="1" />
-        <Text id="txtI7_5" text="40,00" />
-        <Text id="txtI7_6" text="480,00 REAL" />
-        <Text id="txtI7_7" text="520,00 REAL" />
-    </cells>
-</ColumnListItem>
-
-<ColumnListItem id="cliItem8">
-    <cells>
-        <Text id="txtI8_1" text="8" />
-        <Text id="txtI8_2" text="Serrote" />
-        <Text id="txtI8_3" text="6" />
-        <Text id="txtI8_4" text="1" />
-        <Text id="txtI8_5" text="120,00" />
-        <Text id="txtI8_6" text="720,00 REAL" />
-        <Text id="txtI8_7" text="840,00 REAL" />
-    </cells>
-</ColumnListItem>
-
-<ColumnListItem id="cliItem9">
-    <cells>
-        <Text id="txtI9_1" text="9" />
-        <Text id="txtI9_2" text="Chave Phillips" />
-        <Text id="txtI9_3" text="15" />
-        <Text id="txtI9_4" text="1" />
-        <Text id="txtI9_5" text="30,00" />
-        <Text id="txtI9_6" text="450,00 REAL" />
-        <Text id="txtI9_7" text="495,00 REAL" />
-    </cells>
-</ColumnListItem>
                 </items>
+
             </Table>
+
         </f:content>
+
     </f:DynamicPage>
+
 </mvc:View>
