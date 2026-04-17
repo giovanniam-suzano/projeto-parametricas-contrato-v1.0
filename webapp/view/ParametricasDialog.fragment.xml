@@ -1,135 +1,157 @@
 <core:FragmentDefinition
-    xmlns="sap.m"
-    xmlns:core="sap.ui.core"
-    xmlns:form="sap.ui.layout.form">
+  xmlns="sap.m"
+  xmlns:core="sap.ui.core"
+  xmlns:form="sap.ui.layout.form">
 
-    <Dialog
-        id="dialogParametricas"
-        title="Alteração de Paramétricas"
-        contentWidth="900px"
-        contentHeight="600px"
-        verticalScrolling="true">
+  <Dialog
+    id="dialogParametricas"
+    contentWidth="900px"
+    contentHeight="600px"
+    verticalScrolling="true">
 
-        <content>
+    <!-- ===================================================== -->
+    <!-- PASSO 1: HEADER DINÂMICO (3 estados)                   -->
+    <!-- ===================================================== -->
+    <customHeader>
+      <Bar>
 
-            <Wizard
-                id="wizardParametricas"
-                finishButtonText="Concluir">
+        <!-- Estado 1: todos selecionados -->
+        <contentMiddle>
+          <Title
+            text="Cabeçalho"
+            visible="{dialog>/isAllSelected}" />
+        </contentMiddle>
 
-                <!-- ================= STEP 1 ================= -->
-                <WizardStep
-                    id="step1"
-                    title="Paramétricas do Item {id}"
-                    validated="true">
+        <!-- Estado 2 e 3: não são todos selecionados -> bolinhas conforme seleção -->
+        <contentLeft>
+          <HBox
+            visible="{= !${dialog>/isAllSelected} }"
+            alignItems="Center"
+            renderType="Bare"
+            items="{dialog>/selectedItems}">
 
-                    <!-- ===== RESUMO DO ITEM ===== -->
-                    <VBox id="boxResumoItem" class="sapUiSmallMarginBottom">
+            <!-- Template de cada bolinha -->
+            <HBox class="sapUiTinyMarginEnd" alignItems="Center">
+              <Avatar
+                displayShape="Circle"
+                displaySize="S"
+                initials="{= '' + ${dialog>seq} }"
+                class="sapUiTinyMarginEnd" />
+              <Text text="{= 'Item ' + ${dialog>seq} }" />
+            </HBox>
 
-                        <HBox id="hbResumoId">
-                            <Text id="lblId" text="ID:" width="160px"/>
-                            <Text id="txtIdResumo" text="{id}"/>
-                        </HBox>
+          </HBox>
+        </contentLeft>
 
-                        <HBox id="hbResumoMaterial">
-                            <Text id="lblMaterial" text="Material:" width="160px"/>
-                            <Text id="txtMaterialResumo" text="{material}"/>
-                        </HBox>
+      </Bar>
+    </customHeader>
 
-                        <HBox id="hbResumoQtd">
-                            <Text id="lblQtd" text="Quantidade:" width="160px"/>
-                            <Text id="txtQtdResumo" text="{quantidade}"/>
-                        </HBox>
+    <!-- ===================================================== -->
+    <!-- PASSO 2: UM FORM POR VEZ (um some, o próximo aparece)  -->
+    <!-- ===================================================== -->
+    <content>
 
-                        <HBox id="hbResumoValor">
-                            <Text id="lblValor" text="Valor Total:" width="160px"/>
-                            <Text id="txtValorResumo" text="{valorTotal}"/>
-                        </HBox>
+      <!-- Lista de formulários: 1 por item selecionado -->
+      <VBox items="{dialog>/selectedItems}">
 
-                    </VBox>
+        <!-- Cada item selecionado vira uma “tela” -->
+        <VBox
+          class="sapUiSmallMargin"
+          visible="{= ${dialog>seq} === (${dialog>/currentIndex} + 1) }">
 
-                    <!-- ===== LISTA DINÂMICA DE ÍNDICES ===== -->
-                    <VBox
-                        id="boxListaIndices"
-                        items="{dialog>/indices}">
+          <!-- Resumo do Item -->
+          <VBox class="sapUiSmallMarginBottom">
+            <HBox>
+              <Text text="ID:" width="160px"/>
+              <Text text="{dialog>id}"/>
+            </HBox>
 
-                        <!-- ===== TEMPLATE ===== -->
-                        <VBox
-                            id="boxIndiceItem"
-                            class="sapUiMediumMarginBottom">
+            <HBox>
+              <Text text="Material:" width="160px"/>
+              <Text text="{dialog>material}"/>
+            </HBox>
 
-                            <form:SimpleForm
-                                id="formIndice"
-                                layout="ColumnLayout"
-                                columnsM="1"
-                                columnsL="1"
-                                columnsXL="1">
+            <HBox>
+              <Text text="Quantidade:" width="160px"/>
+              <Text text="{dialog>quantidade}"/>
+            </HBox>
 
-                                <core:Title
-                                    id="titleDefIndices"
-                                    text="Definição de Índices" />
+            <HBox>
+              <Text text="Valor Total:" width="160px"/>
+              <Text text="{dialog>valorTotal}"/>
+            </HBox>
+          </VBox>
 
-                                <Label
-                                    id="lblIndice"
-                                    text="{= ${dialog>ordem} + 'º Índice da Paramétrica'}"
-                                    required="true"/>
+          <!-- Índices dinâmicos POR ITEM -->
+          <VBox items="{dialog>indices}">
 
-                                <ComboBox
-                                    id="cbIndice"
-                                    width="256px">
-                                    <core:Item id="itemIPA" key="IPA" text="IPA"/>
-                                    <core:Item id="itemIPCA" key="IPCA" text="IPCA"/>
-                                    <core:Item id="itemIGPM" key="IGP-M" text="IGP-M"/>
-                                    <core:Item id="itemINCC" key="INCC" text="INCC"/>
-                                </ComboBox>
+            <VBox class="sapUiMediumMarginBottom">
+              <form:SimpleForm
+                layout="ColumnLayout"
+                columnsM="1"
+                columnsL="1"
+                columnsXL="1">
 
-                                <Label
-                                    id="lblPeso"
-                                    text="{= ${dialog>ordem} + 'º Peso do Índice (%)'}"
-                                    required="true"/>
+                <core:Title text="Definição de Índices" />
 
-                                <Input
-                                    id="inpPeso"
-                                    type="Number"
-                                    placeholder="Ex: 15"/>
+                <Label
+                  text="{= ${dialog>ordem} + 'º Índice da Paramétrica'}"
+                  required="true"/>
 
-                                <Label
-                                    id="lblPergunta"
-                                    text="Deseja adicionar mais um índice de Paramétrica para esse item?"
-                                    required="true"/>
+                <ComboBox
+                  width="256px"
+                  selectedKey="{dialog>tipoIndice}">
+                  <core:Item key="IPA" text="IPA"/>
+                  <core:Item key="IPCA" text="IPCA"/>
+                  <core:Item key="IGP-M" text="IGP-M"/>
+                  <core:Item key="INCC" text="INCC"/>
+                </ComboBox>
 
-                                <ComboBox
-                                    id="cbPergunta"
-                                    width="200px"
-                                    selectionChange=".onAdicionarIndice">
-                                    <core:Item id="itemSim" key="SIM" text="Sim"/>
-                                    <core:Item id="itemNao" key="NAO" text="Não"/>
-                                </ComboBox>
+                <Label
+                  text="{= ${dialog>ordem} + 'º Peso do Índice (%)'}"
+                  required="true"/>
 
-                            </form:SimpleForm>
+                <Input
+                  type="Number"
+                  value="{dialog>peso}"
+                  placeholder="Ex: 15"/>
 
-                        </VBox>
+                <Label
+                  text="Deseja adicionar mais um índice de Paramétrica para esse item?"
+                  required="true"/>
 
-                    </VBox>
+                <ComboBox
+                  width="200px"
+                  selectedKey="{dialog>addMore}"
+                  selectionChange=".onAdicionarIndice">
+                  <core:Item key="SIM" text="Sim"/>
+                  <core:Item key="NAO" text="Não"/>
+                </ComboBox>
 
-                </WizardStep>
+              </form:SimpleForm>
+            </VBox>
 
-                <!-- STEPS FUTUROS -->
-                <WizardStep id="step2" title="Item"/>
-                <WizardStep id="step3" title="Item"/>
-                <WizardStep id="step4" title="Item"/>
-                <WizardStep id="step5" title="Item"/>
-                <WizardStep id="step6" title="Item"/>
+          </VBox>
 
-            </Wizard>
+        </VBox>
+      </VBox>
 
-        </content>
+    </content>
 
-        <buttons>
-            <Button id="btnDialogVoltar" text="Voltar" press=".onDialogVoltar"/>
-            <Button id="btnDialogProximo" text="Próximo Passo" type="Emphasized" press=".onDialogProximo"/>
-            <Button id="btnDialogCancel" text="Cancelar" press=".onDialogCancel"/>
-        </buttons>
+    <buttons>
+      <Button
+        text="Voltar"
+        press=".onDialogVoltar" />
 
-    </Dialog>
+      <Button
+        text="Próximo Passo"
+        type="Emphasized"
+        press=".onDialogProximo" />
 
+      <Button
+        text="Cancelar"
+        press=".onDialogCancel" />
+    </buttons>
+
+  </Dialog>
 </core:FragmentDefinition>
