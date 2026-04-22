@@ -9,82 +9,65 @@
     contentHeight="600px"
     verticalScrolling="true">
 
-    <!-- ===================================================== -->
-    <!-- PASSO 1: HEADER DINÂMICO (3 estados)                   -->
-    <!-- ===================================================== -->
-    <customHeader>
-      <Bar>
+   <customHeader>
+    <Bar>
+      <contentLeft>
+        <HBox
+          alignItems="Center"
+          renderType="Bare"
+          visible="{= !${dialog>/isAllSelected} }">
 
-        <!-- Estado 1: todos selecionados -->
-        <contentMiddle>
-          <Title
-            text="Cabeçalho"
-            visible="{dialog>/isAllSelected}" />
-        </contentMiddle>
+          <!-- Ícone escolhido por você -->
+          <core:Icon
+            src="sap-icon://request"
+            size="1rem"
+            class="sapUiTinyMarginEnd" />
 
-        <!-- Estado 2 e 3: não são todos selecionados -> bolinhas conforme seleção -->
-        <contentLeft>
-          <HBox
-            visible="{= !${dialog>/isAllSelected} }"
-            alignItems="Center"
-            renderType="Bare"
-            items="{dialog>/selectedItems}">
+          <!-- ✅ TEXTO CORRETO: Item X -->
+          <Text text="{= 'Item ' + ${dialog>/currentItem/seq} }" />
 
-            <!-- Template de cada bolinha -->
-            <HBox class="sapUiTinyMarginEnd" alignItems="Center">
-              <Avatar
-                displayShape="Circle"
-                displaySize="S"
-                initials="{= '' + ${dialog>seq} }"
-                class="sapUiTinyMarginEnd" />
-              <Text text="{= 'Item ' + ${dialog>seq} }" />
-            </HBox>
+        </HBox>
+      </contentLeft>
 
-          </HBox>
-        </contentLeft>
+      <contentMiddle>
+        <Title
+          text="Cabeçalho"
+          visible="{dialog>/isAllSelected}" />
+      </contentMiddle>
 
-      </Bar>
-    </customHeader>
+    </Bar>
+  </customHeader>
 
-    <!-- ===================================================== -->
-    <!-- PASSO 2: UM FORM POR VEZ (um some, o próximo aparece)  -->
-    <!-- ===================================================== -->
     <content>
-
-      <!-- Lista de formulários: 1 por item selecionado -->
       <VBox items="{dialog>/selectedItems}">
 
-        <!-- Cada item selecionado vira uma “tela” -->
         <VBox
           class="sapUiSmallMargin"
           visible="{= ${dialog>seq} === (${dialog>/currentIndex} + 1) }">
 
-          <!-- Resumo do Item -->
           <VBox class="sapUiSmallMarginBottom">
             <HBox>
-              <Text text="ID:" width="160px"/>
-              <Text text="{dialog>id}"/>
+              <Text text="ID:" width="160px" />
+              <Text text="{dialog>id}" />
             </HBox>
 
             <HBox>
-              <Text text="Material:" width="160px"/>
-              <Text text="{dialog>material}"/>
+              <Text text="Material:" width="160px" />
+              <Text text="{dialog>material}" />
             </HBox>
 
             <HBox>
-              <Text text="Quantidade:" width="160px"/>
-              <Text text="{dialog>quantidade}"/>
+              <Text text="Quantidade:" width="160px" />
+              <Text text="{dialog>quantidade}" />
             </HBox>
 
             <HBox>
-              <Text text="Valor Total:" width="160px"/>
-              <Text text="{dialog>valorTotal}"/>
+              <Text text="Valor Total:" width="160px" />
+              <Text text="{dialog>valorTotal}" />
             </HBox>
           </VBox>
 
-          <!-- Índices dinâmicos POR ITEM -->
           <VBox items="{dialog>indices}">
-
             <VBox class="sapUiMediumMarginBottom">
               <form:SimpleForm
                 layout="ColumnLayout"
@@ -94,63 +77,42 @@
 
                 <core:Title text="Definição de Índices" />
 
-                <Label
-                  text="{= ${dialog>ordem} + 'º Índice da Paramétrica'}"
-                  required="true"/>
+                <Label text="{= ${dialog>ordem} + 'º Índice da Paramétrica'}" required="true" />
 
-                <ComboBox
-                  width="256px"
-                  selectedKey="{dialog>tipoIndice}">
-                  <core:Item key="IPA" text="IPA"/>
-                  <core:Item key="IPCA" text="IPCA"/>
-                  <core:Item key="IGP-M" text="IGP-M"/>
-                  <core:Item key="INCC" text="INCC"/>
+                <ComboBox width="256px" selectedKey="{dialog>tipoIndice}">
+                  <core:Item key="IPA" text="IPA" />
+                  <core:Item key="IPCA" text="IPCA" />
+                  <core:Item key="IGP-M" text="IGP-M" />
+                  <core:Item key="INCC" text="INCC" />
                 </ComboBox>
 
-                <Label
-                  text="{= ${dialog>ordem} + 'º Peso do Índice (%)'}"
-                  required="true"/>
+                <Label text="{= ${dialog>ordem} + 'º Peso do Índice (%)'}" required="true" />
 
-                <Input
-                  type="Number"
-                  value="{dialog>peso}"
-                  placeholder="Ex: 15"/>
+                <Input type="Number" value="{dialog>peso}" placeholder="Ex: 15" />
 
-                <Label
-                  text="Deseja adicionar mais um índice de Paramétrica para esse item?"
-                  required="true"/>
+                <Label text="Deseja adicionar mais um índice de Paramétrica para esse item?" required="true" />
 
                 <ComboBox
                   width="200px"
                   selectedKey="{dialog>addMore}"
                   selectionChange=".onAdicionarIndice">
-                  <core:Item key="SIM" text="Sim"/>
-                  <core:Item key="NAO" text="Não"/>
+                  <core:Item key="SIM" text="Sim" />
+                  <core:Item key="NAO" text="Não" />
                 </ComboBox>
 
               </form:SimpleForm>
             </VBox>
-
           </VBox>
 
         </VBox>
-      </VBox>
 
+      </VBox>
     </content>
 
     <buttons>
-      <Button
-        text="Voltar"
-        press=".onDialogVoltar" />
-
-      <Button
-        text="Próximo Passo"
-        type="Emphasized"
-        press=".onDialogProximo" />
-
-      <Button
-        text="Cancelar"
-        press=".onDialogCancel" />
+      <Button text="Voltar" press=".onDialogVoltar" />
+      <Button text="Próximo Passo" type="Emphasized" press=".onDialogProximo" />
+      <Button text="Cancelar" press=".onDialogCancel" />
     </buttons>
 
   </Dialog>

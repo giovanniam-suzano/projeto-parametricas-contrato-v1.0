@@ -14,8 +14,6 @@ sap.ui.define([
     /* Lifecycle */
     /* =========================================================== */
     onInit: function () {
-      // Model principal (simulando database)
-      // ✅ Ajustado para conter os campos que a tabela espera
       var oMainModel = new JSONModel({
         contratos: [
           {
@@ -35,6 +33,15 @@ sap.ui.define([
             valorUnitario: "247,00",
             valorTotal: "1.235,00 REAL",
             valorSugerido: "1.200,00 REAL"
+          },
+          {
+            id: "3",
+            material: "Martelo",
+            quantidade: 5,
+            unidade: "UN",
+            valorUnitario: "247,00",
+            valorTotal: "1.235,00 REAL",
+            valorSugerido: "1.200,00 REAL"
           }
         ]
       });
@@ -43,7 +50,7 @@ sap.ui.define([
     },
 
     /* =========================================================== */
-    /* Informação complementar: buscar item por ID (explícito) */
+    /* Helper: buscar item por ID (explícito) */
     /* =========================================================== */
     _getContratoById: function (sId) {
       var oModel = this.getView().getModel();
@@ -51,6 +58,16 @@ sap.ui.define([
       return aContratos.find(function (oItem) {
         return String(oItem.id) === String(sId);
       }) || null;
+    },
+
+    /* =========================================================== */
+    /* Helper: sincroniza currentItem com currentIndex */
+    /* =========================================================== */
+    _syncCurrentItem: function (oDialogModel) {
+      var aItems = oDialogModel.getProperty("/selectedItems") || [];
+      var iCurrent = oDialogModel.getProperty("/currentIndex") || 0;
+      var oCurrent = aItems[iCurrent] || null;
+      oDialogModel.setProperty("/currentItem", oCurrent);
     },
 
     /* =========================================================== */
@@ -65,7 +82,6 @@ sap.ui.define([
         return;
       }
 
-      // ✅ Agora permite 1 ou N seleções
       var aContexts = aItems.map(function (oItem) {
         return oItem.getBindingContext();
       });
@@ -73,7 +89,6 @@ sap.ui.define([
       this._abrirDialogParametricas(aContexts);
     },
 
-    // ✅ Implementado: SearchField chama esse handler na View
     onSearch: function (oEvent) {
       var sQuery = (oEvent.getParameter("query") || "").trim();
       var oTable = this.byId("tabelaContratos");
@@ -96,7 +111,6 @@ sap.ui.define([
       ]);
     },
 
-    // ✅ Implementado: botão “Concluído”
     onConcluidoPress: function () {
       var oTable = this.byId("tabelaContratos");
       var aItems = oTable.getSelectedItems();
@@ -117,7 +131,6 @@ sap.ui.define([
       var oView = this.getView();
       var oMainModel = oView.getModel();
 
-      // Total de itens da tabela (para identificar quando "todos" foram selecionados)
       var iTotal = (oMainModel.getProperty("/contratos") || []).length;
       var iSelected = aContexts.length;
       var bAllSelected = (iTotal > 0 && iSelected === iTotal);
@@ -134,12 +147,10 @@ sap.ui.define([
       }
 
       this._pParametricasDialog.then(function (oDialog) {
-
-        // ✅ Monta os itens selecionados (cada um com seu próprio indices)
         var aSelectedItems = aContexts.map(function (oCtx, i) {
-          var oObj = oCtx.getObject(); // já contém id/material/quantidade...
+          var oObj = oCtx.getObject();
           return {
-            seq: i + 1,                 // 1..N para o header ("Item 1", "Item 2"...)
+            seq: i + 1,
             id: oObj.id,
             material: oObj.material,
             quantidade: oObj.quantidade,
@@ -147,8 +158,6 @@ sap.ui.define([
             valorUnitario: oObj.valorUnitario,
             valorTotal: oObj.valorTotal,
             valorSugerido: oObj.valorSugerido,
-
-            // indices por item
             indices: [
               { ordem: 1, tipoIndice: "", peso: "", addMore: "NAO" }
             ]
@@ -156,14 +165,15 @@ sap.ui.define([
         });
 
         var oDialogModel = new JSONModel({
-          headerTitle: bAllSelected ? "Cabeçalho" : "", // usado no modo "todos selecionados"
           isAllSelected: bAllSelected,
           selectedCount: iSelected,
 
           // navegação entre formulários
           currentIndex: 0,
 
-          // lista dos itens selecionados
+          // ✅ novo: item atualmente em edição (para o header mostrar só ele)
+          currentItem: aSelectedItems[0] || null,
+
           selectedItems: aSelectedItems
         });
 
@@ -182,20 +192,17 @@ sap.ui.define([
       var oDialog = this.byId("dialogParametricas");
       var oModel = oDialog.getModel("dialog");
 
-      // Contexto aponta para um índice dentro de /selectedItems/{i}/indices/{j}
       var oCtx = oComboBox.getBindingContext("dialog");
       if (!oCtx) return;
 
-      var sPathIndice = oCtx.getPath(); // ex: /selectedItems/0/indices/0
+      var sPathIndice = oCtx.getPath();                 // /selectedItems/0/indices/0
       var sPathIndices = sPathIndice.substring(0, sPathIndice.lastIndexOf("/")); // /selectedItems/0/indices
-      var sPathItem = sPathIndices.substring(0, sPathIndices.lastIndexOf("/indices")); // /selectedItems/0
 
       var aIndices = oModel.getProperty(sPathIndices) || [];
       var oIndiceAtual = oCtx.getObject();
       var iIndexAtual = aIndices.indexOf(oIndiceAtual);
 
       if (sKey === "SIM") {
-        // só adiciona se for o último índice desse item
         if (iIndexAtual === aIndices.length - 1) {
           aIndices.push({
             ordem: aIndices.length + 1,
@@ -205,21 +212,14 @@ sap.ui.define([
           });
         }
       } else {
-        // remove todos os próximos
         aIndices.splice(iIndexAtual + 1);
       }
 
       oModel.setProperty(sPathIndices, aIndices);
-
-      // (opcional) garante que o selectedCount e header continuam coerentes
-      var aItems = oModel.getProperty("/selectedItems") || [];
-      oModel.setProperty("/selectedCount", aItems.length);
-      oModel.setProperty("/isAllSelected", oModel.getProperty("/isAllSelected") === true);
-      oModel.setProperty("/headerTitle", oModel.getProperty("/isAllSelected") ? "Cabeçalho" : "");
     },
 
     /* =========================================================== */
-    /* PASSO 2: Navegação entre formulários (um some, outro aparece) */
+    /* Navegação: troca de formulário (um some, outro aparece) */
     /* =========================================================== */
     onDialogProximo: function () {
       var oDialog = this.byId("dialogParametricas");
@@ -230,6 +230,8 @@ sap.ui.define([
 
       if (iCurrent < iCount - 1) {
         oModel.setProperty("/currentIndex", iCurrent + 1);
+        // ✅ garante que o header mostre só o item atual
+        this._syncCurrentItem(oModel);
       } else {
         MessageToast.show("Você já está no último item selecionado");
       }
@@ -243,6 +245,8 @@ sap.ui.define([
 
       if (iCurrent > 0) {
         oModel.setProperty("/currentIndex", iCurrent - 1);
+        // ✅ garante que o header mostre só o item atual
+        this._syncCurrentItem(oModel);
       } else {
         MessageToast.show("Você já está no primeiro item selecionado");
       }
