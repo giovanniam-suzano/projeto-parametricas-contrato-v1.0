@@ -128,59 +128,53 @@ sap.ui.define([
     /* Dialog */
     /* =========================================================== */
     _abrirDialogParametricas: function (aContexts) {
-      var oView = this.getView();
-      var oMainModel = oView.getModel();
+  var oView = this.getView();
+  var oMainModel = oView.getModel();
 
-      var iTotal = (oMainModel.getProperty("/contratos") || []).length;
-      var iSelected = aContexts.length;
-      var bAllSelected = (iTotal > 0 && iSelected === iTotal);
+  // Cálculo para o Cenário 1 (Comparar selecionados com o total da tabela)
+  var iTotalTableItems = (oMainModel.getProperty("/contratos") || []).length;
+  var iSelectedCount = aContexts.length;
+  var bAllSelected = (iTotalTableItems > 0 && iSelectedCount === iTotalTableItems);
 
-      if (!this._pParametricasDialog) {
-        this._pParametricasDialog = Fragment.load({
-          id: oView.getId(),
-          name: "com.parametricas.parametricasapp.view.ParametricasDialog",
-          controller: this
-        }).then(function (oDialog) {
-          oView.addDependent(oDialog);
-          return oDialog;
-        });
-      }
+  if (!this._pParametricasDialog) {
+    this._pParametricasDialog = Fragment.load({
+      id: oView.getId(),
+      name: "com.parametricas.parametricasapp.view.ParametricasDialog",
+      controller: this
+    }).then(function (oDialog) {
+      oView.addDependent(oDialog);
+      return oDialog;
+    });
+  }
 
-      this._pParametricasDialog.then(function (oDialog) {
-        var aSelectedItems = aContexts.map(function (oCtx, i) {
-          var oObj = oCtx.getObject();
-          return {
-            seq: i + 1,
-            id: oObj.id,
-            material: oObj.material,
-            quantidade: oObj.quantidade,
-            unidade: oObj.unidade,
-            valorUnitario: oObj.valorUnitario,
-            valorTotal: oObj.valorTotal,
-            valorSugerido: oObj.valorSugerido,
-            indices: [
-              { ordem: 1, tipoIndice: "", peso: "", addMore: "NAO" }
-            ]
-          };
-        });
+  this._pParametricasDialog.then(function (oDialog) {
+    var aSelectedItems = aContexts.map(function (oCtx, i) {
+      var oObj = oCtx.getObject();
+      return {
+        seq: i + 1,
+        id: oObj.id,
+        material: oObj.material,
+        quantidade: oObj.quantidade,
+        unidade: oObj.unidade,
+        valorUnitario: oObj.valorUnitario,
+        valorTotal: oObj.valorTotal,
+        valorSugerido: oObj.valorSugerido,
+        indices: [{ ordem: 1, tipoIndice: "", peso: "", addMore: "NAO" }]
+      };
+    });
 
-        var oDialogModel = new JSONModel({
-          isAllSelected: bAllSelected,
-          selectedCount: iSelected,
+    var oDialogModel = new JSONModel({
+      isAllSelected: bAllSelected,
+      selectedCount: iSelectedCount,
+      currentIndex: 0,
+      currentItem: aSelectedItems[0] || null,
+      selectedItems: aSelectedItems
+    });
 
-          // navegação entre formulários
-          currentIndex: 0,
-
-          // ✅ novo: item atualmente em edição (para o header mostrar só ele)
-          currentItem: aSelectedItems[0] || null,
-
-          selectedItems: aSelectedItems
-        });
-
-        oDialog.setModel(oDialogModel, "dialog");
-        oDialog.open();
-      });
-    },
+    oDialog.setModel(oDialogModel, "dialog");
+    oDialog.open();
+  }.bind(this));
+},
 
     /* =========================================================== */
     /* Índices dinâmicos (por item selecionado) */
@@ -219,7 +213,7 @@ sap.ui.define([
     },
 
     /* =========================================================== */
-    /* Navegação: troca de formulário (um some, outro aparece) */
+    /* Navegação: troca de formulário  */
     /* =========================================================== */
     onDialogProximo: function () {
       var oDialog = this.byId("dialogParametricas");
