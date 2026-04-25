@@ -16,131 +16,159 @@ sap.ui.define([
             var oMainModel = new JSONModel({
                 contratos: [
                     {
-            id: "1",
-            material: "Parafuso",
-            quantidade: 12,
-            unidade: "UN",
-            valorUnitario: "150,00",
-            valorTotal: "1.800,00 REAL",
-            valorSugerido: "1.750,00 REAL"
-          },
-          {
-            id: "2",
-            material: "Martelo",
-            quantidade: 5,
-            unidade: "UN",
-            valorUnitario: "247,00",
-            valorTotal: "1.235,00 REAL",
-            valorSugerido: "1.200,00 REAL"
-          },
-          {
-            id: "3",
-            material: "Chave de Fenda",
-            quantidade: 8,
-            unidade: "UN",
-            valorUnitario: "85,00",
-            valorTotal: "680,00 REAL",
-            valorSugerido: "650,00 REAL"
-          },
-          {
-            id: "4",
-            material: "Chave Philips",
-            quantidade: 10,
-            unidade: "UN",
-            valorUnitario: "92,00",
-            valorTotal: "920,00 REAL",
-            valorSugerido: "900,00 REAL"
-          },
-          {
-            id: "5",
-            material: "Alicate",
-            quantidade: 6,
-            unidade: "UN",
-            valorUnitario: "180,00",
-            valorTotal: "1.080,00 REAL",
-            valorSugerido: "1.050,00 REAL"
-          },
-          {
-            id: "6",
-            material: "Trena",
-            quantidade: 4,
-            unidade: "UN",
-            valorUnitario: "210,00",
-            valorTotal: "840,00 REAL",
-            valorSugerido: "820,00 REAL"
-          },
-          {
-            id: "7",
-            material: "Serrote",
-            quantidade: 3,
-            unidade: "UN",
-            valorUnitario: "320,00",
-            valorTotal: "960,00 REAL",
-            valorSugerido: "930,00 REAL"
-          },
-          {
-            id: "8",
-            material: "Furadeira",
-            quantidade: 2,
-            unidade: "UN",
-            valorUnitario: "1.250,00",
-            valorTotal: "2.500,00 REAL",
-            valorSugerido: "2.450,00 REAL"
-          },
-          {
-            id: "9",
-            material: "Lixadeira",
-            quantidade: 2,
-            unidade: "UN",
-            valorUnitario: "980,00",
-            valorTotal: "1.960,00 REAL",
-            valorSugerido: "1.900,00 REAL"
-          },
-          {
-            id: "10",
-            material: "Disco de Corte",
-            quantidade: 15,
-            unidade: "UN",
-            valorUnitario: "45,00",
-            valorTotal: "675,00 REAL",
-            valorSugerido: "650,00 REAL"
-          },
-          {
-            id: "11",
-            material: "Broca",
-            quantidade: 20,
-            unidade: "UN",
-            valorUnitario: "38,00",
-            valorTotal: "760,00 REAL",
-            valorSugerido: "720,00 REAL"
-          },
-          {
-            id: "12",
-            material: "Luvas de Proteção",
-            quantidade: 12,
-            unidade: "UN",
-            valorUnitario: "55,00",
-            valorTotal: "660,00 REAL",
-            valorSugerido: "630,00 REAL"
-          },
-          {
-            id: "13",
-            material: "Óculos de Segurança",
-            quantidade: 10,
-            unidade: "UN",
-            valorUnitario: "70,00",
-            valorTotal: "700,00 REAL",
-            valorSugerido: "680,00 REAL"
-          },
-          {
-            id: "14",
-            material: "Capacete de Segurança",
-            quantidade: 5,
-            unidade: "UN",
-            valorUnitario: "160,00",
-            valorTotal: "800,00 REAL",
-            valorSugerido: "780,00 REAL"
-          }
+                      id: "1",
+                      material: "Parafuso",
+                      ncontrato: "212354",
+                      ni: "12.345.678-1",
+                      quantidade: 12,
+                      unidade: "UN",
+                      valorUnitario: "150,00",
+                      valorTotal: "1.800,00 REAL",
+                      valorSugerido: "1.750,00 REAL"
+                    },
+                    {
+                      id: "2",
+                      material: "Martelo",
+                      ncontrato: "212354",
+                      ni: "12.345.678-2",
+                      quantidade: 5,
+                      unidade: "UN",
+                      valorUnitario: "247,00",
+                      valorTotal: "1.235,00 REAL",
+                      valorSugerido: "1.200,00 REAL"
+                    },
+                    {
+                      id: "3",
+                      material: "Chave de Fenda",
+                      ncontrato: "212354",
+                      ni: "12.345.678-3",
+                      quantidade: 8,
+                      unidade: "UN",
+                      valorUnitario: "85,00",
+                      valorTotal: "680,00 REAL",
+                      valorSugerido: "650,00 REAL"
+                    },
+                    {
+                      id: "4",
+                      material: "Chave Philips",
+                      ncontrato: "212354",
+                      ni: "12.345.678-4",
+                      quantidade: 10,
+                      unidade: "UN",
+                      valorUnitario: "92,00",
+                      valorTotal: "920,00 REAL",
+                      valorSugerido: "900,00 REAL"
+                    },
+                    {
+                      id: "5",
+                      material: "Alicate",
+                      ncontrato: "212354",
+                      ni: "12.345.678-5",
+                      quantidade: 6,
+                      unidade: "UN",
+                      valorUnitario: "180,00",
+                      valorTotal: "1.080,00 REAL",
+                      valorSugerido: "1.050,00 REAL"
+                    },
+                    {
+                      id: "6",
+                      material: "Trena",
+                      ncontrato: "212354",
+                      ni: "12.345.678-6",
+                      quantidade: 4,
+                      unidade: "UN",
+                      valorUnitario: "210,00",
+                      valorTotal: "840,00 REAL",
+                      valorSugerido: "820,00 REAL"
+                    },
+                    {
+                      id: "7",
+                      material: "Serrote",
+                      ncontrato: "212354",
+                      ni: "12.345.678-7",
+                      quantidade: 3,
+                      unidade: "UN",
+                      valorUnitario: "320,00",
+                      valorTotal: "960,00 REAL",
+                      valorSugerido: "930,00 REAL"
+                    },
+                    {
+                      id: "8",
+                      material: "Furadeira",
+                      ncontrato: "212354",
+                      ni: "12.345.678-8",
+                      quantidade: 2,
+                      unidade: "UN",
+                      valorUnitario: "1.250,00",
+                      valorTotal: "2.500,00 REAL",
+                      valorSugerido: "2.450,00 REAL"
+                    },
+                    {
+                      id: "9",
+                      material: "Lixadeira",
+                      ncontrato: "212354",
+                      ni: "12.345.678-9",
+                      quantidade: 2,
+                      unidade: "UN",
+                      valorUnitario: "980,00",
+                      valorTotal: "1.960,00 REAL",
+                      valorSugerido: "1.900,00 REAL"
+                    },
+                    {
+                      id: "10",
+                      material: "Disco de Corte",
+                      ncontrato: "212354",
+                      ni: "12.345.679-0",
+                      quantidade: 15,
+                      unidade: "UN",
+                      valorUnitario: "45,00",
+                      valorTotal: "675,00 REAL",
+                      valorSugerido: "650,00 REAL"
+                    },
+                    {
+                      id: "11",
+                      material: "Broca",
+                      ncontrato: "212354",
+                      ni: "12.345.679-1",
+                      quantidade: 20,
+                      unidade: "UN",
+                      valorUnitario: "38,00",
+                      valorTotal: "760,00 REAL",
+                      valorSugerido: "720,00 REAL"
+                    },
+                    {
+                      id: "12",
+                      material: "Luvas de Proteção",
+                      ncontrato: "212354",
+                      ni: "12.345.679-2",
+                      quantidade: 12,
+                      unidade: "UN",
+                      valorUnitario: "55,00",
+                      valorTotal: "660,00 REAL",
+                      valorSugerido: "630,00 REAL"
+                    },
+                    {
+                      id: "13",
+                      material: "Óculos de Segurança",
+                      ncontrato: "212354",
+                      ni: "12.345.679-3",
+                      quantidade: 10,
+                      unidade: "UN",
+                      valorUnitario: "70,00",
+                      valorTotal: "700,00 REAL",
+                      valorSugerido: "680,00 REAL"
+                    },
+                    {
+                      id: "14",
+                      material: "Capacete de Segurança",
+                      ncontrato: "212354",
+                      ni: "12.345.679-4",
+                      quantidade: 5,
+                      unidade: "UN",
+                      valorUnitario: "160,00",
+                      valorTotal: "800,00 REAL",
+                      valorSugerido: "780,00 REAL"
+                    }  
                 ]
             });
             this.getView().setModel(oMainModel);

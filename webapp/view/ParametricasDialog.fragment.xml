@@ -35,8 +35,11 @@
           
           <VBox class="sapUiSmallMarginBottom" visible="{= !${dialog>/isAllSelected} }">
             <HBox><Text text="ID:" width="160px" /><Text text="{dialog>id}" /></HBox>
-            <HBox><Text text="Material:" width="160px" /><Text text="{dialog>material}" /></HBox>
+            <HBox><Text text="Nº do Contrato:" width="160px" /><Text text="{dialog>ncontrato}" /></HBox>
+            <HBox><Text text="N.I Material:" width="160px" /><Text text="{dialog>ni}" /></HBox>
+            <HBox><Text text="Material:" width="160px" /><Text text="{dialog>material}" /></HBox> 
             <HBox><Text text="Quantidade:" width="160px" /><Text text="{dialog>quantidade}" /></HBox>
+            <HBox><Text text="Valor Unidade:" width="160px" /><Text text="{dialog>valorUnitario}" /></HBox>
             <HBox><Text text="Valor Total:" width="160px" /><Text text="{dialog>valorTotal}" /></HBox>
           </VBox>
 

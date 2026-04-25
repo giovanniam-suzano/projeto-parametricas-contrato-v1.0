@@ -9,7 +9,6 @@
     height="100%">
 
     <f:DynamicPage id="pagePrincipal" headerExpanded="true">
-
         <!-- ===================== -->
         <!-- TITLE -->
         <!-- ===================== -->
@@ -25,26 +24,35 @@
         <!-- HEADER -->
         <!-- ===================== -->
         <f:header>
-            <f:DynamicPageHeader id="dphMain" pinnable="true">
-                <layout:HorizontalLayout id="hlFilters">
+            <f:DynamicPageHeader  pinnable="true">
+                <layout:HorizontalLayout >
 
-                    <layout:VerticalLayout id="vlDateFilter" class="sapUiMediumMarginEnd">
-                        <Label id="lblDateBase" text="Data-Base:" />
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
+                        <Label text="Data-Base Paramétrica:" />
                         <DatePicker
                             id="dpDateBase"
-                            value="Jan 26, 2024"
-                            displayFormat="MMM dd, yyyy"
+                            value="April , 2025"
+                            displayFormat="MMM, yyyy"
                             width="256px" />
                     </layout:VerticalLayout>
 
-                    <layout:VerticalLayout id="vlPeriodFilter">
-                        <Label id="lblPeriod" text="Período:" />
-                        <ComboBox id="cbPeriod" selectedKey="mensal" width="256px">
+                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
+                        <Label  text="Período:" />
+                        <ComboBox id="cbPeriod" selectedKey="anual" width="256px">
                             <core:Item id="itemMensal" key="mensal" text="Mensal" />
                             <core:Item id="itemAnual" key="anual" text="Anual" />
                             <core:Item id="itemBimestral" key="bimestral" text="Bimestral" />
                             <core:Item id="itemTrimestral" key="trimestral" text="Trimestral" />
                         </ComboBox>
+                    </layout:VerticalLayout>
+
+                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
+                        <Label text="Data-Base Reajuste:"  />
+                        <DatePicker
+                            id="dpDateEdit"
+                            value="April 30 , 2026"
+                            displayFormat="MMM dd, yyyy"
+                            width="256px" />
                     </layout:VerticalLayout>
 
                 </layout:HorizontalLayout>
@@ -91,9 +99,18 @@
                     <Column id="colId">
                         <Text id="txtColId" text="ID" />
                     </Column>
+                    <Column id="colContract">
+                        <Text id="txtColContract" text="Nº Contrato" />
+                    </Column>
+                    <Column id="colNI">
+                        <Text id="txtColNI" text="N.I Material" />
+                    </Column>
                     <Column id="colMaterial">
                         <Text id="txtColMaterial" text="Material" />
                     </Column>
+                    <!-- <Column id="colDataBase">
+                        <Text id="txtColDataBase" text="Data-Base" />
+                    </Column> -->
                     <Column id="colQtd" hAlign="Center">
                         <Text id="txtColQtd" text="Quantidade" />
                     </Column>
@@ -116,7 +133,10 @@
                     <ColumnListItem id="cliContrato">
                         <cells>
                             <Text id="txtId" text="{id}" />
+                            <Text id="txtNContrato" text="{ncontrato}" />
+                            <Text id="txtNI" text="{ni}" />
                             <Text id="txtMaterial" text="{material}" />
+                            <!-- <DatePicker id="dpItemDataBase" value="{dataBase}" displayFormat="dd/MM" valueFormat="dd/MM"  /> editable="false" para travar edição -->
                             <Text id="txtQtd" text="{quantidade}" />
                             <Text id="txtUnd" text="{unidade}" />
                             <Text id="txtVlUni" text="{valorUnitario}" />
