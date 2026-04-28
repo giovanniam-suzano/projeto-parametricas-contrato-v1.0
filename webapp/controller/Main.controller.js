@@ -178,35 +178,24 @@ sap.ui.define([
         },
 
         onCadastroParametricaPress: function () {
-        var oView = this.getView();
+            var oView = this.getView();
+            if (!this._pCadastroDialog) {
+                this._pCadastroDialog = Fragment.load({
+                    id: oView.getId(),
+                    name: "com.parametricas.parametricasapp.view.CadastroDialog",
+                    controller: this._oDialogController 
+                }).then(oDialog => {
+                    oView.addDependent(oDialog);
+                    return oDialog;
+                });
+            }
 
-    if (!this._pCadastroDialog) {
-        this._pCadastroDialog = Fragment.load({
-            id: oView.getId(),
-            name: "com.parametricas.parametricasapp.view.CadastroDialog", // Caminho do novo fragmento
-            controller: this._oDialogController // Reaproveitando o controlador especialista
-        }).then(function (oDialog) {
-            oView.addDependent(oDialog);
-            return oDialog;
-        });
-    }
-
-    this._pCadastroDialog.then(function (oDialog) {
-              var oCadastroModel = new JSONModel({
-                  indicesCadastro: [
-                      { 
-                          ordem: 1, 
-                          valor: "", 
-                          tipoIndice: "", 
-                          peso: "", 
-                          dataBaseParametrica: "", 
-                          addMore: "NAO" 
-                      }
-                  ]
-              });
-              oDialog.setModel(oCadastroModel, "dialog");
-              oDialog.open();
-          });
+            this._pCadastroDialog.then(oDialog => {
+                oDialog.setModel(new JSONModel({
+                    indicesCadastro: [{ ordem: 1, valor: "", tipoIndice: "", peso: "", dataBaseParametrica: "", addMore: "NAO" }]
+                }), "dialog");
+                oDialog.open();
+            });
         
         },
 
