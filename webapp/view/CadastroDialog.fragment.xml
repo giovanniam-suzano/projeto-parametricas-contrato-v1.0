@@ -1,0 +1,64 @@
+<core:FragmentDefinition
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:form="sap.ui.layout.form">
+    <Dialog
+        id="dialogCadastroParametrica"
+        contentWidth="600px"
+        contentHeight="500px"
+        verticalScrolling="true">
+        
+        <customHeader>
+            <Bar>
+                <contentLeft>
+                    <HBox alignItems="Center" renderType="Bare">
+                        <core:Icon src="sap-icon://add-document" size="1.2rem" class="sapUiTinyMarginEnd" color="#005088" />
+                        <Title text="Cadastro de Paramétricas" />
+                    </HBox>
+                </contentLeft>
+            </Bar>
+        </customHeader>
+
+        <content>
+            <VBox class="sapUiSmallMargin" items="{dialog>/indicesCadastro}">
+                <VBox class="sapUiMediumMarginBottom">
+                    <form:SimpleForm layout="ColumnLayout" editable="true" columnsM="1" columnsL="1">
+                        <core:Title text="{= ${dialog>ordem} + 'º Índice'}" />
+                        
+                        <Label text="Valor do Índice" required="true" />
+                        <Input value="{dialog>valor}" placeholder="0,00" type="Number" width="100%"  />
+
+                        <Label text="Tipo de Índice" required="true" />
+                        <ComboBox width="100%" maxWidth="256px" selectedKey="{dialog>tipoIndice}">
+                            <core:Item key="IPA" text="IPA" />
+                            <core:Item key="IPCA" text="IPCA" />
+                            <core:Item key="IGP-M" text="IGP-M" />
+                            <core:Item key="INCC" text="INCC" />
+                        </ComboBox>
+
+                        <Label text="Peso do Índice (%)" required="true" />
+                        <Input value="{dialog>peso}" placeholder="Ex: 15" type="Number" width="100%"  />
+
+                        <Label text="Data-Base Paramétrica" required="true" />
+                        <DatePicker 
+                            value="{dialog>dataBaseParametrica}" 
+                            displayFormat="MM/yyyy" 
+                            width="100%" 
+                            />
+
+                        <Label text="Deseja adicionar mais um índice?" />
+                        <ComboBox width="100%" maxWidth="200px" selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndiceCadastro">
+                            <core:Item key="SIM" text="Sim" />
+                            <core:Item key="NAO" text="Não" />
+                        </ComboBox>
+                    </form:SimpleForm>
+                </VBox>
+            </VBox>
+        </content>
+
+        <buttons>
+            <Button text="Salvar Cadastro" type="Accept" icon="sap-icon://save" press=".onDialogCancel" />
+            <Button text="Fechar" press=".onDialogCancel" />
+        </buttons>
+    </Dialog>
+</core:FragmentDefinition>

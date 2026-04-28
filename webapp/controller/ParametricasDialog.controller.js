@@ -31,34 +31,33 @@ sap.ui.define([
         /* =========================================================== */
         /* Eventos do Fragmento */
         /* =========================================================== */
-        onAdicionarIndice: function (oEvent) {
-            var oComboBox = oEvent.getSource();
-            var sKey = oComboBox.getSelectedKey();
-            var oModel = this._getDialog().getModel("dialog");
-            var oCtx = oComboBox.getBindingContext("dialog");
+       // Adicione este método dentro do ParametricasDialog.controller.js
+onAdicionarIndiceCadastro: function (oEvent) {
+    var oComboBox = oEvent.getSource();
+    var sKey = oComboBox.getSelectedKey();
+    var oModel = oComboBox.getModel("dialog");
+    var aIndices = oModel.getProperty("/indicesCadastro");
+    var oCtx = oComboBox.getBindingContext("dialog");
+    var oIndiceAtual = oCtx.getObject();
+    var iIndexAtual = aIndices.indexOf(oIndiceAtual);
 
-            if (!oCtx) return;
-
-            var sPathIndice = oCtx.getPath();
-            var sPathIndices = sPathIndice.substring(0, sPathIndice.lastIndexOf("/"));
-            var aIndices = oModel.getProperty(sPathIndices) || [];
-            var oIndiceAtual = oCtx.getObject();
-            var iIndexAtual = aIndices.indexOf(oIndiceAtual);
-
-            if (sKey === "SIM") {
-                if (iIndexAtual === aIndices.length - 1) {
-                    aIndices.push({
-                        ordem: aIndices.length + 1,
-                        tipoIndice: "",
-                        peso: "",
-                        addMore: "NAO"
-                    });
-                }
-            } else {
-                aIndices.splice(iIndexAtual + 1);
-            }
-            oModel.setProperty(sPathIndices, aIndices);
-        },
+    if (sKey === "SIM") {
+        if (iIndexAtual === aIndices.length - 1) {
+            aIndices.push({
+                ordem: aIndices.length + 1,
+                valor: "",
+                tipoIndice: "",
+                peso: "",
+                dataBaseParametrica: "",
+                addMore: "NAO"
+            });
+        }
+    } else {
+        // Remove os índices abaixo se mudar para "Não"
+        aIndices.splice(iIndexAtual + 1);
+    }
+    oModel.setProperty("/indicesCadastro", aIndices);
+},
 
         onDialogProximo: function () {
             var oModel = this._getDialog().getModel("dialog");
@@ -81,8 +80,14 @@ sap.ui.define([
             }
         },
 
-        onDialogCancel: function () {
-            this._getDialog().close();
-        }
+        // Atualizamos o onDialogCancel para fechar qualquer um dos dois diálogos
+onDialogCancel: function () {
+    if (this._oView.byId("dialogParametricas")) {
+        this._oView.byId("dialogParametricas").close();
+    }
+    if (this._oView.byId("dialogCadastroParametrica")) {
+        this._oView.byId("dialogCadastroParametrica").close();
+    }
+}
     });
 });

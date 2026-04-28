@@ -17,6 +17,13 @@
                 <f:heading>
                     <Title id="titleContrato" text="Dados do Contrato" level="H2" />
                 </f:heading>
+                <f:actions>
+            <Button
+                id="btnCadastroParametrica"
+                text="Cadastro de Paramétricas"
+                type="Emphasized"
+                press=".onCadastroParametricaPress" />
+        </f:actions>
             </f:DynamicPageTitle>
         </f:title>
 
