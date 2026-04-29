@@ -87,6 +87,43 @@ sap.ui.define([
         onDialogCancel: function () {
             if (this._oView.byId("dialogParametricas")) this._oView.byId("dialogParametricas").close();
             if (this._oView.byId("dialogCadastroParametrica")) this._oView.byId("dialogCadastroParametrica").close();
+        },
+        
+        // AÇÕES ENVOLVENDO O íNDICE 
+
+        onPesoChange: function (oEvent) {
+            var oInput = oEvent.getSource();
+            var sValue = oInput.getValue();
+            var oModel = oInput.getModel("dialog");
+            
+            // 1. Validar se é número (substituindo vírgula por ponto para o sistema)
+            var sNormalizedValue = sValue.replace(",", ".");
+            
+            if (isNaN(sNormalizedValue) || sNormalizedValue.trim() === "") {
+                MessageToast.show("Por favor, inserir somente números!");
+                oInput.setValueState("Error");
+                oInput.setValue("");
+                return;
+            }
+
+            // 2. Calcular a soma dos pesos para o item atual
+            var oCtx = oInput.getBindingContext("dialog");
+            var sPathIndices = oCtx.getPath().substring(0, oCtx.getPath().lastIndexOf("/"));
+            var aIndices = oModel.getProperty(sPathIndices) || [];
+            
+            var fTotalPeso = aIndices.reduce(function (acc, oIndice) {
+                var fPeso = parseFloat(String(oIndice.peso).replace(",", ".")) || 0;
+                return acc + fPeso;
+            }, 0);
+
+            // 3. Validar se passou de 100%
+            if (fTotalPeso > 100) {
+                MessageToast.show("O total de peso do índice tem que ser menor ou igual a 100%");
+                oInput.setValueState("Error");
+                oInput.setValue(""); // Limpa o campo que causou o erro
+            } else {
+                oInput.setValueState("None");
+            }
         }
     });
 });

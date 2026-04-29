@@ -55,7 +55,10 @@
                   <core:Item key="INCC" text="INCC" />
                 </ComboBox>
                 <Label text="{= ${dialog>ordem} + 'º Peso do Índice (%)'}" required="true" />
-                <Input type="Number" value="{dialog>peso}" placeholder="Ex: 15" width="100%" />
+                <Input 
+                    value="{dialog>peso}" 
+                    placeholder="Ex: 13,34" 
+                    change=".onPesoChange" />
                 <Label text="Deseja adicionar mais um índice?" required="true" />
                 <ComboBox width="100%" maxWidth="200px" selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndice">
                   <core:Item key="SIM" text="Sim" />
