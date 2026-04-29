@@ -9,154 +9,92 @@
     height="100%">
 
     <f:DynamicPage id="pagePrincipal" headerExpanded="true">
-        <!-- ===================== -->
-        <!-- TITLE -->
-        <!-- ===================== -->
         <f:title>
             <f:DynamicPageTitle id="dptMain">
                 <f:heading>
                     <Title id="titleContrato" text="Dados do Contrato" level="H2" />
                 </f:heading>
                 <f:actions>
-            <Button
-                id="btnCadastroParametrica"
-                text="Cadastro de Paramétricas"
-                type="Emphasized"
-                press=".onCadastroParametricaPress" />
-        </f:actions>
+                    <SearchField 
+                        id="sfBuscaContrato" 
+                        width="300px" 
+                        placeholder="Buscar Contrato" 
+                        search=".onSearch" />
+                    <Button id="btnCadastroParametrica" text="Cadastro de Paramétricas" type="Emphasized" press=".onCadastroParametricaPress" />
+                </f:actions>
             </f:DynamicPageTitle>
         </f:title>
 
-        <!-- ===================== -->
-        <!-- HEADER -->
-        <!-- ===================== -->
         <f:header>
-            <f:DynamicPageHeader  pinnable="true">
-                <layout:HorizontalLayout >
-
+            <f:DynamicPageHeader id="dphMain" pinnable="true">
+                <layout:HorizontalLayout id="hlFilters" visible="{/headerVisible}">
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <Label text="Data-Base Paramétrica:" />
-                        <DatePicker
-                            id="dpDateBase"
-                            value="April , 2025"
-                            displayFormat="MMM, yyyy"
-                            width="256px" />
+                        <DatePicker value="{/headerData/dataBaseParametrica}" displayFormat="MM/yyyy" width="256px" editable="false" />
                     </layout:VerticalLayout>
 
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
-                        <Label  text="Período:" />
-                        <ComboBox id="cbPeriod" selectedKey="anual" width="256px">
-                            <core:Item id="itemMensal" key="mensal" text="Mensal" />
-                            <core:Item id="itemAnual" key="anual" text="Anual" />
-                            <core:Item id="itemBimestral" key="bimestral" text="Bimestral" />
-                            <core:Item id="itemTrimestral" key="trimestral" text="Trimestral" />
+                        <Label text="Período:" />
+                        <ComboBox selectedKey="{/headerData/periodo}" width="256px" editable="true">
+                            <core:Item key="mensal" text="Mensal" />
+                            <core:Item key="anual" text="Anual" />
                         </ComboBox>
                     </layout:VerticalLayout>
 
-                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
-                        <Label text="Data-Base Reajuste:"  />
-                        <DatePicker
-                            id="dpDateEdit"
-                            value="April 30 , 2026"
-                            displayFormat="MMM dd, yyyy"
-                            width="256px" />
+                    <layout:VerticalLayout>
+                        <Label text="Data-Base Reajuste:" />
+                        <DatePicker value="{/headerData/dataBaseReajuste}" displayFormat="dd/MM/yyyy" width="256px" editable="true" />
                     </layout:VerticalLayout>
-
                 </layout:HorizontalLayout>
             </f:DynamicPageHeader>
         </f:header>
 
-        <!-- ===================== -->
-        <!-- CONTENT -->
-        <!-- ===================== -->
         <f:content>
+            <VBox id="vbMainContainer">
+                <Toolbar visible="{/headerVisible}" style="Clear" height="1px" class="sapUiMediumMarginBottom" />
 
-            <Table
-                id="tabelaContratos"
-                mode="MultiSelect"
-                sticky="ColumnHeaders,HeaderToolbar"
-                items="{/contratos}">
-
-                <!-- Toolbar -->
-                <headerToolbar>
-                    <OverflowToolbar id="otbActions">
-                        <ToolbarSpacer id="tsSpacer" />
-                        <SearchField
-                            id="sfBusca"
-                            width="280px"
-                            placeholder="Search"
-                            search=".onSearch" />
-                        <ToolbarSeparator id="tsep1" />
-                        <Button
-                            id="btnEditar"
-                            text="Editar"
-                            icon="sap-icon://edit"
-                            press=".onEditarPress" />
-                        <ToolbarSeparator id="tsep2" />
-                        <Button
-                            id="btnConcluido"
-                            text="Concluído"
-                            icon="sap-icon://accept"
-                            press=".onConcluidoPress" />
-                    </OverflowToolbar>
-                </headerToolbar>
-
-                <!-- Columns -->
-                <columns>
-                    <Column id="colId">
-                        <Text id="txtColId" text="ID" />
-                    </Column>
-                    <Column id="colContract">
-                        <Text id="txtColContract" text="Nº Contrato" />
-                    </Column>
-                    <Column id="colNI">
-                        <Text id="txtColNI" text="N.I Material" />
-                    </Column>
-                    <Column id="colMaterial">
-                        <Text id="txtColMaterial" text="Material" />
-                    </Column>
-                    <!-- <Column id="colDataBase">
-                        <Text id="txtColDataBase" text="Data-Base" />
-                    </Column> -->
-                    <Column id="colQtd" hAlign="Center">
-                        <Text id="txtColQtd" text="Quantidade" />
-                    </Column>
-                    <Column id="colUnd" hAlign="Center">
-                        <Text id="txtColUnd" text="Unidade" />
-                    </Column>
-                    <Column id="colVlUni" hAlign="End">
-                        <Text id="txtColVlUni" text="Valor Unid" />
-                    </Column>
-                    <Column id="colVlTot" hAlign="End">
-                        <Text id="txtColVlTot" text="Valor Total" />
-                    </Column>
-                    <Column id="colVlSug" hAlign="End">
-                        <Text id="txtColVlSug" text="Valor Sugerido" />
-                    </Column>
-                </columns>
-
-                <!-- Items (Template) -->
-                <items>
-                    <ColumnListItem id="cliContrato">
-                        <cells>
-                            <Text id="txtId" text="{id}" />
-                            <Text id="txtNContrato" text="{ncontrato}" />
-                            <Text id="txtNI" text="{ni}" />
-                            <Text id="txtMaterial" text="{material}" />
-                            <!-- <DatePicker id="dpItemDataBase" value="{dataBase}" displayFormat="dd/MM" valueFormat="dd/MM"  /> editable="false" para travar edição -->
-                            <Text id="txtQtd" text="{quantidade}" />
-                            <Text id="txtUnd" text="{unidade}" />
-                            <Text id="txtVlUni" text="{valorUnitario}" />
-                            <Text id="txtVlTot" text="{valorTotal}" />
-                            <Text id="txtVlSug" text="{valorSugerido}" />
-                        </cells>
-                    </ColumnListItem>
-                </items>
-
-            </Table>
-
+                <Table
+                    id="tabelaContratos"
+                    items="{/contratos}"
+                    mode="MultiSelect"
+                    visible="{/headerVisible}"
+                    sticky="ColumnHeaders,HeaderToolbar">
+                    <headerToolbar>
+                        <OverflowToolbar>
+                            <Title text="Itens do Contrato" level="H3" />
+                            <ToolbarSpacer />
+                            <Button id="btnEditar" text="Editar" icon="sap-icon://edit" press=".onEditarPress" />
+                            <Button id="btnConcluir" text="Concluir" icon="sap-icon://accept" type="Accept" press=".onConcluidoPress" />
+                        </OverflowToolbar>
+                    </headerToolbar>
+                    <columns>
+                        <Column width="3rem"><Text text="ID" /></Column>
+                        <Column><Text text="Nº Contrato" /></Column>
+                        <Column><Text text="N.I Material" /></Column>
+                        <Column><Text text="Material" /></Column>
+                        <Column hAlign="Center"><Text text="Quantidade" /></Column>
+                        <Column hAlign="Center"><Text text="Unidade" /></Column>
+                        <Column hAlign="End"><Text text="Valor Unid" /></Column>
+                        <Column hAlign="End"><Text text="Valor Total" /></Column>
+                        <Column hAlign="End"><Text text="Valor Sugerido" /></Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{id}" />
+                                <Text text="{ncontrato}" />
+                                <Text text="{ni}" />
+                                <Text text="{material}" />
+                                <Text text="{quantidade}" />
+                                <Text text="{unidade}" />
+                                <Text text="{valorUnitario}" />
+                                <Text text="{valorTotal}" />
+                                <Text text="{valorSugerido}" />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
         </f:content>
-
     </f:DynamicPage>
-
 </mvc:View>

@@ -5,125 +5,80 @@ sap.ui.define([
     "use strict";
 
     return Controller.extend("com.parametricas.parametricasapp.controller.ParametricasDialog", {
-
-        constructor: function (oView) {
-            this._oView = oView;
-        },
-
-        _getDialog: function (sId) {
-            return this._oView.byId(sId);
-        },
-
-        _syncCurrentItem: function (oModel) {
-            var aItems = oModel.getProperty("/selectedItems") || [];
-            var iCurrent = oModel.getProperty("/currentIndex") || 0;
-            oModel.setProperty("/currentItem", aItems[iCurrent] || null);
-        },
+        constructor: function (oView) { this._oView = oView; },
 
         onAdicionarIndice: function (oEvent) {
             var oComboBox = oEvent.getSource();
-            var sKey = oComboBox.getSelectedKey();
             var oModel = oComboBox.getModel("dialog");
             var oCtx = oComboBox.getBindingContext("dialog");
-            
-            if (!oCtx) return;
-
-            var sPathIndices = oCtx.getPath().substring(0, oCtx.getPath().lastIndexOf("/"));
-            var aIndices = oModel.getProperty(sPathIndices) || [];
-            var iIndexAtual = aIndices.indexOf(oCtx.getObject());
-
-            if (sKey === "SIM") {
-                if (iIndexAtual === aIndices.length - 1) {
-                    aIndices.push({ ordem: aIndices.length + 1, tipoIndice: "", peso: "", addMore: "NAO" });
-                }
+            var sPath = oCtx.getPath().substring(0, oCtx.getPath().lastIndexOf("/"));
+            var aIndices = oModel.getProperty(sPath);
+            if (oComboBox.getSelectedKey() === "SIM") {
+                aIndices.push({ ordem: aIndices.length + 1, tipoIndice: "", peso: "", addMore: "NAO" });
             } else {
-                aIndices.splice(iIndexAtual + 1);
+                aIndices.splice(aIndices.indexOf(oCtx.getObject()) + 1);
             }
+            oModel.setProperty(sPath, aIndices);
+            oModel.refresh(true);
+        },
 
-            oModel.setProperty(sPathIndices, aIndices);
-            oModel.refresh(true); // FORÇA A ATUALIZAÇÃO VISUAL NA TELA
+        onAdicionarIndiceGlobal: function (oEvent) {
+            var oModel = oEvent.getSource().getModel("dialog");
+            var aIndices = oModel.getProperty("/globalIndices");
+            if (oEvent.getSource().getSelectedKey() === "SIM") {
+                aIndices.push({ ordem: aIndices.length + 1, tipoIndice: "", peso: "", addMore: "NAO" });
+            } else {
+                aIndices.splice(aIndices.indexOf(oEvent.getSource().getBindingContext("dialog").getObject()) + 1);
+            }
+            oModel.setProperty("/globalIndices", aIndices);
+            oModel.refresh(true);
         },
 
         onAdicionarIndiceCadastro: function (oEvent) {
-            var oComboBox = oEvent.getSource();
-            var sKey = oComboBox.getSelectedKey();
-            var oModel = oComboBox.getModel("dialog");
-            var aIndices = oModel.getProperty("/indicesCadastro") || [];
-            var iIndexAtual = aIndices.indexOf(oEvent.getSource().getBindingContext("dialog").getObject());
-
-            if (sKey === "SIM") {
-                if (iIndexAtual === aIndices.length - 1) {
-                    aIndices.push({ ordem: aIndices.length + 1, valor: "", tipoIndice: "", peso: "", dataBaseParametrica: "", addMore: "NAO" });
-                }
+            var oModel = oEvent.getSource().getModel("dialog");
+            var aIndices = oModel.getProperty("/indicesCadastro");
+            if (oEvent.getSource().getSelectedKey() === "SIM") {
+                aIndices.push({ ordem: aIndices.length + 1, valor: "", tipoIndice: "", peso: "", dataBaseParametrica: "", addMore: "NAO" });
             } else {
-                aIndices.splice(iIndexAtual + 1);
+                aIndices.splice(aIndices.indexOf(oEvent.getSource().getBindingContext("dialog").getObject()) + 1);
             }
-
             oModel.setProperty("/indicesCadastro", aIndices);
-            oModel.refresh(true); // FORÇA A ATUALIZAÇÃO VISUAL NA TELA
+            oModel.refresh(true);
+        },
+
+        onPesoChange: function (oEvent) {
+            var oInput = oEvent.getSource();
+            var sVal = oInput.getValue().replace(",", ".");
+            if (isNaN(sVal) || sVal.trim() === "") {
+                MessageToast.show("Por favor, inserir somente números!");
+                oInput.setValue("");
+                return;
+            }
+            var aIndices = oInput.getModel("dialog").getProperty(oInput.getBindingContext("dialog").getPath().split("/indices")[0] + "/indices") || oInput.getModel("dialog").getProperty("/globalIndices") || oInput.getModel("dialog").getProperty("/indicesCadastro");
+            var fTotal = aIndices.reduce((acc, obj) => acc + (parseFloat(String(obj.peso).replace(",", ".")) || 0), 0);
+            if (fTotal > 100) {
+                MessageToast.show("O total de peso do índice tem que ser menor ou igual a 100%");
+                oInput.setValue("");
+            }
         },
 
         onDialogProximo: function () {
-            var oModel = this._getDialog("dialogParametricas").getModel("dialog");
-            var iCurrent = oModel.getProperty("/currentIndex") || 0;
-            var iCount = (oModel.getProperty("/selectedItems") || []).length;
-
-            if (iCurrent < iCount - 1) {
-                oModel.setProperty("/currentIndex", iCurrent + 1);
-                this._syncCurrentItem(oModel);
-            }
+            var oModel = this._oView.byId("dialogParametricas").getModel("dialog");
+            var iCurrent = oModel.getProperty("/currentIndex");
+            oModel.setProperty("/currentIndex", iCurrent + 1);
+            oModel.setProperty("/currentItem", oModel.getProperty("/selectedItems")[iCurrent + 1]);
         },
 
         onDialogVoltar: function () {
-            var oModel = this._getDialog("dialogParametricas").getModel("dialog");
-            var iCurrent = oModel.getProperty("/currentIndex") || 0;
-
-            if (iCurrent > 0) {
-                oModel.setProperty("/currentIndex", iCurrent - 1);
-                this._syncCurrentItem(oModel);
-            }
+            var oModel = this._oView.byId("dialogParametricas").getModel("dialog");
+            var iCurrent = oModel.getProperty("/currentIndex");
+            oModel.setProperty("/currentIndex", iCurrent - 1);
+            oModel.setProperty("/currentItem", oModel.getProperty("/selectedItems")[iCurrent - 1]);
         },
 
         onDialogCancel: function () {
             if (this._oView.byId("dialogParametricas")) this._oView.byId("dialogParametricas").close();
             if (this._oView.byId("dialogCadastroParametrica")) this._oView.byId("dialogCadastroParametrica").close();
-        },
-        
-        // AÇÕES ENVOLVENDO O íNDICE 
-
-        onPesoChange: function (oEvent) {
-            var oInput = oEvent.getSource();
-            var sValue = oInput.getValue();
-            var oModel = oInput.getModel("dialog");
-            
-            // 1. Validar se é número (substituindo vírgula por ponto para o sistema)
-            var sNormalizedValue = sValue.replace(",", ".");
-            
-            if (isNaN(sNormalizedValue) || sNormalizedValue.trim() === "") {
-                MessageToast.show("Por favor, inserir somente números!");
-                oInput.setValueState("Error");
-                oInput.setValue("");
-                return;
-            }
-
-            // 2. Calcular a soma dos pesos para o item atual
-            var oCtx = oInput.getBindingContext("dialog");
-            var sPathIndices = oCtx.getPath().substring(0, oCtx.getPath().lastIndexOf("/"));
-            var aIndices = oModel.getProperty(sPathIndices) || [];
-            
-            var fTotalPeso = aIndices.reduce(function (acc, oIndice) {
-                var fPeso = parseFloat(String(oIndice.peso).replace(",", ".")) || 0;
-                return acc + fPeso;
-            }, 0);
-
-            // 3. Validar se passou de 100%
-            if (fTotalPeso > 100) {
-                MessageToast.show("O total de peso do índice tem que ser menor ou igual a 100%");
-                oInput.setValueState("Error");
-                oInput.setValue(""); // Limpa o campo que causou o erro
-            } else {
-                oInput.setValueState("None");
-            }
         }
     });
 });

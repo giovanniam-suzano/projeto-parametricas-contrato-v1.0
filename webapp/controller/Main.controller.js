@@ -3,18 +3,20 @@ sap.ui.define([
     "sap/ui/core/Fragment",
     "sap/m/MessageToast",
     "sap/ui/model/json/JSONModel",
-    "sap/ui/model/Filter",
-    "sap/ui/model/FilterOperator",
-    "./ParametricasDialog.controller" // Importação do novo controlador
-], function (Controller, Fragment, MessageToast, JSONModel, Filter, FilterOperator, ParametricasDialogController) {
+    "./ParametricasDialog.controller"
+], function (Controller, Fragment, MessageToast, JSONModel, ParametricasDialogController) {
     "use strict";
 
     return Controller.extend("com.parametricas.parametricasapp.controller.Main", {
 
         onInit: function () {
-            // Mantém a inicialização do modelo principal
-            var oMainModel = new JSONModel({
-                contratos: [
+            this._allContratosMock = [
+                {
+                    ncontrato: "212354",
+                    dataBaseParametrica: "01/2024",
+                    periodo: "mensal",
+                    dataBaseReajuste: "29/04/2026",
+                    items: [
                     {
                       id: "1",
                       material: "Parafuso",
@@ -170,33 +172,42 @@ sap.ui.define([
                       valorSugerido: "780,00 REAL"
                     }  
                 ]
-            });
-            this.getView().setModel(oMainModel);
+                }
+            ];
 
-            // Instancia o controlador do diálogo passando a view atual
+            this.getView().setModel(new JSONModel({
+                contratos: [],
+                headerVisible: false,
+                headerData: {}
+            }));
             this._oDialogController = new ParametricasDialogController(this.getView());
         },
 
-        onCadastroParametricaPress: function () {
-            var oView = this.getView();
-            if (!this._pCadastroDialog) {
-                this._pCadastroDialog = Fragment.load({
-                    id: oView.getId(),
-                    name: "com.parametricas.parametricasapp.view.CadastroDialog",
-                    controller: this._oDialogController 
-                }).then(oDialog => {
-                    oView.addDependent(oDialog);
-                    return oDialog;
-                });
+        onSearch: function (oEvent) {
+            var sQuery = oEvent.getParameter("query") || oEvent.getSource().getValue();
+            var oModel = this.getView().getModel();
+
+            if (!sQuery) {
+                oModel.setProperty("/contratos", []);
+                oModel.setProperty("/headerVisible", false);
+                return;
             }
 
-            this._pCadastroDialog.then(oDialog => {
-                oDialog.setModel(new JSONModel({
-                    indicesCadastro: [{ ordem: 1, valor: "", tipoIndice: "", peso: "", dataBaseParametrica: "", addMore: "NAO" }]
-                }), "dialog");
-                oDialog.open();
-            });
-        
+            var oContrato = this._allContratosMock.find(item => item.ncontrato === sQuery);
+
+            if (oContrato) {
+                oModel.setProperty("/contratos", oContrato.items);
+                oModel.setProperty("/headerData", {
+                    dataBaseParametrica: oContrato.dataBaseParametrica,
+                    periodo: oContrato.periodo,
+                    dataBaseReajuste: oContrato.dataBaseReajuste
+                });
+                oModel.setProperty("/headerVisible", true);
+            } else {
+                MessageToast.show("Contrato " + sQuery + " não localizado.");
+                oModel.setProperty("/contratos", []);
+                oModel.setProperty("/headerVisible", false);
+            }
         },
 
         onEditarPress: function () {
@@ -208,46 +219,56 @@ sap.ui.define([
             this._abrirDialogParametricas(aItems.map(o => o.getBindingContext()));
         },
 
-        onSearch: function (oEvent) {
-            var sQuery = (oEvent.getParameter("query") || "").trim();
-            var oBinding = this.byId("tabelaContratos").getBinding("items");
-            if (!oBinding) return;
-
-            var aFilters = sQuery ? [new Filter("material", FilterOperator.Contains, sQuery)] : [];
-            oBinding.filter(aFilters);
+        onConcluidoPress: function () {
+            MessageToast.show("Processo concluído.");
         },
 
-        _abrirDialogParametricas: function (aContexts) {
+        onCadastroParametricaPress: function () {
             var oView = this.getView();
-            var iSelectedCount = aContexts.length;
-            var iTotalTableItems = (oView.getModel().getProperty("/contratos") || []).length;
-
-            if (!this._pParametricasDialog) {
-                this._pParametricasDialog = Fragment.load({
+            if (!this._pCadastroDialog) {
+                this._pCadastroDialog = Fragment.load({
                     id: oView.getId(),
-                    name: "com.parametricas.parametricasapp.view.ParametricasDialog",
-                    controller: this._oDialogController // Vincula ao novo controlador
-                }).then(function (oDialog) {
+                    name: "com.parametricas.parametricasapp.view.CadastroDialog",
+                    controller: this._oDialogController
+                }).then(oDialog => {
                     oView.addDependent(oDialog);
                     return oDialog;
                 });
             }
+            this._pCadastroDialog.then(oDialog => {
+                oDialog.setModel(new JSONModel({
+                    indicesCadastro: [{ ordem: 1, valor: "", tipoIndice: "", peso: "", dataBaseParametrica: "", addMore: "NAO" }]
+                }), "dialog");
+                oDialog.open();
+            });
+        },
 
-            this._pParametricasDialog.then(function (oDialog) {
+        _abrirDialogParametricas: function (aContexts) {
+            var oView = this.getView();
+            if (!this._pParametricasDialog) {
+                this._pParametricasDialog = Fragment.load({
+                    id: oView.getId(),
+                    name: "com.parametricas.parametricasapp.view.ParametricasDialog",
+                    controller: this._oDialogController
+                }).then(oDialog => {
+                    oView.addDependent(oDialog);
+                    return oDialog;
+                });
+            }
+            this._pParametricasDialog.then(oDialog => {
                 var aItems = aContexts.map((oCtx, i) => ({
                     ...oCtx.getObject(),
                     seq: i + 1,
                     indices: [{ ordem: 1, tipoIndice: "", peso: "", addMore: "NAO" }]
                 }));
-
                 oDialog.setModel(new JSONModel({
-                    isAllSelected: (iSelectedCount === iTotalTableItems),
-                    selectedCount: iSelectedCount,
+                    isAllSelected: (aItems.length === oView.getModel().getProperty("/contratos").length),
+                    selectedCount: aItems.length,
                     currentIndex: 0,
                     currentItem: aItems[0],
-                    selectedItems: aItems
+                    selectedItems: aItems,
+                    globalIndices: [{ ordem: 1, tipoIndice: "", peso: "", addMore: "NAO" }]
                 }), "dialog");
-
                 oDialog.open();
             });
         }
