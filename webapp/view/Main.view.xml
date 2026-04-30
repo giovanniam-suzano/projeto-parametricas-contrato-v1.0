@@ -20,7 +20,6 @@
                         width="300px" 
                         placeholder="Buscar Contrato" 
                         search=".onSearch" />
-                    <Button id="btnCadastroParametrica" text="Cadastro de Paramétricas" type="Emphasized" press=".onCadastroParametricaPress" />
                 </f:actions>
             </f:DynamicPageTitle>
         </f:title>
@@ -30,7 +29,7 @@
                 <layout:HorizontalLayout id="hlFilters" visible="{/headerVisible}">
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
                         <Label text="Data-Base Paramétrica:" />
-                        <DatePicker value="{/headerData/dataBaseParametrica}" displayFormat="MM/yyyy" width="256px" editable="false" />
+                        <DatePicker value="{/headerData/dataBaseParametrica}" displayFormat="dd/MM/yyyy" width="256px" editable="true" />
                     </layout:VerticalLayout>
 
                     <layout:VerticalLayout class="sapUiMediumMarginEnd">
@@ -63,6 +62,7 @@
                         <OverflowToolbar>
                             <Title text="Itens do Contrato" level="H3" />
                             <ToolbarSpacer />
+                            <Button id="btnCadastroParametrica" text="Cadastrar Paramétrica" icon="sap-icon://add" press=".onCadastroParametricaPress" />
                             <Button id="btnEditar" text="Editar" icon="sap-icon://edit" press=".onEditarPress" />
                             <Button id="btnConcluir" text="Concluir" icon="sap-icon://accept" type="Accept" press=".onConcluidoPress" />
                         </OverflowToolbar>
@@ -76,7 +76,7 @@
                         <Column hAlign="Center"><Text text="Unidade" /></Column>
                         <Column hAlign="End"><Text text="Valor Unid" /></Column>
                         <Column hAlign="End"><Text text="Valor Total" /></Column>
-                        <Column hAlign="End"><Text text="Valor Sugerido" /></Column>
+                        <Column hAlign="End"><Text text="Valor de Variação" /></Column>
                     </columns>
                     <items>
                         <ColumnListItem>

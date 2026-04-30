@@ -13,9 +13,9 @@ sap.ui.define([
             this._allContratosMock = [
                 {
                     ncontrato: "212354",
-                    dataBaseParametrica: "01/2024",
+                    dataBaseParametrica: "30/02/2024",
                     periodo: "mensal",
-                    dataBaseReajuste: "29/04/2026",
+                    dataBaseReajuste: "01/05/2026",
                     items: [
                     {
                       id: "1",
