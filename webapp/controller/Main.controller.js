@@ -3,8 +3,9 @@ sap.ui.define([
     "sap/ui/core/Fragment",
     "sap/m/MessageToast",
     "sap/ui/model/json/JSONModel",
-    "./ParametricasDialog.controller"
-], function (Controller, Fragment, MessageToast, JSONModel, ParametricasDialogController) {
+    "./ParametricasDialog.controller",
+    "./CadastroDialog.controller"
+], function (Controller, Fragment, MessageToast, JSONModel, ParametricasDialogController, CadastroDialogController) {
     "use strict";
 
     return Controller.extend("com.parametricas.parametricasapp.controller.Main", {
@@ -181,6 +182,7 @@ sap.ui.define([
                 headerData: {}
             }));
             this._oDialogController = new ParametricasDialogController(this.getView());
+            this._oCadastroDialogController = new CadastroDialogController(this.getView());
         },
 
         onSearch: function (oEvent) {
@@ -225,20 +227,43 @@ sap.ui.define([
 
         onCadastroParametricaPress: function () {
             var oView = this.getView();
+            var aSelectedItems = this.byId("tabelaContratos").getSelectedItems();
+            var iTotalTabela = oView.getModel().getProperty("/contratos").length;
+
+            if (aSelectedItems.length === 0) {
+                MessageToast.show("Selecione ao menos um item para cadastrar.");
+                return;
+            }
+
             if (!this._pCadastroDialog) {
                 this._pCadastroDialog = Fragment.load({
                     id: oView.getId(),
                     name: "com.parametricas.parametricasapp.view.CadastroDialog",
-                    controller: this._oDialogController
+                    controller: this._oCadastroDialogController 
                 }).then(oDialog => {
                     oView.addDependent(oDialog);
                     return oDialog;
                 });
             }
+
             this._pCadastroDialog.then(oDialog => {
+                // Prepara os dados adicionando "seq" e os "indices" para CADA ITEM (Cenários 2 e 3)
+                var aItems = aSelectedItems.map((o, i) => ({
+                    ...o.getBindingContext().getObject(),
+                    seq: i + 1,
+                    indices: [{ ordem: 1, tipoIndice: "", peso: "", addMore: "NAO" }]
+                }));
+                
                 oDialog.setModel(new JSONModel({
-                    indicesCadastro: [{ ordem: 1, valor: "", tipoIndice: "", peso: "", dataBaseParametrica: "", addMore: "NAO" }]
+                    isAllSelected: (aItems.length === iTotalTabela),
+                    selectedCount: aItems.length,
+                    currentIndex: 0,
+                    currentItem: aItems[0],
+                    selectedItems: aItems,
+                    // Array utilizado no Cabeçalho (Cenário 1)
+                    globalIndices: [{ ordem: 1, tipoIndice: "", peso: "", addMore: "NAO" }]
                 }), "dialog");
+                
                 oDialog.open();
             });
         },
