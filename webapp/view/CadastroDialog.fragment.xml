@@ -18,38 +18,36 @@
             </Bar>
         </customHeader>
         <content>
-            
-            <!-- ========================================== -->
-            <!-- CENÁRIO 1: CABEÇALHO (Todos Selecionados)  -->
-            <!-- ========================================== -->
+            <!-- CENÁRIO 1: CABEÇALHO -->
             <VBox class="sapUiSmallMargin" visible="{dialog>/isAllSelected}">
                 <VBox items="{dialog>/globalIndices}">
-                    <form:SimpleForm layout="ColumnLayout" editable="true">
+                    <!-- labelSpan="4" + emptySpan="4" deixa exatamente 4 colunas (33%) para o campo central -->
+                    <form:SimpleForm layout="ResponsiveGridLayout" editable="true"
+                                     labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+                                     emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0"
+                                     columnsXL="1" columnsL="1" columnsM="1">
                         <core:Title text="{= ${dialog>ordem} + 'º Índice (Geral)'}" />
                         <Label text="Tipo de Índice" required="true" />
-                        <ComboBox selectedKey="{dialog>tipoIndice}" width="100%" maxWidth="256px">
+                        <ComboBox selectedKey="{dialog>tipoIndice}" width="100%">
                             <core:Item key="IPCA" text="IPCA" /><core:Item key="IGP-M" text="IGP-M" />
                         </ComboBox>
+                        <Label text="Valor do índice selecionado" />
+                        <Input value="{dialog>valorIndice}" type="Number" width="100%" />
                         <Label text="Peso (%)" required="true" />
-                        <!-- Chamando onPesoChange do CadastroDialog.controller -->
                         <Input value="{dialog>peso}" change=".onPesoChange" width="100%" />
                         <Label text="Deseja adicionar mais um índice" />
-                        <!-- Chama a função Global (Cenário 1) -->
-                        <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndiceGlobal" width="100%" maxWidth="200px">
+                        <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndiceGlobal" width="100%">
                             <core:Item key="SIM" text="Sim" /><core:Item key="NAO" text="Não" />
                         </ComboBox>
                     </form:SimpleForm>
                 </VBox>
             </VBox>
 
-            <!-- ================================================== -->
-            <!-- CENÁRIOS 2 e 3: ITENS (1 ou + Itens Selecionados) -->
-            <!-- ================================================== -->
+            <!-- CENÁRIOS 2 e 3: ITENS -->
             <VBox items="{dialog>/selectedItems}" visible="{= !${dialog>/isAllSelected} }">
                 <VBox class="sapUiSmallMargin" visible="{= ${dialog>seq} === (${dialog>/currentIndex} + 1) }">
-                    
-                    <!-- Dados do Item Atual -->
-                    <form:SimpleForm layout="ColumnLayout" editable="false" columnsL="3" title="Dados do Item Selecionado">
+                    <form:SimpleForm layout="ResponsiveGridLayout" editable="false" labelSpanL="4" columnsL="2">
+                        <core:Title text="Dados do Item Selecionado" />
                         <Label text="ID" /><Text text="{dialog>id}" />
                         <Label text="Contrato" /><Text text="{dialog>ncontrato}" />
                         <Label text="N.I" /><Text text="{dialog>ni}" />
@@ -59,28 +57,27 @@
                         <Label text="Vl Unid" /><Text text="{dialog>valorUnitario}" />
                         <Label text="Vl Total" /><Text text="{dialog>valorTotal}" />
                     </form:SimpleForm>
-
-                    <!-- Índices amarrados ao Item Específico -->
                     <VBox items="{dialog>indices}">
-                        <form:SimpleForm layout="ColumnLayout" editable="true">
+                        <form:SimpleForm layout="ResponsiveGridLayout" editable="true"
+                                         labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+                                         emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0">
                             <core:Title text="{= ${dialog>ordem} + 'º Índice'}" />
                             <Label text="Tipo" required="true" />
-                            <ComboBox selectedKey="{dialog>tipoIndice}" width="100%" maxWidth="256px">
+                            <ComboBox selectedKey="{dialog>tipoIndice}" width="100%">
                                 <core:Item key="IPCA" text="IPCA" /><core:Item key="IGP-M" text="IGP-M" />
                             </ComboBox>
+                            <Label text="Valor do índice selecionado" />
+                            <Input value="{dialog>valorIndice}" type="Number" width="100%" />
                             <Label text="Peso (%)" required="true" />
                             <Input value="{dialog>peso}" change=".onPesoChange" width="100%"/>
                             <Label text="Deseja adicionar mais um índice" />
-                            <!-- Chama a função que amarra o array ao path do contexto atual (Cenários 2 e 3) -->
-                            <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndice" width="100%" maxWidth="200px">
+                            <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndice" width="100%">
                                 <core:Item key="SIM" text="Sim" /><core:Item key="NAO" text="Não" />
                             </ComboBox>
                         </form:SimpleForm>
                     </VBox>
-
                 </VBox>
             </VBox>
-
         </content>
         <buttons>
             <Button text="Voltar" press=".onDialogVoltar" 

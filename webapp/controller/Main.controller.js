@@ -251,7 +251,7 @@ sap.ui.define([
                 var aItems = aSelectedItems.map((o, i) => ({
                     ...o.getBindingContext().getObject(),
                     seq: i + 1,
-                    indices: [{ ordem: 1, tipoIndice: "", peso: "", addMore: "NAO" }]
+                   indices: [{ ordem: 1, tipoIndice: "", valorIndice: "", peso: "", addMore: "NAO" }]
                 }));
                 
                 oDialog.setModel(new JSONModel({
@@ -261,7 +261,7 @@ sap.ui.define([
                     currentItem: aItems[0],
                     selectedItems: aItems,
                     // Array utilizado no Cabeçalho (Cenário 1)
-                    globalIndices: [{ ordem: 1, tipoIndice: "", peso: "", addMore: "NAO" }]
+                   globalIndices: [{ ordem: 1, tipoIndice: "", valorIndice: "", peso: "", addMore: "NAO" }]
                 }), "dialog");
                 
                 oDialog.open();

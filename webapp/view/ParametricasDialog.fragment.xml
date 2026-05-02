@@ -8,6 +8,7 @@
                 <contentLeft>
                     <HBox alignItems="Center" renderType="Bare">
                         <core:Icon src="sap-icon://request" class="sapUiTinyMarginEnd" />
+                        <!-- Lógica de Títulos baseada na seleção[cite: 4] -->
                         <Title text="Cabeçalho" visible="{dialog>/isAllSelected}" />
                         <Title text="Item 1" visible="{= !${dialog>/isAllSelected} &amp;&amp; ${dialog>/selectedCount} === 1 }" />
                         <Title text="{= 'Item ' + (${dialog>/currentIndex} + 1) + ' de ' + ${dialog>/selectedCount} }" 
@@ -17,29 +18,48 @@
             </Bar>
         </customHeader>
         <content>
+            <!-- ========================================== -->
+            <!-- CENÁRIO 1: CABEÇALHO (Todos Selecionados)  -->
+            <!-- ========================================== -->
             <VBox class="sapUiSmallMargin" visible="{dialog>/isAllSelected}">
                 <VBox items="{dialog>/globalIndices}">
-                    <form:SimpleForm layout="ColumnLayout" editable="true">
+                    <form:SimpleForm layout="ResponsiveGridLayout" editable="true" 
+                                     labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+                                     emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0"
+                                     columnsXL="1" columnsL="1" columnsM="1">
                         <core:Title text="{= ${dialog>ordem} + 'º Índice (Geral)'}" />
-                        <Label text="Tipo de Índice" required="true" />
-                        <ComboBox selectedKey="{dialog>tipoIndice}" width="100%" maxWidth="256px">
+                        
+                        <Label text="Tipo" required="true" />
+                        <ComboBox selectedKey="{dialog>tipoIndice}" width="100%">
                             <core:Item key="IPCA" text="IPCA" /><core:Item key="IGP-M" text="IGP-M" />
                         </ComboBox>
+
+                        <Label text="Valor do índice selecionado" />
+                        <Input value="{dialog>valorIndice}" editable="false" width="100%" />
+
                         <Label text="Peso (%)" required="true" />
                         <Input value="{dialog>peso}" change=".onPesoChange" width="100%" />
+
                         <Label text="Deseja adicionar mais um índice" />
-                        <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndiceGlobal" width="100%" maxWidth="200px">
+                        <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndiceGlobal" width="100%">
                             <core:Item key="SIM" text="Sim" /><core:Item key="NAO" text="Não" />
                         </ComboBox>
                     </form:SimpleForm>
                 </VBox>
             </VBox>
 
+            <!-- ================================================== -->
+            <!-- CENÁRIOS 2 e 3: ITENS (1 ou + Itens Selecionados) -->
+            <!-- ================================================== -->
             <VBox items="{dialog>/selectedItems}" visible="{= !${dialog>/isAllSelected} }">
                 <VBox class="sapUiSmallMargin" visible="{= ${dialog>seq} === (${dialog>/currentIndex} + 1) }">
-                    <form:SimpleForm layout="ColumnLayout" editable="false" columnsL="3">
-                        <core:Title text="Informações do Item" />
-                        <Label text="ID" /><Text text="{dialog>id}" />
+                    
+                    <!-- Dados do Item (Layout centralizado igual aos índices)[cite: 3, 4] -->
+                    <form:SimpleForm layout="ResponsiveGridLayout" editable="false" 
+                                     labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+                                     emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0"
+                                     columnsXL="1" columnsL="1" columnsM="1"
+                                     title="Dados do Item Selecionado">
                         <Label text="Contrato" /><Text text="{dialog>ncontrato}" />
                         <Label text="N.I" /><Text text="{dialog>ni}" />
                         <Label text="Material" /><Text text="{dialog>material}" />
@@ -49,17 +69,28 @@
                         <Label text="Vl Total" /><Text text="{dialog>valorTotal}" />
                         <Label text="Vl Sugerido" /><Text text="{dialog>valorSugerido}" />
                     </form:SimpleForm>
+
+                    <!-- Índices do Item (Layout centralizado)[cite: 4] -->
                     <VBox items="{dialog>indices}">
-                        <form:SimpleForm layout="ColumnLayout" editable="true">
+                        <form:SimpleForm layout="ResponsiveGridLayout" editable="true"
+                                         labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
+                                         emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0"
+                                         columnsXL="1" columnsL="1" columnsM="1">
                             <core:Title text="{= ${dialog>ordem} + 'º Índice'}" />
+                            
                             <Label text="Tipo" required="true" />
-                            <ComboBox selectedKey="{dialog>tipoIndice}" width="100%" maxWidth="256px">
+                            <ComboBox selectedKey="{dialog>tipoIndice}" width="100%">
                                 <core:Item key="IPCA" text="IPCA" /><core:Item key="IGP-M" text="IGP-M" />
                             </ComboBox>
+
+                            <Label text="Valor do índice selecionado" />
+                            <Input value="{dialog>valorIndice}" editable="false" width="100%" />
+
                             <Label text="Peso (%)" required="true" />
                             <Input value="{dialog>peso}" change=".onPesoChange" width="100%"/>
+
                             <Label text="Deseja adicionar mais um índice" />
-                            <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndice" width="100%" maxWidth="200px">
+                            <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndice" width="100%">
                                 <core:Item key="SIM" text="Sim" /><core:Item key="NAO" text="Não" />
                             </ComboBox>
                         </form:SimpleForm>
@@ -68,9 +99,14 @@
             </VBox>
         </content>
         <buttons>
-            <Button text="Voltar" press=".onDialogVoltar" visible="{= !${dialog>/isAllSelected} &amp;&amp; ${dialog>/currentIndex} > 0 }" />
-            <Button text="Próximo Passo" type="Emphasized" press=".onDialogProximo" visible="{= !${dialog>/isAllSelected} &amp;&amp; (${dialog>/currentIndex} + 1) &lt; ${dialog>/selectedCount} }" />
+            <Button text="Voltar" press=".onDialogVoltar" 
+                    visible="{= !${dialog>/isAllSelected} &amp;&amp; ${dialog>/currentIndex} > 0 }" />
+            
+            <Button text="Próximo Passo" type="Emphasized" press=".onDialogProximo" 
+                    visible="{= !${dialog>/isAllSelected} &amp;&amp; (${dialog>/currentIndex} + 1) &lt; ${dialog>/selectedCount} }" />
+            
             <Button text="Concluído" type="Accept" press=".onDialogCancel" />
+            
             <Button text="Cancelar" press=".onDialogCancel" />
         </buttons>
     </Dialog>
