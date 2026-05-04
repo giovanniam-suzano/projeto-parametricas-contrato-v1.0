@@ -49,20 +49,20 @@
                     <form:SimpleForm layout="ResponsiveGridLayout" editable="false" labelSpanL="4" columnsL="2">
                         <core:Title text="Dados do Item Selecionado" />
                         <Label text="ID" /><Text text="{dialog>id}" />
-                        <Label text="Contrato" /><Text text="{dialog>ncontrato}" />
-                        <Label text="N.I" /><Text text="{dialog>ni}" />
+                        <Label text="Nº do Contrato" /><Text text="{dialog>ncontrato}" />
+                        <Label text="N.I do Material" /><Text text="{dialog>ni}" />
                         <Label text="Material" /><Text text="{dialog>material}" />
-                        <Label text="Qtd" /><Text text="{dialog>quantidade}" />
-                        <Label text="Und" /><Text text="{dialog>unidade}" />
-                        <Label text="Vl Unid" /><Text text="{dialog>valorUnitario}" />
-                        <Label text="Vl Total" /><Text text="{dialog>valorTotal}" />
+                        <Label text="Quantidade" /><Text text="{dialog>quantidade}" />
+                        <Label text="Unidade" /><Text text="{dialog>unidade}" />
+                        <Label text="Valor da Unidade" /><Text text="{dialog>valorUnitario}" />
+                        <Label text="Valor Total" /><Text text="{dialog>valorTotal}" />
                     </form:SimpleForm>
                     <VBox items="{dialog>indices}">
                         <form:SimpleForm layout="ResponsiveGridLayout" editable="true"
                                          labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
                                          emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0">
                             <core:Title text="{= ${dialog>ordem} + 'º Índice'}" />
-                            <Label text="Tipo" required="true" />
+                            <Label text="Índice" required="true" />
                             <ComboBox selectedKey="{dialog>tipoIndice}" width="100%">
                                 <core:Item key="IPCA" text="IPCA" /><core:Item key="IGP-M" text="IGP-M" />
                             </ComboBox>

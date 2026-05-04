@@ -11,6 +11,7 @@ sap.ui.define([
     return Controller.extend("com.parametricas.parametricasapp.controller.Main", {
 
         onInit: function () {
+            // MOCK ORIGINAL COMPLETO (Itens 1 a 14)
             this._allContratosMock = [
                 {
                     ncontrato: "212354",
@@ -18,161 +19,21 @@ sap.ui.define([
                     periodo: "mensal",
                     dataBaseReajuste: "01/05/2026",
                     items: [
-                    {
-                      id: "1",
-                      material: "Parafuso",
-                      ncontrato: "212354",
-                      ni: "12.345.678-1",
-                      quantidade: 12,
-                      unidade: "UN",
-                      valorUnitario: "150,00",
-                      valorTotal: "1.800,00 REAL",
-                      valorSugerido: "1.750,00 REAL"
-                    },
-                    {
-                      id: "2",
-                      material: "Martelo",
-                      ncontrato: "212354",
-                      ni: "12.345.678-2",
-                      quantidade: 5,
-                      unidade: "UN",
-                      valorUnitario: "247,00",
-                      valorTotal: "1.235,00 REAL",
-                      valorSugerido: "1.200,00 REAL"
-                    },
-                    {
-                      id: "3",
-                      material: "Chave de Fenda",
-                      ncontrato: "212354",
-                      ni: "12.345.678-3",
-                      quantidade: 8,
-                      unidade: "UN",
-                      valorUnitario: "85,00",
-                      valorTotal: "680,00 REAL",
-                      valorSugerido: "650,00 REAL"
-                    },
-                    {
-                      id: "4",
-                      material: "Chave Philips",
-                      ncontrato: "212354",
-                      ni: "12.345.678-4",
-                      quantidade: 10,
-                      unidade: "UN",
-                      valorUnitario: "92,00",
-                      valorTotal: "920,00 REAL",
-                      valorSugerido: "900,00 REAL"
-                    },
-                    {
-                      id: "5",
-                      material: "Alicate",
-                      ncontrato: "212354",
-                      ni: "12.345.678-5",
-                      quantidade: 6,
-                      unidade: "UN",
-                      valorUnitario: "180,00",
-                      valorTotal: "1.080,00 REAL",
-                      valorSugerido: "1.050,00 REAL"
-                    },
-                    {
-                      id: "6",
-                      material: "Trena",
-                      ncontrato: "212354",
-                      ni: "12.345.678-6",
-                      quantidade: 4,
-                      unidade: "UN",
-                      valorUnitario: "210,00",
-                      valorTotal: "840,00 REAL",
-                      valorSugerido: "820,00 REAL"
-                    },
-                    {
-                      id: "7",
-                      material: "Serrote",
-                      ncontrato: "212354",
-                      ni: "12.345.678-7",
-                      quantidade: 3,
-                      unidade: "UN",
-                      valorUnitario: "320,00",
-                      valorTotal: "960,00 REAL",
-                      valorSugerido: "930,00 REAL"
-                    },
-                    {
-                      id: "8",
-                      material: "Furadeira",
-                      ncontrato: "212354",
-                      ni: "12.345.678-8",
-                      quantidade: 2,
-                      unidade: "UN",
-                      valorUnitario: "1.250,00",
-                      valorTotal: "2.500,00 REAL",
-                      valorSugerido: "2.450,00 REAL"
-                    },
-                    {
-                      id: "9",
-                      material: "Lixadeira",
-                      ncontrato: "212354",
-                      ni: "12.345.678-9",
-                      quantidade: 2,
-                      unidade: "UN",
-                      valorUnitario: "980,00",
-                      valorTotal: "1.960,00 REAL",
-                      valorSugerido: "1.900,00 REAL"
-                    },
-                    {
-                      id: "10",
-                      material: "Disco de Corte",
-                      ncontrato: "212354",
-                      ni: "12.345.679-0",
-                      quantidade: 15,
-                      unidade: "UN",
-                      valorUnitario: "45,00",
-                      valorTotal: "675,00 REAL",
-                      valorSugerido: "650,00 REAL"
-                    },
-                    {
-                      id: "11",
-                      material: "Broca",
-                      ncontrato: "212354",
-                      ni: "12.345.679-1",
-                      quantidade: 20,
-                      unidade: "UN",
-                      valorUnitario: "38,00",
-                      valorTotal: "760,00 REAL",
-                      valorSugerido: "720,00 REAL"
-                    },
-                    {
-                      id: "12",
-                      material: "Luvas de Proteção",
-                      ncontrato: "212354",
-                      ni: "12.345.679-2",
-                      quantidade: 12,
-                      unidade: "UN",
-                      valorUnitario: "55,00",
-                      valorTotal: "660,00 REAL",
-                      valorSugerido: "630,00 REAL"
-                    },
-                    {
-                      id: "13",
-                      material: "Óculos de Segurança",
-                      ncontrato: "212354",
-                      ni: "12.345.679-3",
-                      quantidade: 10,
-                      unidade: "UN",
-                      valorUnitario: "70,00",
-                      valorTotal: "700,00 REAL",
-                      valorSugerido: "680,00 REAL"
-                    },
-                    {
-                      id: "14",
-                      material: "Capacete de Segurança",
-                      ncontrato: "212354",
-                      ni: "12.345.679-4",
-                      quantidade: 5,
-                      unidade: "UN",
-                      valorUnitario: "160,00",
-                      valorTotal: "800,00 REAL",
-                      valorSugerido: "780,00 REAL"
-                    }  
-                ]
+                        { id: "1", material: "Parafuso", ncontrato: "212354", ni: "12.345.678-1", quantidade: 12, unidade: "UN", valorUnitario: "150,00", valorTotal: "1.800,00 REAL", valorSugerido: "1.750,00 REAL" },
+                        { id: "2", material: "Martelo", ncontrato: "212354", ni: "12.345.678-2", quantidade: 5, unidade: "UN", valorUnitario: "247,00", valorTotal: "1.235,00 REAL", valorSugerido: "1.200,00 REAL" },
+                        { id: "3", material: "Chave de Fenda", ncontrato: "212354", ni: "12.345.678-3", quantidade: 8, unidade: "UN", valorUnitario: "85,00", valorTotal: "680,00 REAL", valorSugerido: "650,00 REAL" },
+                        { id: "4", material: "Chave Philips", ncontrato: "212354", ni: "12.345.678-4", quantidade: 10, unidade: "UN", valorUnitario: "92,00", valorTotal: "920,00 REAL", valorSugerido: "900,00 REAL" },
+                        { id: "5", material: "Alicate", ncontrato: "212354", ni: "12.345.678-5", quantidade: 6, unidade: "UN", valorUnitario: "180,00", valorTotal: "1.080,00 REAL", valorSugerido: "1.050,00 REAL" },
+                        { id: "6", material: "Trena", ncontrato: "212354", ni: "12.345.678-6", quantidade: 4, unidade: "UN", valorUnitario: "210,00", valorTotal: "840,00 REAL", valorSugerido: "820,00 REAL" },
+                        { id: "7", material: "Serrote", ncontrato: "212354", ni: "12.345.678-7", quantidade: 3, unidade: "UN", valorUnitario: "320,00", valorTotal: "960,00 REAL", valorSugerido: "930,00 REAL" },
+                        { id: "8", material: "Furadeira", ncontrato: "212354", ni: "12.345.678-8", quantidade: 2, unidade: "UN", valorUnitario: "1.250,00", valorTotal: "2.500,00 REAL", valorSugerido: "2.450,00 REAL" },
+                        { id: "9", material: "Lixadeira", ncontrato: "212354", ni: "12.345.678-9", quantidade: 2, unidade: "UN", valorUnitario: "980,00", valorTotal: "1.960,00 REAL", valorSugerido: "1.900,00 REAL" },
+                        { id: "10", material: "Disco de Corte", ncontrato: "212354", ni: "12.345.679-0", quantidade: 15, unidade: "UN", valorUnitario: "45,00", valorTotal: "675,00 REAL", valorSugerido: "650,00 REAL" },
+                        { id: "11", material: "Broca", ncontrato: "212354", ni: "12.345.679-1", quantidade: 20, unidade: "UN", valorUnitario: "38,00", valorTotal: "760,00 REAL", valorSugerido: "720,00 REAL" },
+                        { id: "12", material: "Luvas de Proteção", ncontrato: "212354", ni: "12.345.679-2", quantidade: 12, unidade: "UN", valorUnitario: "55,00", valorTotal: "660,00 REAL", valorSugerido: "630,00 REAL" },
+                        { id: "13", material: "Óculos de Segurança", ncontrato: "212354", ni: "12.345.679-3", quantidade: 10, unidade: "UN", valorUnitario: "70,00", valorTotal: "700,00 REAL", valorSugerido: "680,00 REAL" },
+                        { id: "14", material: "Capacete de Segurança", ncontrato: "212354", ni: "12.345.679-4", quantidade: 5, unidade: "UN", valorUnitario: "160,00", valorTotal: "800,00 REAL", valorSugerido: "780,00 REAL" }
+                    ]
                 }
             ];
 
@@ -181,6 +42,8 @@ sap.ui.define([
                 headerVisible: false,
                 headerData: {}
             }));
+
+            // Inicialização dos Controladores das Janelas[cite: 2, 3]
             this._oDialogController = new ParametricasDialogController(this.getView());
             this._oCadastroDialogController = new CadastroDialogController(this.getView());
         },
@@ -235,65 +98,95 @@ sap.ui.define([
                 return;
             }
 
+            // Garante que a Promise do Fragmento seja criada corretamente
             if (!this._pCadastroDialog) {
                 this._pCadastroDialog = Fragment.load({
                     id: oView.getId(),
                     name: "com.parametricas.parametricasapp.view.CadastroDialog",
-                    controller: this._oCadastroDialogController 
-                }).then(oDialog => {
+                    controller: this._oCadastroDialogController
+                }).then(function (oDialog) {
                     oView.addDependent(oDialog);
                     return oDialog;
                 });
             }
 
-            this._pCadastroDialog.then(oDialog => {
-                // Prepara os dados adicionando "seq" e os "indices" para CADA ITEM (Cenários 2 e 3)
-                var aItems = aSelectedItems.map((o, i) => ({
-                    ...o.getBindingContext().getObject(),
-                    seq: i + 1,
-                   indices: [{ ordem: 1, tipoIndice: "", valorIndice: "", peso: "", addMore: "NAO" }]
-                }));
-                
+            this._pCadastroDialog.then(function (oDialog) {
+                var aItems = aSelectedItems.map(function (o, i) {
+                    return Object.assign({}, o.getBindingContext().getObject(), {
+                        seq: i + 1,
+                        indices: [{ ordem: 1, tipoIndice: "", valorIndice: "", peso: "", addMore: "NAO" }]
+                    });
+                });
+
+                var bAllSelected = (aItems.length === iTotalTabela);
+
                 oDialog.setModel(new JSONModel({
-                    isAllSelected: (aItems.length === iTotalTabela),
+                    isAllSelected: bAllSelected,
                     selectedCount: aItems.length,
                     currentIndex: 0,
                     currentItem: aItems[0],
                     selectedItems: aItems,
-                    // Array utilizado no Cabeçalho (Cenário 1)
-                   globalIndices: [{ ordem: 1, tipoIndice: "", valorIndice: "", peso: "", addMore: "NAO" }]
+                    // Garante que o Cenário 1 (Cabeçalho) tenha o array inicial[cite: 1]
+                    globalIndices: [{ ordem: 1, tipoIndice: "", valorIndice: "", peso: "", addMore: "NAO" }],
+                    // Garante que o Cenário 2 e 3 (Itens) tenha o array inicial[cite: 1]
+                    indicesCadastro: [{ ordem: 1, tipoIndice: "", valorIndice: "", peso: "", addMore: "NAO" }]
                 }), "dialog");
-                
+
                 oDialog.open();
             });
         },
 
         _abrirDialogParametricas: function (aContexts) {
             var oView = this.getView();
+            
+            // Correção da inicialização da Promise para evitar erro de 'undefined'
             if (!this._pParametricasDialog) {
                 this._pParametricasDialog = Fragment.load({
                     id: oView.getId(),
                     name: "com.parametricas.parametricasapp.view.ParametricasDialog",
                     controller: this._oDialogController
-                }).then(oDialog => {
+                }).then(function (oDialog) {
                     oView.addDependent(oDialog);
                     return oDialog;
                 });
             }
-            this._pParametricasDialog.then(oDialog => {
-                var aItems = aContexts.map((oCtx, i) => ({
-                    ...oCtx.getObject(),
-                    seq: i + 1,
-                    indices: [{ ordem: 1, tipoIndice: "", peso: "", addMore: "NAO" }]
-                }));
+
+            this._pParametricasDialog.then(function (oDialog) {
+                var iTotalItens = oView.getModel().getProperty("/contratos").length;
+                var aItems = aContexts.map(function (oCtx, i) {
+                    var oObj = oCtx.getObject();
+                    return Object.assign({}, oObj, {
+                        seq: i + 1,
+                        indices: [{ 
+                            ordem: 1, 
+                            tipoIndice: "IPCA", 
+                            valorIndice: "1,25", 
+                            variacao: "0,5", 
+                            novoValor: "1,75", 
+                            peso: "100", 
+                            addMore: "NAO" 
+                        }]
+                    });
+                });
+
                 oDialog.setModel(new JSONModel({
-                    isAllSelected: (aItems.length === oView.getModel().getProperty("/contratos").length),
+                    isAllSelected: (aItems.length === iTotalItens),
                     selectedCount: aItems.length,
                     currentIndex: 0,
                     currentItem: aItems[0],
                     selectedItems: aItems,
-                    globalIndices: [{ ordem: 1, tipoIndice: "", peso: "", addMore: "NAO" }]
+                    isNegociando: false, // Inicia sempre bloqueado[cite: 2]
+                    globalIndices: [{ 
+                        ordem: 1, 
+                        tipoIndice: "IPCA", 
+                        valorIndice: "1,25", 
+                        variacao: "0,5", 
+                        novoValor: "1,75", 
+                        peso: "100", 
+                        addMore: "NAO" 
+                    }]
                 }), "dialog");
+
                 oDialog.open();
             });
         }

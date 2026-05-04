@@ -5,7 +5,32 @@ sap.ui.define([
     "use strict";
 
     return Controller.extend("com.parametricas.parametricasapp.controller.ParametricasDialog", {
-        constructor: function (oView) { this._oView = oView; },
+        
+        constructor: function (oView) { 
+            this._oView = oView; 
+        },
+
+        onNegociar: function () {
+            var oModel = this._oView.byId("dialogParametricas").getModel("dialog");
+            oModel.setProperty("/isNegociando", true);
+        },
+
+        onCancelarNegociacao: function () {
+            var oModel = this._oView.byId("dialogParametricas").getModel("dialog");
+            oModel.setProperty("/isNegociando", false);
+            MessageToast.show("Negociação cancelada.");
+        },
+
+        onAplicarReajuste: function () {
+            MessageToast.show("Reajuste aplicado com sucesso!");
+            this.onDialogCancel();
+        },
+
+        onSalvarNegociacao: function () {
+            var oModel = this._oView.byId("dialogParametricas").getModel("dialog");
+            oModel.setProperty("/isNegociando", true);
+            MessageToast.show("Negociação Salva!");
+        },
 
         onAdicionarIndice: function (oEvent) {
             var oComboBox = oEvent.getSource();
@@ -34,18 +59,6 @@ sap.ui.define([
             oModel.refresh(true);
         },
 
-        onAdicionarIndiceCadastro: function (oEvent) {
-            var oModel = oEvent.getSource().getModel("dialog");
-            var aIndices = oModel.getProperty("/indicesCadastro");
-            if (oEvent.getSource().getSelectedKey() === "SIM") {
-                aIndices.push({ ordem: aIndices.length + 1, valor: "", tipoIndice: "", peso: "", dataBaseParametrica: "", addMore: "NAO" });
-            } else {
-                aIndices.splice(aIndices.indexOf(oEvent.getSource().getBindingContext("dialog").getObject()) + 1);
-            }
-            oModel.setProperty("/indicesCadastro", aIndices);
-            oModel.refresh(true);
-        },
-
         onPesoChange: function (oEvent) {
             var oInput = oEvent.getSource();
             var sVal = oInput.getValue().replace(",", ".");
@@ -54,7 +67,9 @@ sap.ui.define([
                 oInput.setValue("");
                 return;
             }
-            var aIndices = oInput.getModel("dialog").getProperty(oInput.getBindingContext("dialog").getPath().split("/indices")[0] + "/indices") || oInput.getModel("dialog").getProperty("/globalIndices") || oInput.getModel("dialog").getProperty("/indicesCadastro");
+            var aIndices = oInput.getModel("dialog").getProperty(oInput.getBindingContext("dialog").getPath().split("/indices")[0] + "/indices") 
+                           || oInput.getModel("dialog").getProperty("/globalIndices");
+            
             var fTotal = aIndices.reduce((acc, obj) => acc + (parseFloat(String(obj.peso).replace(",", ".")) || 0), 0);
             if (fTotal > 100) {
                 MessageToast.show("O total de peso do índice tem que ser menor ou igual a 100%");
@@ -67,6 +82,7 @@ sap.ui.define([
             var iCurrent = oModel.getProperty("/currentIndex");
             oModel.setProperty("/currentIndex", iCurrent + 1);
             oModel.setProperty("/currentItem", oModel.getProperty("/selectedItems")[iCurrent + 1]);
+            oModel.setProperty("/isNegociando", false); // Reseta modo negociação ao navegar[cite: 2]
         },
 
         onDialogVoltar: function () {
@@ -74,11 +90,15 @@ sap.ui.define([
             var iCurrent = oModel.getProperty("/currentIndex");
             oModel.setProperty("/currentIndex", iCurrent - 1);
             oModel.setProperty("/currentItem", oModel.getProperty("/selectedItems")[iCurrent - 1]);
+            oModel.setProperty("/isNegociando", false); // Reseta modo negociação ao navegar[cite: 2]
         },
 
         onDialogCancel: function () {
-            if (this._oView.byId("dialogParametricas")) this._oView.byId("dialogParametricas").close();
-            if (this._oView.byId("dialogCadastroParametrica")) this._oView.byId("dialogCadastroParametrica").close();
+            var oDialog = this._oView.byId("dialogParametricas");
+            if (oDialog) {
+                oDialog.getModel("dialog").setProperty("/isNegociando", false);
+                oDialog.close();
+            }
         }
     });
 });
