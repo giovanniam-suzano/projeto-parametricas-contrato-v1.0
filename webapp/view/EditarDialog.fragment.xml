@@ -2,15 +2,15 @@
     xmlns:core="sap.ui.core"
     xmlns:form="sap.ui.layout.form"
     xmlns="sap.m">
-    <Dialog id="dialogCadastroParametrica" contentWidth="950px" contentHeight="750px" verticalScrolling="true">
+    <Dialog id="dialogParametricas" contentWidth="950px" contentHeight="750px" verticalScrolling="true">
         <customHeader>
             <Bar>
                 <contentLeft>
                     <HBox alignItems="Center" renderType="Bare">
-                        <core:Icon src="sap-icon://add-coursebook" class="sapUiTinyMarginEnd" />
-                        <Title text="Cadastrando Paramétricas de Cabeçalho" visible="{dialog>/isAllSelected}" />
-                        <Title text="Inserindo Paramétricas do Item 1" visible="{= !${dialog>/isAllSelected} &amp;&amp; ${dialog>/selectedCount} === 1 }" />
-                        <Title text="{= 'Inserindo Paramétricas do Item ' + (${dialog>/currentIndex} + 1) + ' de ' + ${dialog>/selectedCount} }" 
+                        <core:Icon src="sap-icon://request" class="sapUiTinyMarginEnd" />
+                        <Title text="Cabeçalho" visible="{dialog>/isAllSelected}" />
+                        <Title text="Item 1" visible="{= !${dialog>/isAllSelected} &amp;&amp; ${dialog>/selectedCount} === 1 }" />
+                        <Title text="{= 'Item ' + (${dialog>/currentIndex} + 1) + ' de ' + ${dialog>/selectedCount} }" 
                                visible="{= !${dialog>/isAllSelected} &amp;&amp; ${dialog>/selectedCount} > 1 }" />
                     </HBox>
                 </contentLeft>
@@ -25,16 +25,15 @@
                                      emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0"
                                      columnsXL="1" columnsL="1" columnsM="1">
                         <core:Title text="{= ${dialog>ordem} + 'º Índice (Geral)'}" />
-                        <Label text="Índice" required="true" />
-                        <ComboBox selectedKey="{dialog>tipoIndice}" width="100%">
-                            <core:Item key="IPCA" text="IPCA" /><core:Item key="IGP-M" text="IGP-M" />
-                        </ComboBox>
-                        <Label text="Valor do índice selecionado" />
-                        <Input value="{dialog>valorIndice}" type="Number" width="100%" />
+                        <Label text="Índice" /><Input value="{dialog>tipoIndice}" editable="false" width="100%" />
+                        <Label text="Valor do índice selecionado" /><Input value="{dialog>valorIndice}" editable="false" width="100%" />
+                        <Label text="Variação(%)" /><Input value="{dialog>variacao}" editable="false" type="Number" width="100%" />
+                        <Label text="Novo valor com a Variação" /><Input value="{dialog>novoValor}" editable="false" width="100%" />
                         <Label text="Peso (%)" required="true" />
-                        <Input value="{dialog>peso}" change=".onPesoChange" width="100%" />
+                        <Input value="{dialog>peso}" change=".onPesoChange" editable="{dialog>/isNegociando}" width="100%" />
                         <Label text="Deseja adicionar mais um índice" />
-                        <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndiceGlobal" width="100%">
+                        <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndiceGlobal" width="100%" 
+                                  editable="{dialog>/isNegociando}">
                             <core:Item key="SIM" text="Sim" /><core:Item key="NAO" text="Não" />
                         </ComboBox>
                     </form:SimpleForm>
@@ -54,6 +53,7 @@
                         <Label text="Unidade" /><Text text="{dialog>unidade}" />
                         <Label text="Valor da Unidade" /><Text text="{dialog>valorUnitario}" />
                         <Label text="Valor Total" /><Text text="{dialog>valorTotal}" />
+                        <Label text="Valor Sugerido" /><Text text="{dialog>valorSugerido}" />
                     </form:SimpleForm>
                     <VBox items="{path: 'dialog>indices'}">
                         <form:SimpleForm layout="ResponsiveGridLayout" editable="true" 
@@ -61,16 +61,15 @@
                                          emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0"
                                          columnsXL="1" columnsL="1" columnsM="1">
                             <core:Title text="{= ${dialog>ordem} + 'º Índice'}" />
-                            <Label text="Tipo" required="true" />
-                            <ComboBox selectedKey="{dialog>tipoIndice}" width="100%">
-                                <core:Item key="IPCA" text="IPCA" /><core:Item key="IGP-M" text="IGP-M" />
-                            </ComboBox>
-                            <Label text="Valor do índice selecionado" />
-                            <Input value="{dialog>valorIndice}" type="Number" width="100%" />
+                            <Label text="Índice" /><Input value="{dialog>tipoIndice}" editable="false" width="100%" />
+                            <Label text="Valor do índice selecionado" /><Input value="{dialog>valorIndice}" editable="false" width="100%" />
+                            <Label text="Variação (%)" /><Input value="{dialog>variacao}" editable="false" type="Number" width="100%" />
+                            <Label text="Novo valor com a Variação" /><Input value="{dialog>novoValor}" editable="false" width="100%" />
                             <Label text="Peso (%)" required="true" />
-                            <Input value="{dialog>peso}" change=".onPesoChange" width="100%"/>
+                            <Input value="{dialog>peso}" change=".onPesoChange" editable="{dialog>/isNegociando}" width="100%"/>
                             <Label text="Deseja adicionar mais um índice" />
-                            <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndice" width="100%">
+                            <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndice" width="100%" 
+                                      editable="{dialog>/isNegociando}">
                                 <core:Item key="SIM" text="Sim" /><core:Item key="NAO" text="Não" />
                             </ComboBox>
                         </form:SimpleForm>
@@ -79,10 +78,14 @@
             </VBox>
         </content>
         <buttons>
-            <Button text="Voltar" press=".onDialogVoltar" visible="{= !${dialog>/isAllSelected} &amp;&amp; ${dialog>/currentIndex} > 0 }" />
-            <Button text="Próximo Passo" type="Emphasized" press=".onDialogProximo" visible="{= !${dialog>/isAllSelected} &amp;&amp; (${dialog>/currentIndex} + 1) &lt; ${dialog>/selectedCount} }" />
-            <Button text="Salvar" type="Accept" press=".onSalvar" visible="{= ${dialog>/isAllSelected} || (${dialog>/currentIndex} + 1) === ${dialog>/selectedCount} }" />
-            <Button text="Cancelar" press=".onDialogCancel" />
+            <Button text="Voltar" press=".onDialogVoltar" visible="{= !${dialog>/isAllSelected} &amp;&amp; ${dialog>/currentIndex} > 0 &amp;&amp; !${dialog>/isNegociando} }" />
+            <Button text="Próximo Passo" type="Emphasized" press=".onDialogProximo" visible="{= !${dialog>/isAllSelected} &amp;&amp; (${dialog>/currentIndex} + 1) &lt; ${dialog>/selectedCount} &amp;&amp; !${dialog>/isNegociando} }" />
+            <!-- Aplicar Reajuste: Aparece apenas no final da navegação ou cabeçalho total[cite: 4] -->
+            <Button text="Aplicar Reajuste" type="Accept" press=".onAplicarReajuste" visible="{= !${dialog>/isNegociando} &amp;&amp; (${dialog>/isAllSelected} || (${dialog>/currentIndex} + 1) === ${dialog>/selectedCount}) }" />
+            <Button text="Negociar" type="Reject" press=".onNegociar" visible="{= !${dialog>/isNegociando} }" />
+            <Button text="Salvar" type="Accept" press=".onSalvarNegociacao" visible="{dialog>/isNegociando}" />
+            <Button text="Cancelar" press=".onCancelarNegociacao" visible="{dialog>/isNegociando}" />
+            <Button text="Sair" press=".onDialogCancel" />
         </buttons>
     </Dialog>
 </core:FragmentDefinition>

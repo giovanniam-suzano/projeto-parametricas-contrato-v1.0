@@ -3,39 +3,43 @@ sap.ui.define([
     "sap/ui/core/Fragment",
     "sap/m/MessageToast",
     "sap/ui/model/json/JSONModel",
-    "./ParametricasDialog.controller",
+    "./EditarDialog.controller",
     "./CadastroDialog.controller"
-], function (Controller, Fragment, MessageToast, JSONModel, ParametricasDialogController, CadastroDialogController) {
+], function (Controller, Fragment, MessageToast, JSONModel, EditarDialogController, CadastroDialogController) {
     "use strict";
 
     return Controller.extend("com.parametricas.parametricasapp.controller.Main", {
 
         onInit: function () {
-            // MOCK ORIGINAL COMPLETO (Itens 1 a 14)
             this._allContratosMock = [
                 {
                     ncontrato: "212354",
-                    dataBaseParametrica: "30/02/2024",
+                    dataBaseParametrica: "12/02/2025",
                     periodo: "mensal",
-                    dataBaseReajuste: "01/05/2026",
+                    dataBaseReajuste: "01/06/2026",
                     items: [
-                        { id: "1", material: "Parafuso", ncontrato: "212354", ni: "12.345.678-1", quantidade: 12, unidade: "UN", valorUnitario: "150,00", valorTotal: "1.800,00 REAL", valorSugerido: "1.750,00 REAL" },
-                        { id: "2", material: "Martelo", ncontrato: "212354", ni: "12.345.678-2", quantidade: 5, unidade: "UN", valorUnitario: "247,00", valorTotal: "1.235,00 REAL", valorSugerido: "1.200,00 REAL" },
-                        { id: "3", material: "Chave de Fenda", ncontrato: "212354", ni: "12.345.678-3", quantidade: 8, unidade: "UN", valorUnitario: "85,00", valorTotal: "680,00 REAL", valorSugerido: "650,00 REAL" },
-                        { id: "4", material: "Chave Philips", ncontrato: "212354", ni: "12.345.678-4", quantidade: 10, unidade: "UN", valorUnitario: "92,00", valorTotal: "920,00 REAL", valorSugerido: "900,00 REAL" },
-                        { id: "5", material: "Alicate", ncontrato: "212354", ni: "12.345.678-5", quantidade: 6, unidade: "UN", valorUnitario: "180,00", valorTotal: "1.080,00 REAL", valorSugerido: "1.050,00 REAL" },
-                        { id: "6", material: "Trena", ncontrato: "212354", ni: "12.345.678-6", quantidade: 4, unidade: "UN", valorUnitario: "210,00", valorTotal: "840,00 REAL", valorSugerido: "820,00 REAL" },
-                        { id: "7", material: "Serrote", ncontrato: "212354", ni: "12.345.678-7", quantidade: 3, unidade: "UN", valorUnitario: "320,00", valorTotal: "960,00 REAL", valorSugerido: "930,00 REAL" },
-                        { id: "8", material: "Furadeira", ncontrato: "212354", ni: "12.345.678-8", quantidade: 2, unidade: "UN", valorUnitario: "1.250,00", valorTotal: "2.500,00 REAL", valorSugerido: "2.450,00 REAL" },
-                        { id: "9", material: "Lixadeira", ncontrato: "212354", ni: "12.345.678-9", quantidade: 2, unidade: "UN", valorUnitario: "980,00", valorTotal: "1.960,00 REAL", valorSugerido: "1.900,00 REAL" },
-                        { id: "10", material: "Disco de Corte", ncontrato: "212354", ni: "12.345.679-0", quantidade: 15, unidade: "UN", valorUnitario: "45,00", valorTotal: "675,00 REAL", valorSugerido: "650,00 REAL" },
-                        { id: "11", material: "Broca", ncontrato: "212354", ni: "12.345.679-1", quantidade: 20, unidade: "UN", valorUnitario: "38,00", valorTotal: "760,00 REAL", valorSugerido: "720,00 REAL" },
-                        { id: "12", material: "Luvas de Proteção", ncontrato: "212354", ni: "12.345.679-2", quantidade: 12, unidade: "UN", valorUnitario: "55,00", valorTotal: "660,00 REAL", valorSugerido: "630,00 REAL" },
-                        { id: "13", material: "Óculos de Segurança", ncontrato: "212354", ni: "12.345.679-3", quantidade: 10, unidade: "UN", valorUnitario: "70,00", valorTotal: "700,00 REAL", valorSugerido: "680,00 REAL" },
-                        { id: "14", material: "Capacete de Segurança", ncontrato: "212354", ni: "12.345.679-4", quantidade: 5, unidade: "UN", valorUnitario: "160,00", valorTotal: "800,00 REAL", valorSugerido: "780,00 REAL" }
+                        { id: "1", material: "Cabo de Rede CAT6", ncontrato: "212354", ni: "21.235.401-1", quantidade: 150, unidade: "M", valorUnitario: "7,20", valorTotal: "1.080,00 REAL", valorSugerido: "1.180,00 REAL" },
+                        { id: "2", material: "Patch Panel 24P", ncontrato: "212354", ni: "21.235.401-2", quantidade: 6, unidade: "UN", valorUnitario: "280,00", valorTotal: "1.680,00 REAL", valorSugerido: "1.850,00 REAL" },
+                        { id: "3", material: "Rack de Piso 40U", ncontrato: "212354", ni: "21.235.401-3", quantidade: 2, unidade: "UN", valorUnitario: "2.950,00", valorTotal: "5.900,00 REAL", valorSugerido: "6.350,00 REAL" },
+                        { id: "4", material: "Switch Gerenciável 48P", ncontrato: "212354", ni: "21.235.401-4", quantidade: 3, unidade: "UN", valorUnitario: "3.200,00", valorTotal: "9.600,00 REAL", valorSugerido: "10.300,00 REAL" },
+                        { id: "5", material: "Organizador de Cabos", ncontrato: "212354", ni: "21.235.401-5", quantidade: 12, unidade: "UN", valorUnitario: "65,00", valorTotal: "780,00 REAL", valorSugerido: "850,00 REAL" },
+                        { id: "6", material: "Nobreak 3000VA", ncontrato: "212354", ni: "21.235.401-6", quantidade: 2, unidade: "UN", valorUnitario: "4.400,00", valorTotal: "8.800,00 REAL", valorSugerido: "9.500,00 REAL" }
                     ]
                 },
-                
+                {
+                    ncontrato: "212355",
+                    dataBaseParametrica: "20/03/2025",
+                    periodo: "anual",
+                    dataBaseReajuste: "15/08/2027",
+                    items: [
+                        { id: "1", material: "Sensor de Temperatura Industrial", ncontrato: "212355", ni: "21.235.502-1", quantidade: 10, unidade: "UN", valorUnitario: "520,00", valorTotal: "5.200,00 REAL", valorSugerido: "5.650,00 REAL" },
+                        { id: "2", material: "Controlador Lógico Programável (CLP)", ncontrato: "212355", ni: "21.235.502-2", quantidade: 4, unidade: "UN", valorUnitario: "6.800,00", valorTotal: "27.200,00 REAL", valorSugerido: "29.000,00 REAL" },
+                        { id: "3", material: "Módulo de Expansão Digital", ncontrato: "212355", ni: "21.235.502-3", quantidade: 6, unidade: "UN", valorUnitario: "1.250,00", valorTotal: "7.500,00 REAL", valorSugerido: "8.100,00 REAL" },
+                        { id: "4", material: "Fonte Chaveada Industrial", ncontrato: "212355", ni: "21.235.502-4", quantidade: 5, unidade: "UN", valorUnitario: "890,00", valorTotal: "4.450,00 REAL", valorSugerido: "4.850,00 REAL" },
+                        { id: "5", material: "Terminal de Operação (IHM)", ncontrato: "212355", ni: "21.235.502-5", quantidade: 3, unidade: "UN", valorUnitario: "3.600,00", valorTotal: "10.800,00 REAL", valorSugerido: "11.700,00 REAL" },
+                        { id: "6", material: "Cabo de Instrumentação", ncontrato: "212355", ni: "21.235.502-6", quantidade: 250, unidade: "M", valorUnitario: "8,40", valorTotal: "2.100,00 REAL", valorSugerido: "2.300,00 REAL" }
+                    ]
+                }
             ];
 
             this.getView().setModel(new JSONModel({
@@ -44,23 +48,19 @@ sap.ui.define([
                 headerData: {}
             }));
 
-            // Inicialização dos Controladores das Janelas[cite: 2, 3]
-            this._oDialogController = new ParametricasDialogController(this.getView());
+            this._oEditarDialogController = new EditarDialogController(this.getView());
             this._oCadastroDialogController = new CadastroDialogController(this.getView());
         },
 
         onSearch: function (oEvent) {
             var sQuery = oEvent.getParameter("query") || oEvent.getSource().getValue();
             var oModel = this.getView().getModel();
-
             if (!sQuery) {
                 oModel.setProperty("/contratos", []);
                 oModel.setProperty("/headerVisible", false);
                 return;
             }
-
             var oContrato = this._allContratosMock.find(item => item.ncontrato === sQuery);
-
             if (oContrato) {
                 oModel.setProperty("/contratos", oContrato.items);
                 oModel.setProperty("/headerData", {
@@ -82,24 +82,17 @@ sap.ui.define([
                 MessageToast.show("Selecione ao menos um item");
                 return;
             }
-            this._abrirDialogParametricas(aItems.map(o => o.getBindingContext()));
-        },
-
-        onConcluidoPress: function () {
-            MessageToast.show("Processo concluído.");
+            this._abrirDialogEditar(aItems.map(o => o.getBindingContext()));
         },
 
         onCadastroParametricaPress: function () {
             var oView = this.getView();
             var aSelectedItems = this.byId("tabelaContratos").getSelectedItems();
             var iTotalTabela = oView.getModel().getProperty("/contratos").length;
-
             if (aSelectedItems.length === 0) {
-                MessageToast.show("Selecione ao menos um item para cadastrar.");
+                MessageToast.show("Selecione ao menos um item.");
                 return;
             }
-
-            // Garante que a Promise do Fragmento seja criada corretamente
             if (!this._pCadastroDialog) {
                 this._pCadastroDialog = Fragment.load({
                     id: oView.getId(),
@@ -110,84 +103,55 @@ sap.ui.define([
                     return oDialog;
                 });
             }
-
             this._pCadastroDialog.then(function (oDialog) {
                 var aItems = aSelectedItems.map(function (o, i) {
                     return Object.assign({}, o.getBindingContext().getObject(), {
                         seq: i + 1,
+                        // Unificando para 'indices' em todos os itens individuais[cite: 3]
                         indices: [{ ordem: 1, tipoIndice: "", valorIndice: "", peso: "", addMore: "NAO" }]
                     });
                 });
-
-                var bAllSelected = (aItems.length === iTotalTabela);
-
                 oDialog.setModel(new JSONModel({
-                    isAllSelected: bAllSelected,
+                    isAllSelected: (aItems.length === iTotalTabela),
                     selectedCount: aItems.length,
                     currentIndex: 0,
                     currentItem: aItems[0],
                     selectedItems: aItems,
-                    // Garante que o Cenário 1 (Cabeçalho) tenha o array inicial[cite: 1]
-                    globalIndices: [{ ordem: 1, tipoIndice: "", valorIndice: "", peso: "", addMore: "NAO" }],
-                    // Garante que o Cenário 2 e 3 (Itens) tenha o array inicial[cite: 1]
-                    indicesCadastro: [{ ordem: 1, tipoIndice: "", valorIndice: "", peso: "", addMore: "NAO" }]
+                    globalIndices: [{ ordem: 1, tipoIndice: "", valorIndice: "", peso: "", addMore: "NAO" }]
                 }), "dialog");
-
                 oDialog.open();
             });
         },
 
-        _abrirDialogParametricas: function (aContexts) {
+        _abrirDialogEditar: function (aContexts) {
             var oView = this.getView();
-            
-            // Correção da inicialização da Promise para evitar erro de 'undefined'
-            if (!this._pParametricasDialog) {
-                this._pParametricasDialog = Fragment.load({
+            if (!this._pEditarDialog) {
+                this._pEditarDialog = Fragment.load({
                     id: oView.getId(),
-                    name: "com.parametricas.parametricasapp.view.ParametricasDialog",
-                    controller: this._oDialogController
+                    name: "com.parametricas.parametricasapp.view.EditarDialog",
+                    controller: this._oEditarDialogController
                 }).then(function (oDialog) {
                     oView.addDependent(oDialog);
                     return oDialog;
                 });
             }
-
-            this._pParametricasDialog.then(function (oDialog) {
+            this._pEditarDialog.then(function (oDialog) {
                 var iTotalItens = oView.getModel().getProperty("/contratos").length;
                 var aItems = aContexts.map(function (oCtx, i) {
-                    var oObj = oCtx.getObject();
-                    return Object.assign({}, oObj, {
+                    return Object.assign({}, oCtx.getObject(), {
                         seq: i + 1,
-                        indices: [{ 
-                            ordem: 1, 
-                            tipoIndice: "IPCA", 
-                            valorIndice: "1,25", 
-                            variacao: "0,5", 
-                            novoValor: "1,75", 
-                            peso: "100", 
-                            addMore: "NAO" 
-                        }]
+                        indices: [{ ordem: 1, tipoIndice: "IPCA", valorIndice: "1.25", variacao: "0.5", novoValor: "1.75", peso: "100", addMore: "NAO" }]
                     });
                 });
-
                 oDialog.setModel(new JSONModel({
                     isAllSelected: (aItems.length === iTotalItens),
                     selectedCount: aItems.length,
                     currentIndex: 0,
                     currentItem: aItems[0],
                     selectedItems: aItems,
-                    isNegociando: false, // Inicia sempre bloqueado[cite: 2]
-                    globalIndices: [{ 
-                        ordem: 1, 
-                        tipoIndice: "IPCA", 
-                        valorIndice: "1,25", 
-                        variacao: "0,5", 
-                        novoValor: "1,75", 
-                        peso: "100", 
-                        addMore: "NAO" 
-                    }]
+                    isNegociando: false,
+                    globalIndices: [{ ordem: 1, tipoIndice: "IPCA", valorIndice: "1.25", variacao: "0.5", novoValor: "1.75", peso: "100", addMore: "NAO" }]
                 }), "dialog");
-
                 oDialog.open();
             });
         }

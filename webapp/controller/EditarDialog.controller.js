@@ -4,7 +4,7 @@ sap.ui.define([
 ], function (Controller, MessageToast) {
     "use strict";
 
-    return Controller.extend("com.parametricas.parametricasapp.controller.ParametricasDialog", {
+    return Controller.extend("com.parametricas.parametricasapp.controller.EditarDialog", {
         
         constructor: function (oView) { 
             this._oView = oView; 
@@ -22,14 +22,16 @@ sap.ui.define([
         },
 
         onAplicarReajuste: function () {
+            // Lógica final de aplicação (Fase 3) - Por enquanto fecha
             MessageToast.show("Reajuste aplicado com sucesso!");
             this.onDialogCancel();
         },
 
         onSalvarNegociacao: function () {
+            // CORREÇÃO: Apenas volta para o estado normal sem fechar[cite: 2]
             var oModel = this._oView.byId("dialogParametricas").getModel("dialog");
-            oModel.setProperty("/isNegociando", true);
-            MessageToast.show("Negociação Salva!");
+            oModel.setProperty("/isNegociando", false);
+            MessageToast.show("Negociação salva (estado atualizado).");
         },
 
         onAdicionarIndice: function (oEvent) {
@@ -82,7 +84,7 @@ sap.ui.define([
             var iCurrent = oModel.getProperty("/currentIndex");
             oModel.setProperty("/currentIndex", iCurrent + 1);
             oModel.setProperty("/currentItem", oModel.getProperty("/selectedItems")[iCurrent + 1]);
-            oModel.setProperty("/isNegociando", false); // Reseta modo negociação ao navegar[cite: 2]
+            oModel.setProperty("/isNegociando", false); 
         },
 
         onDialogVoltar: function () {
@@ -90,7 +92,7 @@ sap.ui.define([
             var iCurrent = oModel.getProperty("/currentIndex");
             oModel.setProperty("/currentIndex", iCurrent - 1);
             oModel.setProperty("/currentItem", oModel.getProperty("/selectedItems")[iCurrent - 1]);
-            oModel.setProperty("/isNegociando", false); // Reseta modo negociação ao navegar[cite: 2]
+            oModel.setProperty("/isNegociando", false); 
         },
 
         onDialogCancel: function () {
