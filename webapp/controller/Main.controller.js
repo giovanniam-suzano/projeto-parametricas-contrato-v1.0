@@ -34,7 +34,8 @@ sap.ui.define([
                         { id: "13", material: "Óculos de Segurança", ncontrato: "212354", ni: "12.345.679-3", quantidade: 10, unidade: "UN", valorUnitario: "70,00", valorTotal: "700,00 REAL", valorSugerido: "680,00 REAL" },
                         { id: "14", material: "Capacete de Segurança", ncontrato: "212354", ni: "12.345.679-4", quantidade: 5, unidade: "UN", valorUnitario: "160,00", valorTotal: "800,00 REAL", valorSugerido: "780,00 REAL" }
                     ]
-                }
+                },
+                
             ];
 
             this.getView().setModel(new JSONModel({
