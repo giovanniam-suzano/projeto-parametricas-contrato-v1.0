@@ -17,59 +17,76 @@
             </Bar>
         </customHeader>
         <content>
-            <!-- CENÁRIO 1: CABEÇALHO -->
             <VBox class="sapUiSmallMargin" visible="{dialog>/isAllSelected}">
+                <form:SimpleForm layout="ResponsiveGridLayout" editable="false" 
+                                 labelSpanL="4" emptySpanL="4" columnsL="1" title="Dados do Cabeçalho">
+                    <Label text="Nº do Contrato" />
+                    <Text text="{dialog>/currentItem/ncontrato}" />
+                    <Label text="Reajuste Total (%)" />
+                    <Text text="{dialog>/currentItem/reajusteTotal}" />
+                </form:SimpleForm>
+
                 <VBox items="{path: 'dialog>/globalIndices'}">
                     <form:SimpleForm layout="ResponsiveGridLayout" editable="true" 
                                      labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
                                      emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0"
                                      columnsXL="1" columnsL="1" columnsM="1">
                         <core:Title text="{= ${dialog>ordem} + 'º Índice (Geral)'}" />
-                        <Label text="Índice" /><Input value="{dialog>tipoIndice}" editable="false" width="100%" />
-                        <Label text="Valor do índice selecionado" /><Input value="{dialog>valorIndice}" editable="false" width="100%" />
-                        <Label text="Variação(%)" /><Input value="{dialog>variacao}" editable="false" type="Number" width="100%" />
-                        <Label text="Novo valor com a Variação" /><Input value="{dialog>novoValor}" editable="false" width="100%" />
-                        <Label text="Peso (%)" required="true" />
-                        <Input value="{dialog>peso}" change=".onPesoChange" editable="{dialog>/isNegociando}" width="100%" />
+                        
+                        <Label text="Índice" />
+                        <Input value="{dialog>tipoIndice}" editable="false" width="100%" />
+                        
+                        <Label text="Peso (%)" />
+                        <Input value="{dialog>peso}" editable="false" width="100%" />
+
+                        <Label text="Reajuste Projetado (%)" />
+                        <Input value="{dialog>reajusteProjetado}" type="Number" 
+                               editable="{dialog>/isNegociando}" width="100%" />
+
                         <Label text="Deseja adicionar mais um índice" />
-                        <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndiceGlobal" width="100%" 
-                                  editable="{dialog>/isNegociando}">
+                        <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndiceGlobal" 
+                                  width="100%" editable="{dialog>/isNegociando}">
                             <core:Item key="SIM" text="Sim" /><core:Item key="NAO" text="Não" />
                         </ComboBox>
                     </form:SimpleForm>
                 </VBox>
             </VBox>
 
-            <!-- CENÁRIOS 2 e 3: ITENS -->
             <VBox items="{path: 'dialog>/selectedItems'}" visible="{= !${dialog>/isAllSelected} }">
                 <VBox class="sapUiSmallMargin" visible="{= ${dialog>seq} === (${dialog>/currentIndex} + 1) }">
                     <form:SimpleForm layout="ResponsiveGridLayout" editable="false" 
                                      labelSpanL="4" emptySpanL="4" columnsL="1" title="Dados do Item Selecionado">
                         <Label text="ID" /><Text text="{dialog>id}" />
-                        <Label text="Nº do Contrato" /><Text text="{dialog>ncontrato}" />
-                        <Label text="N.I do Material" /><Text text="{dialog>ni}" />
+                        <Label text="Nº Contrato" /><Text text="{dialog>ncontrato}" />
+                        <Label text="N.I do material" /><Text text="{dialog>ni}" />
                         <Label text="Material" /><Text text="{dialog>material}" />
                         <Label text="Quantidade" /><Text text="{dialog>quantidade}" />
                         <Label text="Unidade" /><Text text="{dialog>unidade}" />
                         <Label text="Valor da Unidade" /><Text text="{dialog>valorUnitario}" />
                         <Label text="Valor Total" /><Text text="{dialog>valorTotal}" />
-                        <Label text="Valor Sugerido" /><Text text="{dialog>valorSugerido}" />
+                        <Label text="Reajuste Total (%)" /><Text text="{dialog>reajusteTotal}" />
                     </form:SimpleForm>
+                    
                     <VBox items="{path: 'dialog>indices'}">
                         <form:SimpleForm layout="ResponsiveGridLayout" editable="true" 
                                          labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
                                          emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0"
                                          columnsXL="1" columnsL="1" columnsM="1">
                             <core:Title text="{= ${dialog>ordem} + 'º Índice'}" />
-                            <Label text="Índice" /><Input value="{dialog>tipoIndice}" editable="false" width="100%" />
-                            <Label text="Valor do índice selecionado" /><Input value="{dialog>valorIndice}" editable="false" width="100%" />
-                            <Label text="Variação (%)" /><Input value="{dialog>variacao}" editable="false" type="Number" width="100%" />
-                            <Label text="Novo valor com a Variação" /><Input value="{dialog>novoValor}" editable="false" width="100%" />
-                            <Label text="Peso (%)" required="true" />
-                            <Input value="{dialog>peso}" change=".onPesoChange" editable="{dialog>/isNegociando}" width="100%"/>
+                            
+                            <Label text="Índice" />
+                            <Input value="{dialog>tipoIndice}" editable="false" width="100%" />
+                            
+                            <Label text="Peso (%)" />
+                            <Input value="{dialog>peso}" editable="false" width="100%"/>
+
+                            <Label text="Reajuste Projetado (%)" />
+                            <Input value="{dialog>reajusteProjetado}" type="Number" 
+                                   editable="{dialog>/isNegociando}" width="100%" />
+
                             <Label text="Deseja adicionar mais um índice" />
-                            <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndice" width="100%" 
-                                      editable="{dialog>/isNegociando}">
+                            <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndice" 
+                                      width="100%" editable="{dialog>/isNegociando}">
                                 <core:Item key="SIM" text="Sim" /><core:Item key="NAO" text="Não" />
                             </ComboBox>
                         </form:SimpleForm>
@@ -80,7 +97,6 @@
         <buttons>
             <Button text="Voltar" press=".onDialogVoltar" visible="{= !${dialog>/isAllSelected} &amp;&amp; ${dialog>/currentIndex} > 0 &amp;&amp; !${dialog>/isNegociando} }" />
             <Button text="Próximo Passo" type="Emphasized" press=".onDialogProximo" visible="{= !${dialog>/isAllSelected} &amp;&amp; (${dialog>/currentIndex} + 1) &lt; ${dialog>/selectedCount} &amp;&amp; !${dialog>/isNegociando} }" />
-            <!-- Aplicar Reajuste: Aparece apenas no final da navegação ou cabeçalho total[cite: 4] -->
             <Button text="Aplicar Reajuste" type="Accept" press=".onAplicarReajuste" visible="{= !${dialog>/isNegociando} &amp;&amp; (${dialog>/isAllSelected} || (${dialog>/currentIndex} + 1) === ${dialog>/selectedCount}) }" />
             <Button text="Negociar" type="Reject" press=".onNegociar" visible="{= !${dialog>/isNegociando} }" />
             <Button text="Salvar" type="Accept" press=".onSalvarNegociacao" visible="{dialog>/isNegociando}" />

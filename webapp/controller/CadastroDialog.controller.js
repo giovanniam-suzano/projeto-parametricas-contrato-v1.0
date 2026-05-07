@@ -31,7 +31,6 @@ sap.ui.define([
         },
 
         onSalvar: function () {
-            // Lógica de salvamento será tratada na Fase 3
             MessageToast.show("Paramétricas salvas com sucesso!");
             this.onDialogCancel();
         },
@@ -42,8 +41,6 @@ sap.ui.define([
             }
         },
 
-        // --- AS TRÊS FUNÇÕES EXATAMENTE COMO SOLICITADO ---
-
         onAdicionarIndice: function (oEvent) {
             var oComboBox = oEvent.getSource();
             var oModel = oComboBox.getModel("dialog");
@@ -51,6 +48,7 @@ sap.ui.define([
             var sPath = oCtx.getPath().substring(0, oCtx.getPath().lastIndexOf("/"));
             var aIndices = oModel.getProperty(sPath);
             if (oComboBox.getSelectedKey() === "SIM") {
+                // Adicionando reajusteProjetado na nova linha
                 aIndices.push({ ordem: aIndices.length + 1, tipoIndice: "", peso: "", addMore: "NAO" });
             } else {
                 aIndices.splice(aIndices.indexOf(oCtx.getObject()) + 1);
@@ -63,6 +61,7 @@ sap.ui.define([
             var oModel = oEvent.getSource().getModel("dialog");
             var aIndices = oModel.getProperty("/globalIndices");
             if (oEvent.getSource().getSelectedKey() === "SIM") {
+                // Adicionando reajusteProjetado na nova linha global
                 aIndices.push({ ordem: aIndices.length + 1, tipoIndice: "", peso: "", addMore: "NAO" });
             } else {
                 aIndices.splice(aIndices.indexOf(oEvent.getSource().getBindingContext("dialog").getObject()) + 1);
@@ -75,7 +74,8 @@ sap.ui.define([
             var oModel = oEvent.getSource().getModel("dialog");
             var aIndices = oModel.getProperty("/indicesCadastro");
             if (oEvent.getSource().getSelectedKey() === "SIM") {
-                aIndices.push({ ordem: aIndices.length + 1, valor: "", tipoIndice: "", peso: "", dataBaseParametrica: "", addMore: "NAO" });
+                // Adicionando reajusteProjetado no cadastro individual
+                aIndices.push({ ordem: aIndices.length + 1, tipoIndice: "", peso: "", addMore: "NAO" });
             } else {
                 aIndices.splice(aIndices.indexOf(oEvent.getSource().getBindingContext("dialog").getObject()) + 1);
             }
@@ -83,7 +83,6 @@ sap.ui.define([
             oModel.refresh(true);
         },
 
-        // Adicionando o validador de peso para manter a consistência
         onPesoChange: function (oEvent) {
             var oInput = oEvent.getSource();
             var sVal = oInput.getValue().replace(",", ".");
@@ -92,7 +91,10 @@ sap.ui.define([
                 oInput.setValue("");
                 return;
             }
-            var aIndices = oInput.getModel("dialog").getProperty(oInput.getBindingContext("dialog").getPath().split("/indices")[0] + "/indices") || oInput.getModel("dialog").getProperty("/globalIndices") || oInput.getModel("dialog").getProperty("/indicesCadastro");
+            var aIndices = oInput.getModel("dialog").getProperty(oInput.getBindingContext("dialog").getPath().split("/indices")[0] + "/indices") 
+                           || oInput.getModel("dialog").getProperty("/globalIndices") 
+                           || oInput.getModel("dialog").getProperty("/indicesCadastro");
+            
             var fTotal = aIndices.reduce((acc, obj) => acc + (parseFloat(String(obj.peso).replace(",", ".")) || 0), 0);
             if (fTotal > 100) {
                 MessageToast.show("O total de peso do índice tem que ser menor ou igual a 100%");

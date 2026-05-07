@@ -22,13 +22,11 @@ sap.ui.define([
         },
 
         onAplicarReajuste: function () {
-            // Lógica final de aplicação (Fase 3) - Por enquanto fecha
             MessageToast.show("Reajuste aplicado com sucesso!");
             this.onDialogCancel();
         },
 
         onSalvarNegociacao: function () {
-            // CORREÇÃO: Apenas volta para o estado normal sem fechar[cite: 2]
             var oModel = this._oView.byId("dialogParametricas").getModel("dialog");
             oModel.setProperty("/isNegociando", false);
             MessageToast.show("Negociação salva (estado atualizado).");
@@ -41,7 +39,8 @@ sap.ui.define([
             var sPath = oCtx.getPath().substring(0, oCtx.getPath().lastIndexOf("/"));
             var aIndices = oModel.getProperty(sPath);
             if (oComboBox.getSelectedKey() === "SIM") {
-                aIndices.push({ ordem: aIndices.length + 1, tipoIndice: "", peso: "", addMore: "NAO" });
+                // Inserindo com reajusteProjetado para manter consistência com a v3.0
+                aIndices.push({ ordem: aIndices.length + 1, tipoIndice: "", peso: "", reajusteProjetado: "", addMore: "NAO" });
             } else {
                 aIndices.splice(aIndices.indexOf(oCtx.getObject()) + 1);
             }
@@ -53,7 +52,7 @@ sap.ui.define([
             var oModel = oEvent.getSource().getModel("dialog");
             var aIndices = oModel.getProperty("/globalIndices");
             if (oEvent.getSource().getSelectedKey() === "SIM") {
-                aIndices.push({ ordem: aIndices.length + 1, tipoIndice: "", peso: "", addMore: "NAO" });
+                aIndices.push({ ordem: aIndices.length + 1, tipoIndice: "", peso: "", reajusteProjetado: "", addMore: "NAO" });
             } else {
                 aIndices.splice(aIndices.indexOf(oEvent.getSource().getBindingContext("dialog").getObject()) + 1);
             }

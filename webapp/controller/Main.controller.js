@@ -18,12 +18,12 @@ sap.ui.define([
                     periodo: "mensal",
                     dataBaseReajuste: "01/06/2026",
                     items: [
-                        { id: "1", material: "Cabo de Rede CAT6", ncontrato: "212354", ni: "21.235.401-1", quantidade: 150, unidade: "M", valorUnitario: "7,20", valorTotal: "1.080,00 REAL", valorSugerido: "1.180,00 REAL" },
-                        { id: "2", material: "Patch Panel 24P", ncontrato: "212354", ni: "21.235.401-2", quantidade: 6, unidade: "UN", valorUnitario: "280,00", valorTotal: "1.680,00 REAL", valorSugerido: "1.850,00 REAL" },
-                        { id: "3", material: "Rack de Piso 40U", ncontrato: "212354", ni: "21.235.401-3", quantidade: 2, unidade: "UN", valorUnitario: "2.950,00", valorTotal: "5.900,00 REAL", valorSugerido: "6.350,00 REAL" },
-                        { id: "4", material: "Switch Gerenciável 48P", ncontrato: "212354", ni: "21.235.401-4", quantidade: 3, unidade: "UN", valorUnitario: "3.200,00", valorTotal: "9.600,00 REAL", valorSugerido: "10.300,00 REAL" },
-                        { id: "5", material: "Organizador de Cabos", ncontrato: "212354", ni: "21.235.401-5", quantidade: 12, unidade: "UN", valorUnitario: "65,00", valorTotal: "780,00 REAL", valorSugerido: "850,00 REAL" },
-                        { id: "6", material: "Nobreak 3000VA", ncontrato: "212354", ni: "21.235.401-6", quantidade: 2, unidade: "UN", valorUnitario: "4.400,00", valorTotal: "8.800,00 REAL", valorSugerido: "9.500,00 REAL" }
+                        { id: "1", material: "Cabo de Rede CAT6", ncontrato: "212354", ni: "21.235.401-1", quantidade: 150, unidade: "M", valorUnitario: "7,20", valorTotal: "1.086,70 REAL", reajusteTotal: "6.23%" },
+                        { id: "2", material: "Patch Panel 24P", ncontrato: "212354", ni: "21.235.401-2", quantidade: 6, unidade: "UN", valorUnitario: "280,00", valorTotal: "1.689,20 REAL", reajusteTotal: "9.20%" },
+                        { id: "3", material: "Rack de Piso 40U", ncontrato: "212354", ni: "21.235.401-3", quantidade: 2, unidade: "UN", valorUnitario: "2.950,00", valorTotal: "5.906,24 REAL", reajusteTotal: "6,24%" },
+                        { id: "4", material: "Switch Gerenciável 48P", ncontrato: "212354", ni: "21.235.401-4", quantidade: 3, unidade: "UN", valorUnitario: "3.200,00", valorTotal: "9.604,40 REAL", reajusteTotal: "4,40%" },
+                        { id: "5", material: "Organizador de Cabos", ncontrato: "212354", ni: "21.235.401-5", quantidade: 12, unidade: "UN", valorUnitario: "65,00", valorTotal: "785,00 REAL", reajusteTotal: "5.00%" },
+                        { id: "6", material: "Nobreak 3000VA", ncontrato: "212354", ni: "21.235.401-6", quantidade: 2, unidade: "UN", valorUnitario: "4.400,00", valorTotal: "8.817,34 REAL", reajusteTotal: "17,34%" }
                     ]
                 },
                 {
@@ -32,12 +32,9 @@ sap.ui.define([
                     periodo: "anual",
                     dataBaseReajuste: "15/08/2027",
                     items: [
-                        { id: "1", material: "Sensor de Temperatura Industrial", ncontrato: "212355", ni: "21.235.502-1", quantidade: 10, unidade: "UN", valorUnitario: "520,00", valorTotal: "5.200,00 REAL", valorSugerido: "5.650,00 REAL" },
-                        { id: "2", material: "Controlador Lógico Programável (CLP)", ncontrato: "212355", ni: "21.235.502-2", quantidade: 4, unidade: "UN", valorUnitario: "6.800,00", valorTotal: "27.200,00 REAL", valorSugerido: "29.000,00 REAL" },
-                        { id: "3", material: "Módulo de Expansão Digital", ncontrato: "212355", ni: "21.235.502-3", quantidade: 6, unidade: "UN", valorUnitario: "1.250,00", valorTotal: "7.500,00 REAL", valorSugerido: "8.100,00 REAL" },
-                        { id: "4", material: "Fonte Chaveada Industrial", ncontrato: "212355", ni: "21.235.502-4", quantidade: 5, unidade: "UN", valorUnitario: "890,00", valorTotal: "4.450,00 REAL", valorSugerido: "4.850,00 REAL" },
-                        { id: "5", material: "Terminal de Operação (IHM)", ncontrato: "212355", ni: "21.235.502-5", quantidade: 3, unidade: "UN", valorUnitario: "3.600,00", valorTotal: "10.800,00 REAL", valorSugerido: "11.700,00 REAL" },
-                        { id: "6", material: "Cabo de Instrumentação", ncontrato: "212355", ni: "21.235.502-6", quantidade: 250, unidade: "M", valorUnitario: "8,40", valorTotal: "2.100,00 REAL", valorSugerido: "2.300,00 REAL" }
+                        { id: "1", material: "Sensor Industrial", ncontrato: "212355", ni: "21.235.502-1", quantidade: 10, unidade: "UN", valorUnitario: "520,00", valorTotal: "5.382,00 REAL", reajusteTotal: "3,50%" },
+                        { id: "2", material: "Controlador CLP", ncontrato: "212355", ni: "21.235.502-2", quantidade: 4, unidade: "UN", valorUnitario: "6.800,00", valorTotal: "27.512,80 REAL", reajusteTotal: "1,15%" },
+                        { id: "3", material: "Fonte Chaveada", ncontrato: "212355", ni: "21.235.502-3", quantidade: 5, unidade: "UN", valorUnitario: "890,00", valorTotal: "4.628,00 REAL", reajusteTotal: "4,00%" }
                     ]
                 }
             ];
@@ -107,8 +104,8 @@ sap.ui.define([
                 var aItems = aSelectedItems.map(function (o, i) {
                     return Object.assign({}, o.getBindingContext().getObject(), {
                         seq: i + 1,
-                        // Unificando para 'indices' em todos os itens individuais[cite: 3]
-                        indices: [{ ordem: 1, tipoIndice: "", valorIndice: "", peso: "", addMore: "NAO" }]
+                        // v3.0: Usando reajusteProjetado no lugar de valorIndice
+                        indices: [{ ordem: 1, tipoIndice: "", peso: "", reajusteProjetado: "", addMore: "NAO" }]
                     });
                 });
                 oDialog.setModel(new JSONModel({
@@ -117,7 +114,7 @@ sap.ui.define([
                     currentIndex: 0,
                     currentItem: aItems[0],
                     selectedItems: aItems,
-                    globalIndices: [{ ordem: 1, tipoIndice: "", valorIndice: "", peso: "", addMore: "NAO" }]
+                    globalIndices: [{ ordem: 1, tipoIndice: "", peso: "", reajusteProjetado: "", addMore: "NAO" }]
                 }), "dialog");
                 oDialog.open();
             });
@@ -140,7 +137,8 @@ sap.ui.define([
                 var aItems = aContexts.map(function (oCtx, i) {
                     return Object.assign({}, oCtx.getObject(), {
                         seq: i + 1,
-                        indices: [{ ordem: 1, tipoIndice: "IPCA", valorIndice: "1.25", variacao: "0.5", novoValor: "1.75", peso: "100", addMore: "NAO" }]
+                        // v3.0: Inicializando com reajusteProjetado conforme as novas regras
+                        indices: [{ ordem: 1, tipoIndice: "IPCA", peso: "100", reajusteProjetado: "0.5", addMore: "NAO" }]
                     });
                 });
                 oDialog.setModel(new JSONModel({
@@ -150,10 +148,14 @@ sap.ui.define([
                     currentItem: aItems[0],
                     selectedItems: aItems,
                     isNegociando: false,
-                    globalIndices: [{ ordem: 1, tipoIndice: "IPCA", valorIndice: "1.25", variacao: "0.5", novoValor: "1.75", peso: "100", addMore: "NAO" }]
+                    globalIndices: [{ ordem: 1, tipoIndice: "IPCA", peso: "100", reajusteProjetado: "0.5", addMore: "NAO" }]
                 }), "dialog");
                 oDialog.open();
             });
+        },
+
+        onConcluidoPress: function () {
+            MessageToast.show("Processo concluído com sucesso!");
         }
     });
 });

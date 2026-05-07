@@ -17,7 +17,6 @@
             </Bar>
         </customHeader>
         <content>
-            <!-- CENÁRIO 1: CABEÇALHO -->
             <VBox class="sapUiSmallMargin" visible="{dialog>/isAllSelected}">
                 <VBox items="{path: 'dialog>/globalIndices'}">
                     <form:SimpleForm layout="ResponsiveGridLayout" editable="true" 
@@ -29,10 +28,10 @@
                         <ComboBox selectedKey="{dialog>tipoIndice}" width="100%">
                             <core:Item key="IPCA" text="IPCA" /><core:Item key="IGP-M" text="IGP-M" />
                         </ComboBox>
-                        <Label text="Valor do índice selecionado" />
-                        <Input value="{dialog>valorIndice}" type="Number" width="100%" />
+                        
                         <Label text="Peso (%)" required="true" />
                         <Input value="{dialog>peso}" change=".onPesoChange" width="100%" />
+
                         <Label text="Deseja adicionar mais um índice" />
                         <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndiceGlobal" width="100%">
                             <core:Item key="SIM" text="Sim" /><core:Item key="NAO" text="Não" />
@@ -41,14 +40,13 @@
                 </VBox>
             </VBox>
 
-            <!-- CENÁRIOS 2 e 3: ITENS -->
             <VBox items="{path: 'dialog>/selectedItems'}" visible="{= !${dialog>/isAllSelected} }">
                 <VBox class="sapUiSmallMargin" visible="{= ${dialog>seq} === (${dialog>/currentIndex} + 1) }">
                     <form:SimpleForm layout="ResponsiveGridLayout" editable="false" 
                                      labelSpanL="4" emptySpanL="4" columnsL="1" title="Dados do Item Selecionado">
                         <Label text="ID" /><Text text="{dialog>id}" />
-                        <Label text="Nº do Contrato" /><Text text="{dialog>ncontrato}" />
-                        <Label text="N.I do Material" /><Text text="{dialog>ni}" />
+                        <Label text="Nº Contrato" /><Text text="{dialog>ncontrato}" />
+                        <Label text="N.I do material" /><Text text="{dialog>ni}" />
                         <Label text="Material" /><Text text="{dialog>material}" />
                         <Label text="Quantidade" /><Text text="{dialog>quantidade}" />
                         <Label text="Unidade" /><Text text="{dialog>unidade}" />
@@ -61,14 +59,14 @@
                                          emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0"
                                          columnsXL="1" columnsL="1" columnsM="1">
                             <core:Title text="{= ${dialog>ordem} + 'º Índice'}" />
-                            <Label text="Tipo" required="true" />
+                            <Label text="Índice" required="true" />
                             <ComboBox selectedKey="{dialog>tipoIndice}" width="100%">
                                 <core:Item key="IPCA" text="IPCA" /><core:Item key="IGP-M" text="IGP-M" />
                             </ComboBox>
-                            <Label text="Valor do índice selecionado" />
-                            <Input value="{dialog>valorIndice}" type="Number" width="100%" />
+                            
                             <Label text="Peso (%)" required="true" />
                             <Input value="{dialog>peso}" change=".onPesoChange" width="100%"/>
+
                             <Label text="Deseja adicionar mais um índice" />
                             <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndice" width="100%">
                                 <core:Item key="SIM" text="Sim" /><core:Item key="NAO" text="Não" />

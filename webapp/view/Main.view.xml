@@ -76,7 +76,7 @@
                         <Column hAlign="Center"><Text text="Unidade" /></Column>
                         <Column hAlign="End"><Text text="Valor Unid" /></Column>
                         <Column hAlign="End"><Text text="Valor Total" /></Column>
-                        <Column hAlign="End"><Text text="Valor de Variação" /></Column>
+                        <Column hAlign="End"><Text text="Reajuste Total (%)" /></Column>
                     </columns>
                     <items>
                         <ColumnListItem>
@@ -89,7 +89,7 @@
                                 <Text text="{unidade}" />
                                 <Text text="{valorUnitario}" />
                                 <Text text="{valorTotal}" />
-                                <Text text="{valorSugerido}" />
+                                <Text text="{reajusteTotal}" />
                             </cells>
                         </ColumnListItem>
                     </items>
