@@ -48,10 +48,8 @@
                         <Label text="Nº Contrato" /><Text text="{dialog>ncontrato}" />
                         <Label text="N.I do material" /><Text text="{dialog>ni}" />
                         <Label text="Material" /><Text text="{dialog>material}" />
-                        <Label text="Quantidade" /><Text text="{dialog>quantidade}" />
                         <Label text="Unidade" /><Text text="{dialog>unidade}" />
                         <Label text="Valor da Unidade" /><Text text="{dialog>valorUnitario}" />
-                        <Label text="Valor Total" /><Text text="{dialog>valorTotal}" />
                     </form:SimpleForm>
                     <VBox items="{path: 'dialog>indices'}">
                         <form:SimpleForm layout="ResponsiveGridLayout" editable="true" 

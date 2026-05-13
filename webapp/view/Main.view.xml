@@ -26,74 +26,73 @@
 
         <f:header>
             <f:DynamicPageHeader id="dphMain" pinnable="true">
-                <layout:HorizontalLayout id="hlFilters" visible="{/headerVisible}">
-                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
-                        <Label text="Data-Base Paramétrica:" />
-                        <DatePicker value="{/headerData/dataBaseParametrica}" displayFormat="dd/MM/yyyy" width="256px" editable="true" />
-                    </layout:VerticalLayout>
+                <FlexBox alignItems="Start" justifyContent="SpaceBetween" width="100%">
+                    <layout:HorizontalLayout id="hlFilters" visible="{/headerVisible}">
+                        <layout:VerticalLayout class="sapUiMediumMarginEnd">
+                            <Label text="Data-Base Paramétrica:" />
+                            <DatePicker value="{/headerData/dataBaseParametrica}" displayFormat="dd/MM/yyyy" width="256px" editable="true" />
+                        </layout:VerticalLayout>
 
-                    <layout:VerticalLayout class="sapUiMediumMarginEnd">
-                        <Label text="Período:" />
-                        <ComboBox selectedKey="{/headerData/periodo}" width="256px" editable="true">
-                            <core:Item key="mensal" text="Mensal" />
-                            <core:Item key="anual" text="Anual" />
-                        </ComboBox>
-                    </layout:VerticalLayout>
+                        <layout:VerticalLayout class="sapUiMediumMarginEnd">
+                            <Label text="Período:" />
+                            <ComboBox selectedKey="{/headerData/periodo}" width="256px" editable="true">
+                                <core:Item key="mensal" text="Mensal" />
+                                <core:Item key="anual" text="Anual" />
+                            </ComboBox>
+                        </layout:VerticalLayout>
+                        </layout:HorizontalLayout>
 
-                    <layout:VerticalLayout>
-                        <Label text="Data-Base Reajuste:" />
-                        <DatePicker value="{/headerData/dataBaseReajuste}" displayFormat="dd/MM/yyyy" width="256px" editable="true" />
-                    </layout:VerticalLayout>
-                </layout:HorizontalLayout>
+                    <Button 
+                        id="btnExcluirParametricas" 
+                        text="Excluir Paramétricas do Contrato" 
+                        type="Reject" 
+                        visible="{/headerVisible}"
+                        press=".onExcluirParametricasPress" />
+                </FlexBox>
             </f:DynamicPageHeader>
         </f:header>
 
         <f:content>
             <VBox id="vbMainContainer">
                 <Toolbar visible="{/headerVisible}" style="Clear" height="1px" class="sapUiMediumMarginBottom" />
-
-                <Table
-                    id="tabelaContratos"
-                    items="{/contratos}"
-                    mode="MultiSelect"
-                    visible="{/headerVisible}"
-                    sticky="ColumnHeaders,HeaderToolbar">
-                    <headerToolbar>
-                        <OverflowToolbar>
-                            <Title text="Itens do Contrato" level="H3" />
-                            <ToolbarSpacer />
-                            <Button id="btnCadastroParametrica" text="Cadastrar Paramétrica" icon="sap-icon://add" press=".onCadastroParametricaPress" />
-                            <Button id="btnEditar" text="Editar" icon="sap-icon://edit" press=".onEditarPress" />
-                            <Button id="btnConcluir" text="Concluir" icon="sap-icon://accept" type="Accept" press=".onConcluidoPress" />
-                        </OverflowToolbar>
-                    </headerToolbar>
-                    <columns>
-                        <Column width="3rem"><Text text="ID" /></Column>
-                        <Column><Text text="Nº Contrato" /></Column>
-                        <Column><Text text="N.I Material" /></Column>
-                        <Column><Text text="Material" /></Column>
-                        <Column hAlign="Center"><Text text="Quantidade" /></Column>
-                        <Column hAlign="Center"><Text text="Unidade" /></Column>
-                        <Column hAlign="End"><Text text="Valor Unid" /></Column>
-                        <Column hAlign="End"><Text text="Valor Total" /></Column>
-                        <Column hAlign="End"><Text text="Reajuste Total (%)" /></Column>
-                    </columns>
-                    <items>
-                        <ColumnListItem>
-                            <cells>
-                                <Text text="{id}" />
-                                <Text text="{ncontrato}" />
-                                <Text text="{ni}" />
-                                <Text text="{material}" />
-                                <Text text="{quantidade}" />
-                                <Text text="{unidade}" />
-                                <Text text="{valorUnitario}" />
-                                <Text text="{valorTotal}" />
-                                <Text text="{reajusteTotal}" />
-                            </cells>
-                        </ColumnListItem>
-                    </items>
-                </Table>
+                    <Table
+                        id="tabelaContratos"
+                        items="{/contratos}"
+                        mode="MultiSelect"
+                        visible="{/headerVisible}"
+                        sticky="ColumnHeaders,HeaderToolbar">
+                        <headerToolbar>
+                            <OverflowToolbar>
+                                <Title text="Itens do Contrato" level="H3" />
+                                <ToolbarSpacer />
+                                <Button id="btnCadastroParametrica" text="Cadastrar Paramétrica" icon="sap-icon://add" press=".onCadastroParametricaPress" />
+                                <Button id="btnEditar" text="Editar" icon="sap-icon://edit" press=".onEditarPress" />
+                                <Button id="btnConcluir" text="Concluir" icon="sap-icon://accept" type="Accept" press=".onConcluidoPress" />
+                            </OverflowToolbar>
+                        </headerToolbar>
+                        <columns>
+                            <Column width="3rem"><Text text="ID" /></Column>
+                            <Column><Text text="Nº Contrato" /></Column>
+                            <Column><Text text="N.I Material" /></Column>
+                            <Column><Text text="Material" /></Column>
+                            <Column hAlign="Center"><Text text="Unidade" /></Column>
+                            <Column hAlign="End"><Text text="Valor Unid" /></Column> 
+                            <Column hAlign="End"><Text text="Reajuste Total (%)" /></Column>
+                        </columns>
+                        <items>
+                            <ColumnListItem>
+                                <cells>
+                                    <Text text="{id}" />
+                                    <Text text="{ncontrato}" />
+                                    <Text text="{ni}" />
+                                    <Text text="{material}" />
+                                    <Text text="{unidade}" />
+                                    <Text text="{valorUnitario}" />
+                                    <Text text="{reajusteTotal}" />
+                                </cells>
+                            </ColumnListItem>
+                        </items>
+                    </Table>
             </VBox>
         </f:content>
     </f:DynamicPage>

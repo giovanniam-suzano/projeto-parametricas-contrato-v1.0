@@ -2,50 +2,50 @@
     xmlns:core="sap.ui.core"
     xmlns:form="sap.ui.layout.form"
     xmlns="sap.m">
-    <Dialog id="dialogParametricas" contentWidth="950px" contentHeight="750px" verticalScrolling="true">
+    <Dialog id="dialogParametricas" contentWidth="950px" contentHeight="850px" verticalScrolling="true">
         <customHeader>
             <Bar>
                 <contentLeft>
                     <HBox alignItems="Center" renderType="Bare">
                         <core:Icon src="sap-icon://request" class="sapUiTinyMarginEnd" />
-                        <Title text="Cabeçalho" visible="{dialog>/isAllSelected}" />
-                        <Title text="Item 1" visible="{= !${dialog>/isAllSelected} &amp;&amp; ${dialog>/selectedCount} === 1 }" />
+                        <Title text="Cabeçalho Geral" visible="{dialog>/isAllSelected}" />
                         <Title text="{= 'Item ' + (${dialog>/currentIndex} + 1) + ' de ' + ${dialog>/selectedCount} }" 
-                               visible="{= !${dialog>/isAllSelected} &amp;&amp; ${dialog>/selectedCount} > 1 }" />
+                               visible="{= !${dialog>/isAllSelected} }" />
                     </HBox>
                 </contentLeft>
             </Bar>
         </customHeader>
         <content>
             <VBox class="sapUiSmallMargin" visible="{dialog>/isAllSelected}">
-                <form:SimpleForm layout="ResponsiveGridLayout" editable="false" 
-                                 labelSpanL="4" emptySpanL="4" columnsL="1" title="Dados do Cabeçalho">
-                    <Label text="Nº do Contrato" />
-                    <Text text="{dialog>/currentItem/ncontrato}" />
-                    <Label text="Reajuste Total (%)" />
-                    <Text text="{dialog>/currentItem/reajusteTotal}" />
+                <form:SimpleForm layout="ResponsiveGridLayout" editable="true" labelSpanL="4" columnsL="1">
+                    <core:Title text="Dados do Contrato" />
+                    <Label text="Nº do Contrato" /><Text text="{dialog>/currentItem/ncontrato}" />
+                    <Label text="Reajuste Total (%)" /><Text text="{dialog>/currentItem/reajusteTotal}" />
+                    
+                    <Label text="Deseja alterar o reajuste total" visible="{dialog>/isNegociando}" />
+                    <CheckBox selected="{dialog>/alterarReajusteTotal}" visible="{dialog>/isNegociando}" />
                 </form:SimpleForm>
 
-                <VBox items="{path: 'dialog>/globalIndices'}">
-                    <form:SimpleForm layout="ResponsiveGridLayout" editable="true" 
-                                     labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
-                                     emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0"
-                                     columnsXL="1" columnsL="1" columnsM="1">
-                        <core:Title text="{= ${dialog>ordem} + 'º Índice (Geral)'}" />
-                        
-                        <Label text="Índice" />
-                        <Input value="{dialog>tipoIndice}" editable="false" width="100%" />
-                        
-                        <Label text="Peso (%)" />
-                        <Input value="{dialog>peso}" editable="false" width="100%" />
+                <VBox visible="{= ${dialog>/isNegociando} &amp;&amp; ${dialog>/alterarReajusteTotal} }">
+                    <form:SimpleForm layout="ResponsiveGridLayout" editable="true" labelSpanL="4" columnsL="1">
+                        <core:Title text="Negociação de Reajuste Total" />
+                        <Label text="Reajuste Total (%):" />
+                        <Input value="{dialog>/novoReajusteTotalGeral}" type="Number" width="256px" />
+                    </form:SimpleForm>
+                </VBox>
 
-                        <Label text="Reajuste Projetado (%)" />
-                        <Input value="{dialog>reajusteProjetado}" type="Number" 
-                               editable="{dialog>/isNegociando}" width="100%" />
+                <VBox items="{path: 'dialog>/globalIndices'}">
+                    <form:SimpleForm layout="ResponsiveGridLayout" editable="true" labelSpanL="4" columnsL="1">
+                        <core:Title text="{= ${dialog>ordem} + 'º Índice (Geral)'}" />
+                        <Label text="Índice" /><Input value="{dialog>tipoIndice}" editable="false" width="256px" />
+                        <Label text="Peso (%)" /><Input value="{dialog>peso}" editable="false" width="256px" />
+                        <Label text="Reajuste Projetado (%)" /><Input value="{dialog>reajusteProjetado}" type="Number" editable="false" width="256px" />
+
+                        <Label text="Negociação de Reajuste da Paramétrica" visible="{dialog>/isNegociando}" />
+                        <Input value="{dialog>negociacaoReajuste}" type="Number" width="256px" visible="{dialog>/isNegociando}" />
 
                         <Label text="Deseja adicionar mais um índice" />
-                        <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndiceGlobal" 
-                                  width="100%" editable="{dialog>/isNegociando}">
+                        <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndiceGlobal" width="256px" editable="{dialog>/isNegociando}">
                             <core:Item key="SIM" text="Sim" /><core:Item key="NAO" text="Não" />
                         </ComboBox>
                     </form:SimpleForm>
@@ -54,39 +54,39 @@
 
             <VBox items="{path: 'dialog>/selectedItems'}" visible="{= !${dialog>/isAllSelected} }">
                 <VBox class="sapUiSmallMargin" visible="{= ${dialog>seq} === (${dialog>/currentIndex} + 1) }">
-                    <form:SimpleForm layout="ResponsiveGridLayout" editable="false" 
-                                     labelSpanL="4" emptySpanL="4" columnsL="1" title="Dados do Item Selecionado">
+                    <form:SimpleForm layout="ResponsiveGridLayout" editable="true" labelSpanL="4" columnsL="1">
+                        <core:Title text="{= 'Dados do Item ' + (${dialog>/currentIndex} + 1) + ' de ' + ${dialog>/selectedCount} }" />
                         <Label text="ID" /><Text text="{dialog>id}" />
-                        <Label text="Nº Contrato" /><Text text="{dialog>ncontrato}" />
                         <Label text="N.I do material" /><Text text="{dialog>ni}" />
                         <Label text="Material" /><Text text="{dialog>material}" />
-                        <Label text="Quantidade" /><Text text="{dialog>quantidade}" />
                         <Label text="Unidade" /><Text text="{dialog>unidade}" />
                         <Label text="Valor da Unidade" /><Text text="{dialog>valorUnitario}" />
-                        <Label text="Valor Total" /><Text text="{dialog>valorTotal}" />
                         <Label text="Reajuste Total (%)" /><Text text="{dialog>reajusteTotal}" />
+
+                        <Label text="Deseja alterar o reajuste total" visible="{dialog>/isNegociando}" />
+                        <CheckBox selected="{dialog>/alterarReajusteTotal}" visible="{dialog>/isNegociando}" />
                     </form:SimpleForm>
+
+                    <VBox visible="{= ${dialog>/isNegociando} &amp;&amp; ${dialog>/alterarReajusteTotal} }">
+                        <form:SimpleForm layout="ResponsiveGridLayout" editable="true" labelSpanL="4" columnsL="1">
+                            <core:Title text="Negociação de Reajuste Total" />
+                            <Label text="Reajuste Total (%)" />
+                            <Input value="{dialog>novoReajusteTotalItem}" type="Number" width="256px" />
+                        </form:SimpleForm>
+                    </VBox>
                     
                     <VBox items="{path: 'dialog>indices'}">
-                        <form:SimpleForm layout="ResponsiveGridLayout" editable="true" 
-                                         labelSpanXL="4" labelSpanL="4" labelSpanM="4" labelSpanS="12"
-                                         emptySpanXL="4" emptySpanL="4" emptySpanM="4" emptySpanS="0"
-                                         columnsXL="1" columnsL="1" columnsM="1">
+                        <form:SimpleForm layout="ResponsiveGridLayout" editable="true" labelSpanL="4" columnsL="1">
                             <core:Title text="{= ${dialog>ordem} + 'º Índice'}" />
-                            
-                            <Label text="Índice" />
-                            <Input value="{dialog>tipoIndice}" editable="false" width="100%" />
-                            
-                            <Label text="Peso (%)" />
-                            <Input value="{dialog>peso}" editable="false" width="100%"/>
+                            <Label text="Índice" /><Input value="{dialog>tipoIndice}" editable="false" width="256px" />
+                            <Label text="Peso (%)" /><Input value="{dialog>peso}" editable="false" width="256px" />
+                            <Label text="Reajuste Projetado (%)" /><Input value="{dialog>reajusteProjetado}" type="Number" editable="false" width="256px" />
 
-                            <Label text="Reajuste Projetado (%)" />
-                            <Input value="{dialog>reajusteProjetado}" type="Number" 
-                                   editable="{dialog>/isNegociando}" width="100%" />
+                            <Label text="Negociação de Reajuste" visible="{dialog>/isNegociando}" />
+                            <Input value="{dialog>negociacaoReajuste}" type="Number" width="256px" visible="{dialog>/isNegociando}" />
 
                             <Label text="Deseja adicionar mais um índice" />
-                            <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndice" 
-                                      width="100%" editable="{dialog>/isNegociando}">
+                            <ComboBox selectedKey="{dialog>addMore}" selectionChange=".onAdicionarIndice" width="256px" editable="{dialog>/isNegociando}">
                                 <core:Item key="SIM" text="Sim" /><core:Item key="NAO" text="Não" />
                             </ComboBox>
                         </form:SimpleForm>
