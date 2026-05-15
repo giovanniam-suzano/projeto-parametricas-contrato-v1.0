@@ -16,11 +16,18 @@ sap.ui.define([
             this._allContratosMock = [
                 {
                     ncontrato: "212354",
-                    dataBaseParametrica: "12/02/2025",
+                    dataBaseParametrica: "02/2025",
                     periodo: "mensal",
-                    dataBaseReajuste: "01/06/2026",
                     items: [
-                        { id: "1", material: "Cabo de Rede CAT6", ncontrato: "212354", ni: "21.235.401-1", unidade: "M", valorUnitario: "7,20", reajusteTotal: "6.23%" },
+                        { id: "1", 
+        material: "Cabo de Rede CAT6", 
+        ncontrato: "212354", 
+        ni: "21.235.401-1", 
+        quantidade: 150, 
+        unidade: "M", 
+        valorUnitario: "7,20", 
+        valorAlterado: "7,3692", // Exemplo de cálculo conforme solicitado
+        reajusteTotal: "6,25%" },
                         { id: "2", material: "Patch Panel 24P", ncontrato: "212354", ni: "21.235.401-2", unidade: "UN", valorUnitario: "280,00", reajusteTotal: "9.20%" },
                         { id: "3", material: "Rack de Piso 40U", ncontrato: "212354", ni: "21.235.401-3", unidade: "UN", valorUnitario: "2.950,00", reajusteTotal: "6,24%" },
                         { id: "4", material: "Switch Gerenciável 48P", ncontrato: "212354", ni: "21.235.401-4", unidade: "UN", valorUnitario: "3.200,00", reajusteTotal: "4,40%" },
@@ -28,7 +35,6 @@ sap.ui.define([
                         { id: "6", material: "Nobreak 3000VA", ncontrato: "212354", ni: "21.235.401-6", unidade: "UN", valorUnitario: "4.400,00", reajusteTotal: "17,34%" }
                     ]
                 }
-                // ... demais mocks mantidos internamente
             ];
 
             this.getView().setModel(new JSONModel({

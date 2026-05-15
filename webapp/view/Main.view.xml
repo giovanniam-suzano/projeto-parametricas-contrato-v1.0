@@ -30,7 +30,7 @@
                     <layout:HorizontalLayout id="hlFilters" visible="{/headerVisible}">
                         <layout:VerticalLayout class="sapUiMediumMarginEnd">
                             <Label text="Data-Base Paramétrica:" />
-                            <DatePicker value="{/headerData/dataBaseParametrica}" displayFormat="dd/MM/yyyy" width="256px" editable="true" />
+                            <DatePicker value="{/headerData/dataBaseParametrica}" displayFormat="MM/yyyy" width="256px" editable="true" />
                         </layout:VerticalLayout>
 
                         <layout:VerticalLayout class="sapUiMediumMarginEnd">
@@ -76,7 +76,8 @@
                             <Column><Text text="N.I Material" /></Column>
                             <Column><Text text="Material" /></Column>
                             <Column hAlign="Center"><Text text="Unidade" /></Column>
-                            <Column hAlign="End"><Text text="Valor Unid" /></Column> 
+                            <Column hAlign="End"><Text text="Valor Atual" /></Column> 
+                            <Column hAlign="End"><Text text="Valor Alterado" /></Column>
                             <Column hAlign="End"><Text text="Reajuste Total (%)" /></Column>
                         </columns>
                         <items>
@@ -87,8 +88,7 @@
                                     <Text text="{ni}" />
                                     <Text text="{material}" />
                                     <Text text="{unidade}" />
-                                    <Text text="{valorUnitario}" />
-                                    <Text text="{reajusteTotal}" />
+                                    <Text text="{valorUnitario}" /> <Text text="{valorAlterado}" /> <Text text="{reajusteTotal}" />
                                 </cells>
                             </ColumnListItem>
                         </items>
