@@ -19,22 +19,136 @@ sap.ui.define([
                     dataBaseParametrica: "02/2025",
                     periodo: "mensal",
                     items: [
-                        { id: "1", 
-        material: "Cabo de Rede CAT6", 
-        ncontrato: "212354", 
-        ni: "21.235.401-1", 
-        quantidade: 150, 
-        unidade: "M", 
-        valorUnitario: "7,20", 
-        valorAlterado: "7,3692", // Exemplo de cálculo conforme solicitado
-        reajusteTotal: "6,25%" },
-                        { id: "2", material: "Patch Panel 24P", ncontrato: "212354", ni: "21.235.401-2", unidade: "UN", valorUnitario: "280,00", reajusteTotal: "9.20%" },
-                        { id: "3", material: "Rack de Piso 40U", ncontrato: "212354", ni: "21.235.401-3", unidade: "UN", valorUnitario: "2.950,00", reajusteTotal: "6,24%" },
-                        { id: "4", material: "Switch Gerenciável 48P", ncontrato: "212354", ni: "21.235.401-4", unidade: "UN", valorUnitario: "3.200,00", reajusteTotal: "4,40%" },
-                        { id: "5", material: "Organizador de Cabos", ncontrato: "212354", ni: "21.235.401-5", unidade: "UN", valorUnitario: "65,00", reajusteTotal: "5.00%" },
-                        { id: "6", material: "Nobreak 3000VA", ncontrato: "212354", ni: "21.235.401-6", unidade: "UN", valorUnitario: "4.400,00", reajusteTotal: "17,34%" }
+                        {
+                        id: "1",
+                        material: "Cabo de Rede CAT6",
+                        ncontrato: "212354",
+                        ni: "21.235.401-1",
+                        unidade: "M",
+                        valorUnitario: "7,20",
+                        valorAlterado: "7,3692",
+                        reajusteTotal: "6,25%"
+                        },
+                        {
+                        id: "2",
+                        material: "Patch Panel 24P",
+                        ncontrato: "212354",
+                        ni: "21.235.401-2",
+                        unidade: "UN",
+                        valorUnitario: "280,00",
+                        valorAlterado: "305,76",
+                        reajusteTotal: "9,20%"
+                        },
+                        {
+                        id: "3",
+                        material: "Rack de Piso 40U",
+                        ncontrato: "212354",
+                        ni: "21.235.401-3",
+                        unidade: "UN",
+                        valorUnitario: "2.950,00",
+                        valorAlterado: "3.134,08",
+                        reajusteTotal: "6,24%"
+                        },
+                        {
+                        id: "4",
+                        material: "Switch Gerenciável 48P",
+                        ncontrato: "212354",
+                        ni: "21.235.401-4",
+                        unidade: "UN",
+                        valorUnitario: "3.200,00",
+                        valorAlterado: "3.340,80",
+                        reajusteTotal: "4,40%"
+                        },
+                        {
+                        id: "5",
+                        material: "Organizador de Cabos",
+                        ncontrato: "212354",
+                        ni: "21.235.401-5",
+                        unidade: "UN",
+                        valorUnitario: "65,00",
+                        valorAlterado: "68,25",
+                        reajusteTotal: "5,00%"
+                        },
+                        {
+                        id: "6",
+                        material: "Nobreak 3000VA",
+                        ncontrato: "212354",
+                        ni: "21.235.401-6",
+                        unidade: "UN",
+                        valorUnitario: "4.400,00",
+                        valorAlterado: "5.162,96",
+                        reajusteTotal: "17,34%"
+                        }
                     ]
-                }
+                    },
+
+                    {
+                        ncontrato: "212355",
+                        dataBaseParametrica: "05/2026",
+                        periodo: "anual",
+                        items: [
+                            {
+                            id: "1",
+                            material: "Cabo Fibra Óptica SM",
+                            ncontrato: "212355",
+                            ni: "21.235.402-1",
+                            unidade: "M",
+                            valorUnitario: "1.000,00",
+                            valorAlterado: "1.100,00",
+                            reajusteTotal: "10,00%"
+                            },
+                            {
+                            id: "2",
+                            material: "Conector RJ45 Cat6",
+                            ncontrato: "212355",
+                            ni: "21.235.402-2",
+                            unidade: "UN",
+                            valorUnitario: "50,00",
+                            valorAlterado: "51,50",
+                            reajusteTotal: "3,00%"
+                            },
+                            {
+                            id: "3",
+                            material: "Switch 24 Portas",
+                            ncontrato: "212355",
+                            ni: "21.235.402-3",
+                            unidade: "UN",
+                            valorUnitario: "200,00",
+                            valorAlterado: "215,00",
+                            reajusteTotal: "7,50%"
+                            },
+                            {
+                            id: "4",
+                            material: "Patch Cord Cat6 2m",
+                            ncontrato: "212355",
+                            ni: "21.235.402-4",
+                            unidade: "UN",
+                            valorUnitario: "80,00",
+                            valorAlterado: "89,60",
+                            reajusteTotal: "12,00%"
+                            },
+                            {
+                            id: "5",
+                            material: "Servidor Rack 2U",
+                            ncontrato: "212355",
+                            ni: "21.235.402-5",
+                            unidade: "UN",
+                            valorUnitario: "1.500,00",
+                            valorAlterado: "1.623,00",
+                            reajusteTotal: "8,20%"
+                            },
+                            {
+                            id: "6",
+                            material: "HD SSD 1TB",
+                            ncontrato: "212355",
+                            ni: "21.235.402-6",
+                            unidade: "UN",
+                            valorUnitario: "300,00",
+                            valorAlterado: "315,00",
+                            reajusteTotal: "5,00%"
+                            }
+                    ]
+                    }
             ];
 
             this.getView().setModel(new JSONModel({
